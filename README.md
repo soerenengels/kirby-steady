@@ -1,15 +1,16 @@
-# Kirby meets Steady
+![Kirby x Steady](https://github.com/soerenengels/kirby-steady/blob/main/assets/kirby-steady-feature-preview.png?raw=true)
 
-A Steady plugin for Kirby `Version 4 and later` to request data for your publication from the Steady API.
+# Kirby x Steady
 
-What ist Steady?
-What is Kirby?
+A Steady plugin for Kirby `Version 4 and later` to connect your Kirby instance to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
 
 ## Features
 
-- Display Steady Reports in your Panel
-- Site method `->steady()` or helper `steady()` to request publication, plans, subscriptions and newsletter subscribers for use in templates, snippets or everywhere else
-- Steady Paywall Block
+1. Display Steady reports in a Panel section
+2. Site method `$site->steady()` or helper `steady()` to request publication, plans, subscriptions and newsletter subscribers for use in templates, snippets or everywhere else
+3. $block: Steady Paywall
+4. $snippet: Login Button
+5. $snippet: Adblock detection
 
 ## Todo
 
@@ -32,11 +33,13 @@ You have following options in your `config.php`:
 
 ```php
 return [
-	'options' => [
-		'soerenengels.steady' => [
-
-		]
-	]
+  'options' => [
+    'soerenengels.steady' => [
+      'api-token' => '...',
+      'widget' => false, // change to true, if you want to use login, paywall, sticky button or adblock detection
+      'cache-name' => 'steady-api', // optional: change cache name
+    ]
+  ]
 ]
 ```
 
@@ -44,12 +47,13 @@ return [
 
 ### Site-Method: $site->steady()
 
-The site method `$site->steady()` gives you access to the SteadyApi Class and its following methods:
+The site method `$site->steady()` or the Steady helper function `steady()` give you access to the Steady Class and its following methods:
 
 - `->publication()`
 - `->plans()`
 - `->subscriptions()`
 - `->newsletter_subscribers()`
+- `->report($id)`
 
 ### Panel: Steady-Reports
 
@@ -57,8 +61,9 @@ Simply add Steady reports to your panel via a the stats section or as individual
 
 Following reports are available:
 
+- Members
 - Newsletter Subscriptions
-- Total Members
+- Monthly Revenue
 
 ```yml
 section:
@@ -67,12 +72,12 @@ section:
     label: My Steady reports
     size: huge
     reports:
-      - reportname
-      - reportname 2
-
+      - site.steady.report('members') # For total members report
+      - site.steady.report('newsletter_subscribers') # For newsletter subscribers report
+      - site.steady.report('revenue') # For monthly revenue report
 ```
 
-### Snippets
+### Snippet: Plans
 
 You can use the predefined Snippets in `/snippets/components/steady/...` to render following components:
 
@@ -112,3 +117,11 @@ sections:
           - steady/paywall
           - ...
 ```
+
+### Adblock detection
+
+...
+
+### Login button
+
+...
