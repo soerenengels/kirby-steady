@@ -6,6 +6,7 @@ class MonthlyRevenueReport extends Report {
 	public function __construct() {
 		$steady = steady();
 		$revenue = $steady->publication()->monthly_amount;
+		$currency = '€';
 		$theme = (
 			$revenue > 2600 ? 'positive' : (
 				$revenue > 520 ? 'default' : (
@@ -16,7 +17,7 @@ class MonthlyRevenueReport extends Report {
 			)
 		);
 		$this->label = t('soerenengels.steady.reports.revenue.label');
-		$this->value = $revenue;
+		$this->value = $revenue . '' . $currency;
 		$this->info = (
 			$revenue >=2600 ? t('soerenengels.steady.reports.revenue.info.much') : (
 				$revenue > 520 ? t('soerenengels.steady.reports.revenue.info.more') : (
