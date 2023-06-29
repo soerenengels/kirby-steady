@@ -14,11 +14,10 @@ A Steady plugin for Kirby `Version 4 and later` to connect your Kirby instance t
 
 ## Todo
 
-- OAUTH, see <https://github.com/oliverschloebe/oauth2-steadyhq>
-- Opiniated Steady Panel Area
-- connect steady users to kirby users
-- do not save emails in cache if not necessary
-- Webhook for new Steady Subscriptions
+- fix-cache: Privacy by Design: do not save emails in cache if not necessary
+- fix-paywall: add link to steady edit page
+- feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
+- feature-webhook: Webhook for new Steady Subscriptions
 
 ## Installation
 
