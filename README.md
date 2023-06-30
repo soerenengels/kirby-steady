@@ -2,7 +2,7 @@
 
 # Kirby x Steady
 
-**[Steady]() meets [Kirby]().** A Steady plugin for Kirby `Version 4 and later`. Connect your Kirby instance to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
+**[Steady](https://steadyhq.com/) meets [Kirby](https://getkirby.com/).** A Steady plugin for Kirby `Version 4 and later`. Connect your Kirby instance to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
 
 ## Features
 
@@ -28,16 +28,25 @@
 
 ### Setup
 
-You need to add your API-KEY.
-You have following options in your `config.php`:
+For this plugin to function, you have to add your [REST API KEY](https://steadyhq.com/backend/publications/default/integrations/api/edit) to your configs token option. It is the only required option in your configs.
+You also have following options in your `config.php`:
 
 ```php
 return [
   'options' => [
     'soerenengels.steady' => [
-      'api-token' => '...', // REQUIRED. Your personal Steady API token. Get it from: https://steadyhq.com/backend/publications/default/integrations/api/edit when you are logged in
-      'widget' => false, // change to true, if you want to use login, paywall, sticky button or adblock detection
-      'cache' => 'steady-api', // OPTIONAL: Change cache name. Default: 'steady-api'
+      // REQUIRED 
+      // Your private Steady REST API KEY
+      // Get it from https://steadyhq.com/backend/publications/default/integrations/api/edit
+      'token' => '...',
+
+      // OPTIONAL
+      // change to true, if you want to use login, paywall, sticky button or adblock detection
+      // if true, you also need to add the Steady::widget() to your websites head
+      'widget' => false,
+      // If you want to, you can change the name of the cache, where the api requests will be saved
+      // Default: 'steady-api'
+      'cache' => 'steady-api',
     ]
   ]
 ]
@@ -77,32 +86,38 @@ section:
       - site.steady.report('revenue') # For monthly revenue report
 ```
 
-### Snippet: Plans
+### $block Plans
+
+You can simply add a **Steady: Plans** `$block` by adding it to your fieldsets.
 
 You can use the predefined Snippets in `/snippets/components/steady/...` to render following components:
 
 - All Plans
 - A single plan
 
-Example:
+Examples
 
 ```php
+// Display all plans
 snippet('components/steady/plans', [
-  'plans' => $steady->plans() // Plans object
+  'plans' => $steady->plans()->plans // array of Plan objects
 ]);
 ```
 
 ```php
+// Display a single plan by id
 snippet('components/steady/plan', [
   'plan' => $steady->plans()->find($id) // Plan object
 ]);
 ```
 
-Or you just take some inspiration.
+#### Style your plans
+
+The styling of the plans is up to you. For the HTML markup structure and classes see `/snippets/components/steady/plans.php` and `/snippets/components/steady/plan.php`. If you want to change the markup of the plans, you can overwrite those components by creating a new file in `/site/snippets/components/steady/{name-of-file-you-want-to-overwrite}.php`.
 
 ### Steady-Paywall
 
-To use the Steady Paywall block, you need to activate it in you Steady settings (Integrations > Steady Paywall) and add it to your blocks fieldsets.
+To use the Steady Paywall block, you need to activate it in your Steady settings (Integrations > Steady Paywall), add it to your blocks fieldsets and integrate the Steady Javascript Widget.
 
 Example:
 
