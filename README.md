@@ -7,23 +7,30 @@
 ## Features
 
 1. **Steady reports:** Stay up to date with Steady Reports in a Panel section
-2. **Access the API:** Site method `$site->steady()` or helper `steady()` to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
+2. **Access the API:** Site method `$site->steady()` or `steady()`-helper to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
 3. **Show your Plans:** Add your Steady Plans as `$block` or `$snippet` to your Website.
 4. **Let your Content be worth it:** Add a Paywall `$block` to your articles or pages.
 5. **Adblock detection:** Activate Adblocker detection and display the Steady Adblock Overlay.
 6. **Member Login:** Let your members login to your Steady publication, to deactivate the paywall for them.
 
-## Todo
-
-- fix-cache: Privacy by Design: Try to prevent saving unnecessary data in cache.
-- feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
-- feature-webhook: Webhook for new Steady Subscriptions
-
 ## Installation
 
-- composer
-- git
-- zip
+### Composer
+
+Simply install the plugin with [composer](https://github.com/composer/composer).  
+Follow the instructions in the [setup section](#setup).
+
+```bash
+composer require soerenengels/kirby-steady
+```
+
+### Download
+
+[Download](https://github.com/soerenengels/kirby-steady/archive/refs/heads/main.zip), unzip and copy this repository to `/site/plugins/steady`. Follow the instructions in the [setup section](#setup).
+
+### Git
+
+...
 
 ### Setup
 
@@ -53,25 +60,27 @@ return [
 
 ## Documentation
 
-### Site-Method: $site->steady()
+### Site method: $site->steady()
 
-The site method `$site->steady()` or the Steady helper function `steady()` give you access to the Steady Class and its following methods:
+The site method `$site->steady()` or the Steady helper function `steady()` give you access to the [Steady Class](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady.php) and its following methods:
 
 - `->publication()`
 - `->plans()`
 - `->subscriptions()`
 - `->newsletter_subscribers()`
 - `->report($id)`
+- `->widget()`
 
 ### Panel: Steady-Reports
 
-Simply add Steady reports to your panel via a the stats section or as individual reports.
-
+Simply add Steady reports to your panel via a the stats section or as individual reports.  
 Following reports are available:
 
 - Members
 - Newsletter Subscriptions
 - Monthly Revenue
+
+#### Example: Usage of the Steady Reports in a custom stats section
 
 ```yml
 section:
@@ -89,12 +98,12 @@ section:
 
 You can simply add a **Steady: Plans** `$block` by adding it to your fieldsets.
 
-You can use the predefined Snippets in `/snippets/components/steady/...` to render following components:
+You can use the predefined Snippets in `/snippets/components/steady/*.php` to render following components:
 
 - All Plans
 - A single plan
 
-Examples
+#### Example: Display all plans or a single plan via a `$snippet`.
 
 ```php
 // Display all plans
@@ -112,13 +121,13 @@ snippet('components/steady/plan', [
 
 #### Style your plans
 
-The styling of the plans is up to you. For the HTML markup structure and classes see `/snippets/components/steady/plans.php` and `/snippets/components/steady/plan.php`. If you want to change the markup of the plans, you can overwrite those components by creating a new file in `/site/snippets/components/steady/{name-of-file-you-want-to-overwrite}.php`.
+The styling of the plans is up to you. For the HTML markup structure and classes see [`/snippets/components/steady/plans.php`]() and [`/snippets/components/steady/plan.php`](). If you want to change the markup of the plans, you can overwrite those components by creating a new file in `/site/snippets/components/steady/{name-of-file-you-want-to-overwrite}.php`.
 
 ### Steady-Paywall
 
-To use the Steady Paywall block, you need to activate it in your Steady settings (Integrations > Steady Paywall), add it to your blocks fieldsets and integrate the Steady Javascript Widget.
+To use the Steady Paywall block, you need to **activate it** in your Steady settings (Integrations > Steady Paywall), **add it** to your blocks fieldsets **and integrate** the Steady Javascript Widget.
 
-Example:
+#### Example: Add Paywall to your blocks fieldsets
 
 ```yml
 sections:
@@ -142,7 +151,7 @@ If you have set the `widget` option to `true` in the `config.php` options, you c
 
 Visitors, who have not logged in on your website already, see this button. After they click it, a login page opens. Visitors, who are logged in already, can logout themselves with the same button.
 
-Example
+#### Example: Add the Steady Login button to your Website
 
 ```php
 // Default (size: medium, language: en)
@@ -155,4 +164,18 @@ snippet('components/steady/login', [
 ]);
 ```
 
-**Achtung:** Benutze den Button nicht, wenn du den OAuth2-Flow manuell implementierst. Der Button ist so programmiert, dass er automatisch mit unserem Javascript-Widget arbeitet und somit nicht für den manuellen Flow verwendet werden kann.
+**Warning:** Do not use the Steady login button, if you implement the OAuth2-Flow manually. The button is programmed, that it works together with the Steady Javascript widget and shall not be used with a manual OAuth flow, as Steady states.
+
+## Outlook
+
+- fix-cache: Privacy by Design: Try to prevent saving unnecessary data in cache.
+- feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
+- feature-webhook: Webhook for new Steady Subscriptions
+
+## License
+
+MIT
+
+## Credits
+
+Sören Engels
