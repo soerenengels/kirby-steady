@@ -37,10 +37,10 @@ class Plans implements PlansInterface
 	 * @return ?Plan returns Plan or null
 	 */
 	public function find(string $id): ?Plan {
-		$result = array_filter($this->plans, function($plan) use ($id) {
+		$result = array_filter($this->plans, function(Plan $plan) use ($id) {
 			return $plan->id == $id;
 		});
-		return count($result) > 0 ? $result[0] : null;
+		return count($result) > 0 ? current($result) : null;
 	}
 
 	/**
