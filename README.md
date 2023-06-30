@@ -15,6 +15,7 @@ A Steady plugin for Kirby `Version 4 and later` to connect your Kirby instance t
 ## Todo
 
 - fix-cache: Privacy by Design: do not save emails in cache if not necessary
+- feature-block-plans: Add plans via Block
 - fix-paywall: add link to steady edit page
 - feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
 - feature-webhook: Webhook for new Steady Subscriptions
@@ -119,8 +120,25 @@ sections:
 
 ### Adblock detection
 
-...
+If you have set the `widget` option to `true` in the `config.php` options, you can configure the Steady Adblock detection at your publication settings on the Steady website.
 
-### Login button
+### Snippet: Login button
 
-...
+If you have set the `widget` option to `true` in the `config.php` options, you can integrate the Steady login button on your website via a snippet.
+
+Visitors, who have not logged in on your website already, see this button. After they click it, a login page opens. Visitors, who are logged in already, can logout themselves with the same button.
+
+Example
+
+```php
+// Default (size: medium, language: en)
+snippet('components/steady/login');
+
+// Custom
+snippet('components/steady/login', [
+  'size' => 'small',
+  'language' => 'fr'
+]);
+```
+
+**Achtung:** Benutze den Button nicht, wenn du den OAuth2-Flow manuell implementierst. Der Button ist so programmiert, dass er automatisch mit unserem Javascript-Widget arbeitet und somit nicht für den manuellen Flow verwendet werden kann.
