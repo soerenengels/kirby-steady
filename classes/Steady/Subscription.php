@@ -154,15 +154,18 @@ class Subscription implements SubscriptionInterface
 
 	// TODO
 	/**
-	 * sends as POST request to steady API
+	 * Cancel Subscription
+	 * sends a POST request to steady API
 	 * to cancel $this subscription
 	 * returns true in case of success
 	 */
 	/* public function cancel(): bool {
 		$steady = steady();
+
+
 		try {
 			// POST request to /subscriptions/:subscription_id/cancel
-			$steady->post($steady::API_ENDPOINT_BASE . $steady::API_ENDPOINT_SUBSCRIPTIONS . '/' . $id . '/cancel');
+			$request = $steady->post($steady::API_ENDPOINT_SUBSCRIPTIONS . $this->id . '/cancel');
 		} catch (Exception $e) {
 			// status code 442 means subscription can't be canceled (e.g. because it already is cancelled)
 			echo $e->getMessage();
