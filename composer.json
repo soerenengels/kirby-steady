@@ -2,7 +2,7 @@
   "name": "soerenengels/kirby-steady",
   "type": "kirby-plugin",
   "version": "1.0.0",
-  "description": "Steady meets Kirby",
+  "description": "Steady meets Kirby is a Kirby Plugin.",
   "license": "MIT",
   "authors": [
     {
@@ -16,23 +16,10 @@
     "kirby4-plugin",
     "steady"
   ],
-  "autoload": {
-    "psr-4": {
-      "Soerenengels\\": "classes/"
-    }
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "sort-packages": true,
-    "allow-plugins": {
-      "getkirby/composer-installer": true
-    }
-  },
   "require": {
-    "php": ">=8.0",
+		"php": ">=8.0",
     "getkirby/composer-installer": "^1.2"
   },
-  "scripts": {},
   "extra": {},
   "suggest": {}
 }
