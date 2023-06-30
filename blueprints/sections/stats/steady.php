@@ -1,7 +1,4 @@
 <?php
-use Soerenengels\Steady\MembersReport;
-use Soerenengels\Steady\NewsletterSubscribersReport;
-use Soerenengels\Steady\MonthlyRevenueReport;
 
 return [
 	'type' => 'stats',
