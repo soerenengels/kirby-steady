@@ -5,6 +5,6 @@
  * Füge dieses Snippet in den <head>...</head>
  * deines HTML-Dokuments ein.
  */
-if (option('soerenengels.kirby-steady.widget') == false) return;
+if (steady()->widget() == false) return;
 ?>
-<script defer type="text/javascript" src="<?= steady()->publication()->js_widget_url ?>"></script>
+<script type="text/javascript" src="<?= steady()->publication()->js_widget_url ?>"></script>
