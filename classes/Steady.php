@@ -8,6 +8,7 @@ use Soerenengels\Steady\Subscriptions;
 use Soerenengels\Steady\NewsletterSubscribers;
 use Kirby\Cache\Cache;
 use Kirby\Http\Remote;
+use Kirby\Exception\Exception;
 
 interface SteadyInterface
 {
@@ -16,6 +17,9 @@ interface SteadyInterface
 	public function subscriptions(): Subscriptions;
 	public function newsletter_subscribers(): NewsletterSubscribers;
 	public function report(string $id): ?array;
+
+	public function get(string $endpoint);
+	public function post(string $endpoint);
 }
 
 // TODO: better caching
@@ -47,14 +51,44 @@ class Steady implements SteadyInterface
 		);
 	}
 
-	public function fetchDataFromApi(string $endpoint)
-	{
+
+	/**
+	 * Send request to Steady API $endpoint
+	 *
+	 * @param string $endpoint API_ENDPOINT constant
+	 * @param string $method request method GET|POST|PUT|PATCH|DELETE|HEAD, default: GET
+	 */
+	public function request(string $endpoint, string $method = 'GET'): Remote {
 		$url = self::API_ENDPOINT_BASE . $endpoint;
-		$options = ["headers" => ["X-Api-Key: " . $this->api_token]];
-		$request = Remote::get($url, $options);
-		if ($request->code() === 200) {
-			return $request->json();
+		$request = Remote::request($url, [
+			'method'  => $method,
+			'headers' => [
+				'X-Api-Key: ' . $this->api_token
+			]
+		]);
+
+		if ($request->code() !== 200) {
+				throw new Exception('An error occurred: ' . $request->code());
 		}
+		return $request->json();
+	}
+
+	/**
+	 * Send GET request to Steady API $endpoint
+	 *
+	 * @param string $endpoint API_ENDPOINT constant
+	 */
+	public function get(string $endpoint) {
+		return $this->request($endpoint);
+	}
+
+	/**
+	 * Send POST request to Steady API $endpoint
+	 *
+	 * @param string $endpoint API_ENDPOINT constant
+	 */
+	public function post($endpoint) {
+		return $this->request($endpoint, 'POST');
 	}
 
 	/**
@@ -66,7 +100,7 @@ class Steady implements SteadyInterface
 	public function getData(string $endpoint)
 	{
 		return $this->cache->getOrSet($endpoint, function () use ($endpoint) {
-			return self::fetchDataFromApi($endpoint);
+			return $this->get($endpoint);
 		});
 	}
 
