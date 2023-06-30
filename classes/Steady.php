@@ -17,6 +17,7 @@ interface SteadyInterface
 	public function subscriptions(): Subscriptions;
 	public function newsletter_subscribers(): NewsletterSubscribers;
 	public function report(string $id): ?array;
+	public function widget(): bool;
 
 	public function get(string $endpoint);
 	public function post(string $endpoint);
@@ -148,6 +149,8 @@ class Steady implements SteadyInterface
 
 	/**
 	 * Returns Report with $id
+	 * @param string $id revenue|newsletter_subscribers|members
+	 * @return ?array array of rendered report or null
 	 */
 	public function report(string $id): ?array {
 		return (
@@ -157,5 +160,13 @@ class Steady implements SteadyInterface
 					)
 			)
 		);
+	}
+
+	/**
+	 * Returns if widget is activated
+	 */
+	public function widget(): bool
+	{
+		return kirby()->option('soerenengels.steady.widget');
 	}
 }

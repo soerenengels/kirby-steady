@@ -38,9 +38,9 @@ function steady() {
 
 Kirby::plugin('soerenengels/steady', [
 	'blueprints' => [
-		'sections/stats/steady' => function($site) {
-			return require __DIR__ . '/blueprints/sections/stats/steady.php';
-		}
+		'blocks/steady_paywall' => __DIR__ . '/blueprints/blocks/steady/paywall.php',
+		'blocks/steady_plans' => __DIR__ . '/blueprints/blocks/steady/plans.php',
+		'sections/stats/steady' => __DIR__ . '/blueprints/sections/stats/steady.php'
 	],
 	'cache' => function () {
 		return [
@@ -48,19 +48,21 @@ Kirby::plugin('soerenengels/steady', [
 		];
 	},
 	'options' => [
-		'cache' => 'steady-api', // name for cache in /site/cache folder
-		'api-token' => '...', // your personal steady api token, get it from: https://steadyhq.com/backend/publications/default/integrations/api/edit when you are logged in
-		'widget' => false
+		'token' => '...', // REQUIRED Steady API token
+		'cache' => 'steady-api', // OPTIONAL Name of cache in `/site/cache`
+		'widget' => false // OPTIONAL indicate use of Steady Javascript widget
 	],
 	'siteMethods' => [
 		'steady' => function () {
-			return new Steady(option('soerenengels.steady.api-token'));
+			return new Steady(option('soerenengels.steady.token'));
 		}
 	],
 	'snippets' => [
-		'components/steady/plan' => require __DIR__ . '/snippets/components/steady/plan.php',
-		'components/steady/plans' => require __DIR__ . '/snippets/components/steady/plans.php',
-		'components/steady/widget' => require __DIR__ . '/snippets/components/steady/widget.php',
+		'components/steady/plan' => __DIR__ . '/snippets/components/steady/plan.php',
+		'components/steady/plans' => __DIR__ . '/snippets/components/steady/plans.php',
+		'components/steady/widget' => __DIR__ . '/snippets/components/steady/widget.php',
+		'blocks/steady_paywall' => __DIR__ . '/snippets/blocks/steady/paywall.php',
+		'blocks/steady_plans' => __DIR__ . '/snippets/blocks/steady/plans.php',
 	],
 	'translations' => [
 		'en' => require __DIR__ . '/translations/en.php',
