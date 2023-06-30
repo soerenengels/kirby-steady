@@ -6,17 +6,16 @@
 
 ## Features
 
-1. Display **Steady reports** in a Panel section
-2. Site method `$site->steady()` or helper `steady()` to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
-3. $block: **Steady Paywall**
-4. $snippet: **Login Button**
-5. $snippet: **Adblock detection**
+1. **Steady reports:** Stay up to date with Steady Reports in a Panel section
+2. **Access the API:** Site method `$site->steady()` or helper `steady()` to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
+3. **Show your Plans:** Add your Steady Plans as `$block` or `$snippet` to your Website.
+4. **Let your Content be worth it:** Add a Paywall `$block` to your articles or pages.
+5. **Adblock detection:** Activate Adblocker detection and display the Steady Adblock Overlay.
+6. **Member Login:** Let your members login to your Steady publication, to deactivate the paywall for them.
 
 ## Todo
 
-- fix-cache: Privacy by Design: do not save emails in cache if not necessary
-- feature-block-plans: Add plans via Block
-- fix-paywall: add link to steady edit page
+- fix-cache: Privacy by Design: Try to prevent saving unnecessary data in cache.
 - feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
 - feature-webhook: Webhook for new Steady Subscriptions
 
