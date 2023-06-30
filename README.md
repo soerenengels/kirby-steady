@@ -2,15 +2,15 @@
 
 # Kirby x Steady
 
-A Steady plugin for Kirby `Version 4 and later` to connect your Kirby instance to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
+**[Steady]() meets [Kirby]().** A Steady plugin for Kirby `Version 4 and later`. Connect your Kirby instance to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
 
 ## Features
 
-1. Display Steady reports in a Panel section
-2. Site method `$site->steady()` or helper `steady()` to request publication, plans, subscriptions and newsletter subscribers for use in templates, snippets or everywhere else
-3. $block: Steady Paywall
-4. $snippet: Login Button
-5. $snippet: Adblock detection
+1. Display **Steady reports** in a Panel section
+2. Site method `$site->steady()` or helper `steady()` to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
+3. $block: **Steady Paywall**
+4. $snippet: **Login Button**
+5. $snippet: **Adblock detection**
 
 ## Todo
 
@@ -35,9 +35,9 @@ You have following options in your `config.php`:
 return [
   'options' => [
     'soerenengels.steady' => [
-      'api-token' => '...',
+      'api-token' => '...', // REQUIRED. Your personal Steady API token. Get it from: https://steadyhq.com/backend/publications/default/integrations/api/edit when you are logged in
       'widget' => false, // change to true, if you want to use login, paywall, sticky button or adblock detection
-      'cache-name' => 'steady-api', // optional: change cache name
+      'cache' => 'steady-api', // OPTIONAL: Change cache name. Default: 'steady-api'
     ]
   ]
 ]

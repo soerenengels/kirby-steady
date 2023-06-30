@@ -43,7 +43,7 @@ class Steady implements SteadyInterface
 		public int $cache_expiry_in_minutes = 1440,
 	) {
 		$this->cache = kirby()->cache(
-			'steady-api'// TODO: option('soerenengels.kirby-steady.cache-name')
+			'steady-api'// TODO: option('soerenengels.kirby-steady.cache')
 		);
 	}
 

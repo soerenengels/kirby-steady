@@ -7,6 +7,7 @@
  * in Kirby CMS
  *
  * @package   Steady meets Kirby
+ * @version   1.0
  * @author    Sören Engels <mail@soerenengels.com>
  * @link      https://github.com/soerenengels/kirby-steady
  * @copyright Sören Engels
@@ -43,11 +44,11 @@ Kirby::plugin('soerenengels/steady', [
 	],
 	'cache' => function () {
 		return [
-			kirby()->option('soerenengels.steady.cache-name') => true
+			kirby()->option('soerenengels.steady.cache') => true
 		];
 	},
 	'options' => [
-		'cache-name' => 'steady-api', // name for cache in /site/cache folder
+		'cache' => 'steady-api', // name for cache in /site/cache folder
 		'api-token' => '...', // your personal steady api token, get it from: https://steadyhq.com/backend/publications/default/integrations/api/edit when you are logged in
 		'widget' => false
 	],
