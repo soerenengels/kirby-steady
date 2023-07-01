@@ -2,6 +2,7 @@
 namespace Soerenengels\Steady;
 use Soerenengels\Steady\Plan;
 use Soerenengels\Steady\User;
+use Soerenengels\Steady\Endpoint;
 use Kirby\Exception\Exception;
 use Kirby\Toolkit\Date;
 
@@ -165,13 +166,13 @@ class Subscription implements SubscriptionInterface
 
 		try {
 			// POST request to /subscriptions/:subscription_id/cancel
-			$request = $steady->post($steady::API_ENDPOINT_SUBSCRIPTIONS . $this->id . '/cancel');
+			$request = $steady->post(Endpoint::SUBSCRIPTIONS . $this->id . '/cancel');
 		} catch (Exception $e) {
 			// status code 442 means subscription can't be canceled (e.g. because it already is cancelled)
 			echo $e->getMessage();
 		}
 		// flush steady subscriptions cache
-		$steady->cache->remove($steady::API_ENDPOINT_SUBSCRIPTIONS);
+		$steady->cache->remove(Endpoint::SUBSCRIPTIONS);
 		return true;
 	} */
 
