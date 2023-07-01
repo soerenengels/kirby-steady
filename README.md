@@ -26,11 +26,14 @@ composer require soerenengels/kirby-steady
 
 ### Download
 
-[Download](https://github.com/soerenengels/kirby-steady/archive/refs/heads/main.zip), unzip and copy this repository to `/site/plugins/steady`. Follow the instructions in the [setup section](#setup).
+[Download](https://github.com/soerenengels/kirby-steady/archive/refs/heads/main.zip), unzip and copy this repository to `/site/plugins/kirby-steady`. Follow the instructions in the [setup section](#setup).
 
 ### Git
 
-...
+```bash
+git submodule add https://github.com/soerenengels/kirby-steady.git site/plugins/kirby-steady
+```
+
 
 ### Setup
 
@@ -86,7 +89,7 @@ Following reports are available:
 section:
   steady_section:
     type: stats
-    label: My Steady reports
+    label: My Custom Steady reports
     size: huge
     reports:
       - site.steady.report('members') # For total members report
@@ -100,8 +103,8 @@ You can simply add a **Steady: Plans** `$block` by adding it to your fieldsets.
 
 You can use the predefined Snippets in `/snippets/components/steady/*.php` to render following components:
 
-- All Plans
-- A single plan
+- All public Plans
+- A single plan by `$id`
 
 #### Example: Display all plans or a single plan via a `$snippet`.
 
@@ -169,8 +172,10 @@ snippet('components/steady/login', [
 ## Outlook
 
 - fix-cache: Privacy by Design: Try to prevent saving unnecessary data in cache.
+- feature-checkout Integrate Steady Checkout with checkout_url, checkout_snippet and checkout_thanks
 - feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
 - feature-webhook: Webhook for new Steady Subscriptions
+- SECURITY.md
 
 ## License
 
