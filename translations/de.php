@@ -24,5 +24,6 @@ return [
 	'soerenengels.steady.blueprints.plans.customize.false' => 'Alle Pakete',
 	'soerenengels.steady.blueprints.plans.customize.true' => 'Pakete anpassen',
 	'soerenengels.steady.blueprints.plans.choice.label' => 'Pakete auswählen',
-	'soerenengels.steady.blueprints.plans.choice.help' => 'Wähle die Pakete aus, die angezeigt werden sollen.'
+	'soerenengels.steady.blueprints.plans.choice.help' => 'Wähle die Pakete aus, die angezeigt werden sollen.',
+	'soerenengels.steady.snippets.plan.comparison' =>'Du sparst {saving} % im Vergleich zur monatlichen Abrechnung'
 ];

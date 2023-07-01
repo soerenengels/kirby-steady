@@ -24,5 +24,6 @@ return [
 	'soerenengels.steady.blueprints.plans.customize.false' => 'All plans',
 	'soerenengels.steady.blueprints.plans.customize.true' => 'Cutomize plans',
 	'soerenengels.steady.blueprints.plans.choice.label' => 'Choose the plans',
-	'soerenengels.steady.blueprints.plans.choice.help' => 'Choose, which plan to display.'
+	'soerenengels.steady.blueprints.plans.choice.help' => 'Choose, which plan to display.',
+	'soerenengels.steady.snippets.plan.comparison' =>'You save {saving} % compared to monthly billing.'
 ];
