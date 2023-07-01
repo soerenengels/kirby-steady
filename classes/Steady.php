@@ -9,6 +9,7 @@ use Soerenengels\Steady\NewsletterSubscribers;
 use Kirby\Cache\Cache;
 use Kirby\Http\Remote;
 use Kirby\Exception\Exception;
+use Kirby\Cms\App as Kirby;
 
 interface SteadyInterface
 {
@@ -19,8 +20,20 @@ interface SteadyInterface
 	public function report(string $id): ?array;
 	public function widget(): bool;
 
-	public function get(string $endpoint);
-	public function post(string $endpoint);
+	public function get(Endpoint $endpoint);
+	public function post(Endpoint $endpoint);
+}
+
+/**
+ * Endpoint Enum.
+ * BASE | PUBLICATION | PLANS | SUBSCRIPTIONS | NEWSLETTER_SUBSCRIBERS
+ */
+enum Endpoint: string {
+	case BASE = 'https://steadyhq.com/api/v1/';
+	case PUBLICATION = 'publication';
+	case PLANS = 'plans';
+	case SUBSCRIPTIONS = 'subscriptions';
+	case NEWSLETTER_SUBSCRIBERS = 'newsletter_subscribers';
 }
 
 // TODO: better caching
@@ -36,19 +49,15 @@ interface SteadyInterface
  */
 class Steady implements SteadyInterface
 {
-	const API_ENDPOINT_BASE = 'https://steadyhq.com/api/v1/';
-	const API_ENDPOINT_PUBLICATION = 'publication';
-	const API_ENDPOINT_PLANS = 'plans';
-	const API_ENDPOINT_SUBSCRIPTIONS = 'subscriptions';
-	const API_ENDPOINT_NEWSLETTER_SUBSCRIBERS = 'newsletter_subscribers';
 	protected Cache $cache;
 
 	public function __construct(
 		protected string $api_token,
 		public int $cache_expiry_in_minutes = 1440,
 	) {
+		// TODO: option('soerenengels.kirby-steady.cache')
 		$this->cache = kirby()->cache(
-			'steady-api'// TODO: option('soerenengels.kirby-steady.cache')
+			'steady-api'
 		);
 	}
 
@@ -56,11 +65,11 @@ class Steady implements SteadyInterface
 	/**
 	 * Send request to Steady API $endpoint
 	 *
-	 * @param string $endpoint API_ENDPOINT constant
+	 * @param Endpoint $endpoint Endpoint Enum ::PUBLICATION | ::PLANS | ::SUBSCRIPTIONS | ::NEWSLETTER_SUBSCRIBERS
 	 * @param string $method request method GET|POST|PUT|PATCH|DELETE|HEAD, default: GET
 	 */
-	public function request(string $endpoint, string $method = 'GET'): Remote {
-		$url = self::API_ENDPOINT_BASE . $endpoint;
+	public function request(Endpoint $endpoint, string $method = 'GET') {
+		$url = Endpoint::BASE->value . $endpoint->value;
 		$request = Remote::request($url, [
 			'method'  => $method,
 			'headers' => [
@@ -77,18 +86,18 @@ class Steady implements SteadyInterface
 	/**
 	 * Send GET request to Steady API $endpoint
 	 *
-	 * @param string $endpoint API_ENDPOINT constant
+	 * @param Endpoint $endpoint ENDPOINT Enum
 	 */
-	public function get(string $endpoint) {
+	public function get(Endpoint $endpoint) {
 		return $this->request($endpoint);
 	}
 
 	/**
 	 * Send POST request to Steady API $endpoint
 	 *
-	 * @param string $endpoint API_ENDPOINT constant
+	 * @param Endpoint $endpoint ENDPOINT Enum
 	 */
-	public function post($endpoint) {
+	public function post(Endpoint $endpoint) {
 		return $this->request($endpoint, 'POST');
 	}
 
@@ -96,11 +105,11 @@ class Steady implements SteadyInterface
 	 * Get data from cache or set it via
 	 * callback function
 	 *
-	 * @param string $endpoint API_ENDPOINT constant
+	 * @param Endpoint $endpoint ENDPOINT Enum
 	 */
-	public function getData(string $endpoint)
+	public function getData(Endpoint $endpoint)
 	{
-		return $this->cache->getOrSet($endpoint, function () use ($endpoint) {
+		return $this->cache->getOrSet($endpoint->value, function () use ($endpoint) {
 			return $this->get($endpoint);
 		});
 	}
@@ -111,7 +120,7 @@ class Steady implements SteadyInterface
 	 */
 	public function publication(): Publication
 	{
-		$data = self::getData(self::API_ENDPOINT_PUBLICATION)['data'];
+		$data = self::getData(Endpoint::PUBLICATION)['data'];
 		$publication = new Publication($data);
 		return $publication;
 	}
@@ -122,7 +131,7 @@ class Steady implements SteadyInterface
 	 */
 	public function plans(): Plans
 	{
-		$data = self::getData(self::API_ENDPOINT_PLANS)['data'];
+		$data = self::getData(Endpoint::PLANS)['data'];
 		return new Plans($data);
 	}
 
@@ -132,7 +141,7 @@ class Steady implements SteadyInterface
 	 */
 	public function subscriptions(): Subscriptions
 	{
-		$data = $this->getData(self::API_ENDPOINT_SUBSCRIPTIONS);
+		$data = $this->getData(Endpoint::SUBSCRIPTIONS);
 		return $data;
 		return new Subscriptions($data);
 	}
@@ -143,7 +152,7 @@ class Steady implements SteadyInterface
 	 */
 	public function newsletter_subscribers(): NewsletterSubscribers
 	{
-		$data = $this->getData(self::API_ENDPOINT_NEWSLETTER_SUBSCRIBERS)['data'];
+		$data = $this->getData(Endpoint::NEWSLETTER_SUBSCRIBERS)['data'];
 		return new NewsletterSubscribers($data);
 	}
 
@@ -167,6 +176,10 @@ class Steady implements SteadyInterface
 	 */
 	public function widget(): bool
 	{
+		// TODO: paywall activated?
+		// TODO: adblock activated?
+		// TODO: isActive
+		// TODO: Class Widget
 		return kirby()->option('soerenengels.steady.widget');
 	}
 }
