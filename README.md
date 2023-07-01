@@ -177,6 +177,11 @@ snippet('components/steady/login', [
 - feature-webhook: Webhook for new Steady Subscriptions
 - SECURITY.md
 
+## Available Translations
+
+- English
+- German
+
 ## License
 
 MIT
