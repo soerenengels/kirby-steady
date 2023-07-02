@@ -29,7 +29,7 @@ load([
 	'Soerenengels\\Steady\\Plan' => __DIR__ . '/classes/Steady/Plan.php',
 	'Soerenengels\\Steady\\Subscription' => __DIR__ . '/classes/Steady/Subscription.php',
 	'Soerenengels\\Steady\\Subscriptions' => __DIR__ . '/classes/Steady/Subscriptions.php',
-	'Soerenengels\\Steady\\Steady' => __DIR__ . '/classes/Steady.php',
+	'Soerenengels\\Steady\\Steady' => __DIR__ . '/classes/Steady/Steady.php',
 ]);
 
 function steady() {
