@@ -2,7 +2,7 @@
 
 # Kirby x Steady
 
-**[Steady](https://steadyhq.com/) meets [Kirby](https://getkirby.com/).** A Steady plugin for Kirby `Version 4 and later`. Connect your Kirby instance to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
+**[Kirby](https://getkirby.com/) meets [Steady](https://steadyhq.com/).** A plugin for Kirby `Version 4 and later` with `php >= 8.1`. Connect your Kirby site to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
 
 ## Features
 
@@ -33,7 +33,6 @@ composer require soerenengels/kirby-steady
 ```bash
 git submodule add https://github.com/soerenengels/kirby-steady.git site/plugins/kirby-steady
 ```
-
 
 ### Setup
 
@@ -106,7 +105,21 @@ You can use the predefined Snippets in `/snippets/components/steady/*.php` to re
 - All public Plans
 - A single plan by `$id`
 
-#### Example: Display all plans or a single plan via a `$snippet`.
+#### Example: Add Plans $block to your fieldsets
+
+```yml
+sections:
+  content:
+    fields:
+      text:
+        # ...
+        type: blocks
+        fieldsets:
+          - steady_plans
+          - ...
+```
+
+#### Example: Display all plans or a single plan via a `$snippet`
 
 ```php
 // Display all plans
@@ -124,7 +137,7 @@ snippet('components/steady/plan', [
 
 #### Style your plans
 
-The styling of the plans is up to you. For the HTML markup structure and classes see [`/snippets/components/steady/plans.php`]() and [`/snippets/components/steady/plan.php`](). If you want to change the markup of the plans, you can overwrite those components by creating a new file in `/site/snippets/components/steady/{name-of-file-you-want-to-overwrite}.php`.
+The styling of the plans is up to you. For the HTML markup structure and classes see [`/snippets/components/steady/plans.php`](https://github.com/soerenengels/kirby-steady/blob/main/snippets/components/steady/plans.php) and [`/snippets/components/steady/plan.php`](https://github.com/soerenengels/kirby-steady/blob/main/snippets/components/steady/plan.php). If you want to change the markup of the plans, you can overwrite those components by creating a new file in `/site/snippets/components/steady/{name-of-file-you-want-to-overwrite}.php`.
 
 ### Steady-Paywall
 
@@ -140,7 +153,7 @@ sections:
         # ...
         type: blocks
         fieldsets:
-          - steady/paywall
+          - steady_paywall
           - ...
 ```
 
@@ -157,13 +170,13 @@ Visitors, who have not logged in on your website already, see this button. After
 #### Example: Add the Steady Login button to your Website
 
 ```php
-// Default (size: medium, language: en)
+// Default: $data = ['size' => 'medium', 'language' => 'en']
 snippet('components/steady/login');
 
 // Custom
 snippet('components/steady/login', [
   'size' => 'small',
-  'language' => 'fr'
+  'language' => 'de'
 ]);
 ```
 
