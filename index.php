@@ -30,9 +30,12 @@ load([
 	'Soerenengels\\Steady\\Subscription' => __DIR__ . '/classes/Steady/Subscription.php',
 	'Soerenengels\\Steady\\Subscriptions' => __DIR__ . '/classes/Steady/Subscriptions.php',
 	'Soerenengels\\Steady\\Steady' => __DIR__ . '/classes/Steady/Steady.php',
+	'Soerenengels\\Steady\\Widgets' => __DIR__ . '/classes/Steady/Widgets.php',
+	'Soerenengels\\Steady\\Widget' => __DIR__ . '/classes/Steady/Widget.php',
+	'Soerenengels\\Steady\\WidgetType' => __DIR__ . '/classes/Steady/WidgetType.php',
 ]);
 
-function steady() {
+function steady(): Steady {
 	return site()->steady();
 }
 
@@ -53,7 +56,7 @@ Kirby::plugin('soerenengels/steady', [
 		'widget' => false // OPTIONAL indicate use of Steady Javascript widget
 	],
 	'siteMethods' => [
-		'steady' => function () {
+		'steady' => function (): Steady {
 			return new Steady(option('soerenengels.steady.token'));
 		}
 	],

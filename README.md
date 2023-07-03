@@ -49,8 +49,8 @@ return [
       'token' => '...',
 
       // OPTIONAL
-      // change to true, if you want to use login, paywall, sticky button or adblock detection
-      // if true, you also need to add the Steady::widget() to your websites head
+      // Change to true, if you want to use login button, paywall, floating button or adblock detection.
+      // If set to true, you also need to add the snippet('components/steady/widget') to your websites head
       'widget' => false,
       // If you want to, you can change the name of the cache, where the api requests will be saved
       // Default: 'steady-api'
@@ -64,14 +64,18 @@ return [
 
 ### Site method: $site->steady()
 
-The site method `$site->steady()` or the Steady helper function `steady()` give you access to the [Steady Class](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady.php) and its following methods:
+The site method `$site->steady()` or the Steady helper function `steady()` give you access to the [`Steady` Class](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady.php) and its following methods:
 
 - `->publication()`
 - `->plans()`
 - `->subscriptions()`
 - `->newsletter_subscribers()`
 - `->report($id)`
-- `->widget()`
+- `->widgets()`
+
+#### `$steady->widgets()`
+
+The `widgets()` method gives you access to an Widgets object. By calling `->adblock()`, `->floatingButton()` or `paywall()` you have further access to the `isActive()` method. It returns a boolean, if the plugins 'widget' option is set to true AND the widget is activated in the Steady backend.
 
 ### Panel: Steady-Reports
 
@@ -91,9 +95,12 @@ section:
     label: My Custom Steady reports
     size: huge
     reports:
-      - site.steady.report('members') # For total members report
-      - site.steady.report('newsletter_subscribers') # For newsletter subscribers report
-      - site.steady.report('revenue') # For monthly revenue report
+      # For total members report
+      - site.steady.report('members')
+      # For newsletter subscribers report
+      - site.steady.report('newsletter_subscribers')
+      # For monthly revenue report
+      - site.steady.report('revenue')
 ```
 
 ### $block Plans
@@ -141,7 +148,7 @@ The styling of the plans is up to you. For the HTML markup structure and classes
 
 ### Steady-Paywall
 
-To use the Steady Paywall block, you need to **activate it** in your Steady settings (Integrations > Steady Paywall), **add it** to your blocks fieldsets **and integrate** the Steady Javascript Widget.
+To use the Steady Paywall block, you need to **activate it** in your Steady settings (Integrations > Steady Paywall), **add it** to your blocks fieldsets **and integrate** the Steady Javascript Widget in your websites `<head>...</head>`.
 
 #### Example: Add Paywall to your blocks fieldsets
 
@@ -155,6 +162,13 @@ sections:
         fieldsets:
           - steady_paywall
           - ...
+```
+
+```php
+// /site/config/config.php
+return [
+  'soerenengels.kirby-steady.widget' => true,
+]
 ```
 
 ### Adblock detection

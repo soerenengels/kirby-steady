@@ -5,6 +5,6 @@
  * Füge dieses Snippet in den <head>...</head>
  * deines HTML-Dokuments ein.
  */
-if (steady()->widget() == false) return;
+if (!steady()->widgets()->enabled()) return;
 ?>
 <script type="text/javascript" src="<?= steady()->publication()->js_widget_url ?>"></script>

@@ -6,6 +6,9 @@ use Soerenengels\Steady\Publication;
 use Soerenengels\Steady\Plans;
 use Soerenengels\Steady\Subscriptions;
 use Soerenengels\Steady\NewsletterSubscribers;
+use Soerenengels\Steady\Widgets;
+use Soerenengels\Steady\Widget;
+use Soerenengels\Steady\WidgetType;
 use Kirby\Cache\Cache;
 use Kirby\Http\Remote;
 use Kirby\Exception\Exception;
@@ -18,7 +21,7 @@ interface SteadyInterface
 	public function subscriptions(): Subscriptions;
 	public function newsletter_subscribers(): NewsletterSubscribers;
 	public function report(string $id): ?array;
-	public function widget(): bool;
+	public function widgets(WidgetType $type): Widget|Widgets;
 
 	public function get(Endpoint $endpoint);
 	public function post(Endpoint $endpoint);
@@ -172,14 +175,14 @@ class Steady implements SteadyInterface
 	}
 
 	/**
-	 * Returns if widget is activated
+	 * Widgets method
+	 *
+	 * Returns Widgets object or specific Widget
 	 */
-	public function widget(): bool
+	public function widgets(?WidgetType $type = null): Widget|Widgets
 	{
-		// TODO: paywall activated?
-		// TODO: adblock activated?
-		// TODO: isActive
-		// TODO: Class Widget
-		return kirby()->option('soerenengels.steady.widget');
+		if (!$type) return new Widgets();
+		$widget = $type->value;
+		return $this->widgets()->$widget();
 	}
 }
