@@ -40,6 +40,7 @@ function steady(): Steady {
 }
 
 Kirby::plugin('soerenengels/steady', [
+	'areas' => require __DIR__ . '/areas/steady.php',
 	'blueprints' => [
 		'blocks/steady_paywall' => __DIR__ . '/blueprints/blocks/steady/paywall.php',
 		'blocks/steady_plans' => __DIR__ . '/blueprints/blocks/steady/plans.php',
