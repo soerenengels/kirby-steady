@@ -24,7 +24,7 @@ interface SteadyInterface
 	public function report(string $id): ?array;
 	public function widgets(WidgetType $type): Widget|Widgets;
 
-	public function get(Endpoint $endpoint);
+	public function get(Endpoint $endpoint,?array $headers);
 	public function post(Endpoint $endpoint);
 }
 
@@ -87,19 +87,40 @@ class Steady implements SteadyInterface
 	/**
 	 * Send GET request to Steady API $endpoint
 	 *
-	 * @param Endpoint $endpoint ENDPOINT Enum
+	 * @param Endpoint $endpoint Endpoint Enum
+	 * @param ?array $headers optional for REST request
 	 */
-	public function get(Endpoint $endpoint) {
-		return $this->request($endpoint);
+	public function get(
+		Endpoint $endpoint,
+		?array $headers = null
+	): Remote
+	{
+		return $this->request(
+			$endpoint,
+			'GET',
+			$headers
+		);
 	}
 
 	/**
 	 * Send POST request to Steady API $endpoint
 	 *
 	 * @param Endpoint $endpoint ENDPOINT Enum
+	 * @param ?array $data data array to send with request
+	 * @param ?array $headers headers array
 	 */
-	public function post(Endpoint $endpoint) {
-		return $this->request($endpoint, 'POST');
+	public function post(
+		Endpoint $endpoint,
+		?array $data = null,
+		?array $headers = null
+	): Remote
+	{
+		return $this->request(
+			$endpoint,
+			'POST',
+			$headers,
+			$data
+		);
 	}
 
 	/**
