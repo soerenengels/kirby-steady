@@ -33,9 +33,11 @@ load([
 	'Soerenengels\\Steady\\Widgets' => __DIR__ . '/classes/Steady/Widgets.php',
 	'Soerenengels\\Steady\\Widget' => __DIR__ . '/classes/Steady/Widget.php',
 	'Soerenengels\\Steady\\WidgetType' => __DIR__ . '/classes/Steady/WidgetType.php',
+	'Soerenengels\\Steady\\Endpoint' => __DIR__ . '/classes/Steady/Endpoint.php',
 ]);
 
-function steady(): Steady {
+function steady(): Steady
+{
 	return site()->steady();
 }
 
