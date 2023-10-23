@@ -9,6 +9,7 @@ use Soerenengels\Steady\NewsletterSubscribers;
 use Soerenengels\Steady\Widgets;
 use Soerenengels\Steady\Widget;
 use Soerenengels\Steady\WidgetType;
+use Soerenengels\Steady\Endpoint;
 use Kirby\Cache\Cache;
 use Kirby\Http\Remote;
 use Kirby\Exception\Exception;
@@ -25,18 +26,6 @@ interface SteadyInterface
 
 	public function get(Endpoint $endpoint);
 	public function post(Endpoint $endpoint);
-}
-
-/**
- * Endpoint Enum.
- * BASE | PUBLICATION | PLANS | SUBSCRIPTIONS | NEWSLETTER_SUBSCRIBERS
- */
-enum Endpoint: string {
-	case BASE = 'https://steadyhq.com/api/v1/';
-	case PUBLICATION = 'publication';
-	case PLANS = 'plans';
-	case SUBSCRIPTIONS = 'subscriptions';
-	case NEWSLETTER_SUBSCRIBERS = 'newsletter_subscribers';
 }
 
 // TODO: better caching
@@ -71,14 +60,23 @@ class Steady implements SteadyInterface
 	 * @param Endpoint $endpoint Endpoint Enum ::PUBLICATION | ::PLANS | ::SUBSCRIPTIONS | ::NEWSLETTER_SUBSCRIBERS
 	 * @param string $method request method GET|POST|PUT|PATCH|DELETE|HEAD, default: GET
 	 */
-	public function request(Endpoint $endpoint, string $method = 'GET') {
-		$url = Endpoint::BASE->value . $endpoint->value;
-		$request = Remote::request($url, [
-			'method'  => $method,
-			'headers' => [
-				'X-Api-Key: ' . $this->api_token
+	public function request(
+		Endpoint $endpoint,
+		string $method = 'GET',
+		?array $headers = null,
+		array $data = []
+	) {
+		$headers = $headers ?? [
+			'X-Api-Key: ' . $this->api_token
+		];
+		$request = Remote::request(
+			$endpoint->url(),
+			[
+				'method'  => $method,
+				'headers' => $headers,
+				'data' => $data
 			]
-		]);
+		);
 
 		if ($request->code() !== 200) {
 				throw new Exception('An error occurred: ' . $request->code());
