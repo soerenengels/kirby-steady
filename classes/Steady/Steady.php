@@ -46,9 +46,11 @@ class Steady implements SteadyInterface
 	public function __construct(
 		protected string $api_token,
 		public int $cache_expiry_in_minutes = 1440,
+		private ?Kirby $kirby = null
 	) {
 		// TODO: option('soerenengels.kirby-steady.cache')
-		$this->cache = kirby()->cache(
+		$this->kirby = $kirby ?? kirby();
+		$this->cache = $this->kirby->cache(
 			'steady-api'
 		);
 	}
@@ -79,7 +81,7 @@ class Steady implements SteadyInterface
 		);
 
 		if ($request->code() !== 200) {
-				throw new Exception('An error occurred: ' . $request->code());
+			throw new Exception('An error occurred: ' . $request->code());
 		}
 		return $request->json();
 	}
@@ -183,14 +185,15 @@ class Steady implements SteadyInterface
 	 * @param string $id revenue|newsletter_subscribers|members
 	 * @return ?array array of rendered report or null
 	 */
-	public function report(string $id): ?array {
-		return (
-			$id == 'revenue' ? (new MonthlyRevenueReport())->render() : (
-					$id == 'newsletter_subscribers' ? (new NewsletterSubscribersReport())->render() : (
-							$id == 'members' ? (new MembersReport())->render() : null
-					)
-			)
-		);
+	public function report(string $id): ?array
+	{
+		$report = match ($id) {
+			'revenue' => new MonthlyRevenueReport(),
+			'newsletter_subscribers' => new NewsletterSubscribersReport(),
+			'members' => new MembersReport(),
+			default => null
+		};
+		return $report?->render();
 	}
 
 	/**
