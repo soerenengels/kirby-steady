@@ -33,6 +33,7 @@ load([
 	'Soerenengels\\Steady\\Widgets' => __DIR__ . '/classes/Steady/Widgets.php',
 	'Soerenengels\\Steady\\Widget' => __DIR__ . '/classes/Steady/Widget.php',
 	'Soerenengels\\Steady\\WidgetType' => __DIR__ . '/classes/Steady/WidgetType.php',
+	'Soerenengels\\Steady\\AccessToken' => __DIR__ . '/classes/Steady/AccessToken.php',
 	'Soerenengels\\Steady\\Endpoint' => __DIR__ . '/classes/Steady/Endpoint.php',
 ]);
 
@@ -56,7 +57,13 @@ Kirby::plugin('soerenengels/steady', [
 	'options' => [
 		'token' => '...', // REQUIRED Steady API token
 		'cache' => 'steady-api', // OPTIONAL Name of cache in `/site/cache`
-		'widget' => false // OPTIONAL indicate use of Steady Javascript widget
+		'widget' => false, // OPTIONAL indicate use of Steady Javascript widget
+		'oauth' => [
+			'client_id' => '...', //
+			'client_secret' => '...',
+			'redirect_uri' => '...',
+			'after-login' => 'url'
+		]
 	],
 	'siteMethods' => [
 		'steady' => function (): Steady {
@@ -73,5 +80,29 @@ Kirby::plugin('soerenengels/steady', [
 	'translations' => [
 		'en' => require __DIR__ . '/translations/en.php',
 		'de' => require __DIR__ . '/translations/de.php'
+	],
+	'routes' => function () {
+		if (!kirby()->option('soerenengels.steady.oauth.after-login')) return null;
+		return [
+			[
+				'pattern' => 'oauth/steady/callback',
+				'action'  => function (): void {
+					steady()
+						->oauth()
+						->processCallback(
+							get('state'),
+							get('code')
+						);
+				},
+			],
+		];
+	},
+	'hooks' => [
+		'route:before' => function (Kirby\Http\Route $route, string $path, string $method) {
+			// your code goes here
+			// 3. Use Request Interceptor to check Cookie for every requests
+			// 4. If Cookie is expiring - Use Kirby users Refresh Token to generate new Access Token - Replace the Cookie
+			// 5. If Refresh Token also expired - Remove Cookie - Redirect user to Login Page
+		}
 	]
 ]);

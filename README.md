@@ -196,13 +196,28 @@ snippet('components/steady/login', [
 
 **Warning:** Do not use the Steady login button, if you implement the OAuth2-Flow manually. The button is programmed, that it works together with the Steady Javascript widget and shall not be used with a manual OAuth flow, as Steady states.
 
+## OAuth
+
+The `$steady->oauth()` method enables you to create an OAuth flow with Steady. First of all you have to set the plugins oauth options.
+
+### The Flow
+
+0. Set plugins options with `client-id`, `client-secret`, and `redirect-uri` as you find in the Steady Backend.
+1. Create Link for your user to let them authorize your Application `$steady->oauth()->createAuthorizationLink()`
+2. When the user clicks the link, they will be redirected to the Steady Website to grant your application access. After that, the user gets redirected to the `redirect_uri`.
+3. The callback will be processed in the plugins callback route. With the received authentication an access token is requested and saved.
+4. Now you have the oportunity to get the current user `$steady->oauth()->user()` or the current users subscription `$steady->oauth()->subscription()` data.
+
+### Privacy
+
+If you use the OAuth feautures you have to tell your users about storing cookies at their computers.
+
 ## Outlook
 
 - fix-cache: Privacy by Design: Try to prevent saving unnecessary data in cache.
 - feature-checkout Integrate Steady Checkout with checkout_url, checkout_snippet and checkout_thanks
 - feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
 - feature-webhook: Webhook for new Steady Subscriptions
-- SECURITY.md
 
 ## Available Translations
 

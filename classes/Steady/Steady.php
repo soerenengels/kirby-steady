@@ -207,4 +207,23 @@ class Steady implements SteadyInterface
 		$widget = $type->value;
 		return $this->widgets()->$widget();
 	}
+
+	public function oauth(): ?OAuth {
+		$id = $this->kirby->option('soerenengels.kirby-steady.oauth.client-id');
+		$secret = $this->kirby->option('soerenengels.kirby-steady.oauth.client-secret');
+		$redirect_uri = $this->kirby->option('soerenengels.kirby-steady.oauth.redirect-uri');
+
+		if (
+			!$id ||
+			!$secret ||
+			!$redirect_uri
+		) return null; // TODO: and throw exception
+
+		return new OAuth(
+			$id,
+			$secret,
+			$redirect_uri,
+			$this
+		);
+	}
 }
