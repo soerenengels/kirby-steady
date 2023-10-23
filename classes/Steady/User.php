@@ -2,6 +2,13 @@
 
 namespace Soerenengels\Steady;
 
+interface UserInterface {
+	public function id();
+	public function type();
+	public function firstName();
+	public function lastName();
+}
+
 /**
  * User Class
  * as object included in Steady API response
