@@ -6,26 +6,16 @@ use Soerenengels\Steady\WidgetType;
 use Soerenengels\Steady\Widget;
 use Kirby\Http\Remote;
 
-interface WidgetsInterface
-{
-	public static function enabled(): bool;
-
-	public function list(): array;
-	public function adblock(): Widget;
-	public function floatingButton(): Widget;
-	public function paywall(): Widget;
-}
-
 /**
  * Give access to the Widgets via methods
  *
- * @method adblock
- * @method floatingButton
- * @method paywall
- * @method list
- * @method enabled
+ * @method Widget adblock() returns Widget Object
+ * @method Widget floatingButton() returns Widget Object
+ * @method Widget paywall() returns Widget Object
+ * @method array list(): Widget returns Widget Object
+ * @method bool enabled() returns widget config value
  */
-class Widgets implements WidgetsInterface
+class Widgets
 {
 
 	/** @var array $widgets array of Widget objects */
