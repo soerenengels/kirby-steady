@@ -14,8 +14,8 @@ foreach ($published_plans->list() as $plan) {
 	];
 }
 return [
-	'name' => 'Steady: ' . $publication->title . ' ' . t('soerenengels.steady.blueprints.plans.name'),
-	'icon' => '📣',
+	'name' => 'Steady: ' . t('soerenengels.steady.blueprints.plans.name'),
+	'icon' => 'cart',
 	'wysiwyg' => true,
 	'preview' => 'fields',
 	'fields' => [
