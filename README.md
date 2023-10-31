@@ -2,16 +2,17 @@
 
 # Kirby x Steady
 
-**[Kirby](https://getkirby.com/) meets [Steady](https://steadyhq.com/).** A plugin for Kirby `Version 4 and later` with `php >= 8.1`. Connect your Kirby site to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
+**[Kirby](https://getkirby.com/) meets [Steady](https://steadyhq.com/).** A plugin for Kirby `Version 4 and later` and `php >= 8.2`. Connect your Kirby site to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
 
 ## Features
 
-1. **Steady reports:** Stay up to date with Steady Reports in a Panel section
-2. **Access the API:** Site method `$site->steady()` or `steady()`-helper to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
-3. **Show your Plans:** Add your Steady Plans as `$block` or `$snippet` to your Website.
+1. **Access the API:** Site method `$site->steady()` or `steady()`-helper to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
+2. **Steady reports:** Stay up to date with Steady Reports in a Panel section
+3. **Display your Plans:** Add your Steady Plans as `$block` or `$snippet` to your Website.
 4. **Let your Content be worth it:** Add a Paywall `$block` to your articles or pages.
 5. **Adblock detection:** Activate Adblocker detection and display the Steady Adblock Overlay.
 6. **Member Login:** Let your members login to your Steady publication, to deactivate the paywall for them.
+7. **Hidden Steady Area:** Simple overview of Steady stats, Plugin configuration status and Plugin docs.
 
 ## Installation
 
@@ -36,25 +37,29 @@ git submodule add https://github.com/soerenengels/kirby-steady.git site/plugins/
 
 ### Setup
 
-For this plugin to function, you have to add your [REST API KEY](https://steadyhq.com/backend/publications/default/integrations/api/edit) to your configs token option. It is the only required option in your configs.
+To use this plugin, add your required [REST API-Key](https://steadyhq.com/backend/publications/default/integrations/api/edit) in your `config.php`. Keep the key secure.
+
+```php
+return [
+  // ...
+  'options' => [
+    'soerenengels.steady' => [
+      'token' => '...', // Instead of ... use your API key
+    ]
+  ]
+]
+```
+
 You also have following options in your `config.php`:
 
 ```php
 return [
   'options' => [
     'soerenengels.steady' => [
-      // REQUIRED 
-      // Your private Steady REST API KEY
-      // Get it from https://steadyhq.com/backend/publications/default/integrations/api/edit
-      'token' => '...',
-
       // OPTIONAL
       // Change to true, if you want to use login button, paywall, floating button or adblock detection.
       // If set to true, you also need to add the snippet('components/steady/widget') to your websites head
-      'widget' => false,
-      // If you want to, you can change the name of the cache, where the api requests will be saved
-      // Default: 'steady-api'
-      'cache' => 'steady-api',
+      'widget' => false
     ]
   ]
 ]
@@ -76,6 +81,12 @@ The site method `$site->steady()` or the Steady helper function `steady()` give 
 #### `$steady->widgets()`
 
 The `widgets()` method gives you access to an Widgets object. By calling `->adblock()`, `->floatingButton()` or `paywall()` you have further access to the `isActive()` method. It returns a boolean, if the plugins 'widget' option is set to true AND the widget is activated in the Steady backend.
+
+### Panel: Steady-Area
+
+<!-- ADD IMAGE: GIF -->
+
+Behind the panel route `/panel/steady/stats` you'll find the hidden Steady panel area. In three tabs you find the available stats about you Steady publication, the status of the widgets in Steady backend aswell as the plugins config setting and an overview over the `$steady`-API and its available methods.
 
 ### Panel: Steady-Reports
 
@@ -148,7 +159,7 @@ The styling of the plans is up to you. For the HTML markup structure and classes
 
 ### Steady-Paywall
 
-To use the Steady Paywall block, you need to **activate it** in your Steady settings (Integrations > Steady Paywall), **add it** to your blocks fieldsets **and integrate** the Steady Javascript Widget in your websites `<head>...</head>`.
+To use the Steady Paywall block, you need to **activate it** (1) in your Publications Steady settings (Integrations > Steady Paywall), **add it** (2) to your blocks fieldsets **and integrate** (3) the Steady Javascript Widget in your websites `<head>...</head>`.
 
 #### Example: Add Paywall to your blocks fieldsets
 
@@ -202,7 +213,6 @@ snippet('components/steady/login', [
 - feature-checkout Integrate Steady Checkout with checkout_url, checkout_snippet and checkout_thanks
 - feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
 - feature-webhook: Webhook for new Steady Subscriptions
-- SECURITY.md
 
 ## Available Translations
 
