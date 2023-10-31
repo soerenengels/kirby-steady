@@ -1,0 +1,24 @@
+{
+  "name": "kirby-steady",
+  "version": "0.2",
+  "description": "Kirby CMS meets Steady",
+  "scripts": {
+    "dev": "npx -y kirbyup@latest src/index.js --watch",
+    "serve": "npx -y kirbyup@latest serve src/index.js",
+    "build": "npx -y kirbyup@latest src/index.js"
+    },
+  "posthtml": {
+    "recognizeSelfClosing": true
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.1",
+    "@vue/component-compiler-utils": "^3.1.2",
+    "cssnano": "^4.1.10",
+    "parcel-bundler": "^1.12.4",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "dependencies": {
+    "vue": "^2.6.11",
+    "vue-hot-reload-api": "^2.3.4"
+  }
+}
