@@ -8,6 +8,7 @@ use Soerenengels\Steady\Subscriptions;
 use Soerenengels\Steady\Widgets;
 use Soerenengels\Steady\Widget;
 use Soerenengels\Steady\WidgetType;
+use Soerenengels\Steady\Endpoint;
 use Kirby\Cache\Cache;
 use Kirby\Http\Remote;
 use Kirby\Exception\Exception;
@@ -24,18 +25,6 @@ interface SteadyInterface
 
 	public function get(Endpoint $endpoint);
 	public function post(Endpoint $endpoint);
-}
-
-/**
- * Endpoint Enum.
- * BASE | PUBLICATION | PLANS | SUBSCRIPTIONS | NEWSLETTER_SUBSCRIBERS
- */
-enum Endpoint: string {
-	case BASE = 'https://steadyhq.com/api/v1/';
-	case PUBLICATION = 'publication';
-	case PLANS = 'plans';
-	case SUBSCRIPTIONS = 'subscriptions';
-	case NEWSLETTER_SUBSCRIBERS = 'newsletter_subscribers';
 }
 
 // TODO: better caching
