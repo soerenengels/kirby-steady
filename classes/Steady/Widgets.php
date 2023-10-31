@@ -9,6 +9,7 @@ use Kirby\Http\Remote;
 /**
  * Give access to the Widgets via methods
  *
+ * @param Steady $steady instance of Steady Class
  * @method Widget adblock() returns Widget Object
  * @method Widget floatingButton() returns Widget Object
  * @method Widget paywall() returns Widget Object
@@ -21,59 +22,76 @@ class Widgets
 	/** @var array $widgets array of Widget objects */
 	private array $widgets = [];
 
-	public function __construct()
+	/** @var Steady $steady Steady parent instance */
+	private Steady $steady;
+
+	/**
+	 * @param Steady $steady
+	 */
+	public function __construct($steady)
 	{
-		// Create a Widget in $widgets array for each WidgetType
-		foreach (WidgetType::cases() as $type) {
-			$this->widgets[] = [
-				$type->value => new Widget($type, $this)
-			];
-		}
+		$this->steady = $steady ?? steady();
+		// Create array of Widgets from WidgetType
+		$this->widgets = array_map(
+				function(WidgetType $type) {
+					return new Widget($type);
+				},
+				WidgetType::cases()
+		);
+	}
+
+	// Creates methods named after WidgetType values
+	/**
+	 * @method Widget adblock()
+	 * @method Widget checkout()
+	 * @method Widget floatingButton()
+	 * @method Widget paywall()
+	 */
+	public function __call(string $name, $arguments): ?Widget
+	{
+		// Check if method name is a WidgetType value and return Widget Object
+		if(!($type = WidgetType::tryFrom($name))) return null;
+		return array_reduce(
+			$this->list(),
+			function(?Widget $carry, ?Widget $widget) use ($type) {
+				return $carry ?? ($widget->type == $type ? $widget : $carry);
+			},
+			null
+		);
 	}
 
 	/**
-	 * Enabled method
-	 * @return boolean $enabled if plugins 'widget' option is set to true
+	 * Check if widgets are enabled in config
+	 * @return boolean $enabled true if plugins 'widget' option is set to true
 	 */
 	public static function enabled(): bool
 	{
-		// TODO: use parent->instance
 		return kirby()->option('soerenengels.steady.widget');
 	}
 
+	/**
+	 * Request Steadys Javascript Code for Widget
+	 * @return string $content javscript content string
+	 */
 	public static function getWidgetLoaderContent(): string
 	{
+		$steady = steady();
+		$url = $steady->publication()->js_widget_url;
 		// TODO: use parent
-		// TODO: cache
-		$url = steady()->publication()->widget_loader_url;
-		$request = Remote::get($url);
-		$content = $request->content();
-		return $content;
+		$cache = $steady->cache;
+		return $cache->getOrSet('js-widget-url', function() use ($url) {
+			$request = Remote::get($url);
+			return $request->content();
+		}, 1);
 	}
 
 	/**
-	 * list method
-	 * @return array $widgets array of all widgets
+	 * Return Widget objects as array
+	 * @return Widget[] array of Widget objects
 	 */
 	public function list(): array
 	{
 		return $this->widgets;
 	}
 
-	/* TODO: refactor to use public function __call() */
-
-	public function adblock(): Widget
-	{
-		return $this->widgets[WidgetType::ADBLOCK->value];
-	}
-
-	public function floatingButton(): Widget
-	{
-		return $this->widgets[WidgetType::ADBLOCK->value];
-	}
-
-	public function paywall(): Widget
-	{
-		return $this->widgets[WidgetType::ADBLOCK->value];
-	}
 }
