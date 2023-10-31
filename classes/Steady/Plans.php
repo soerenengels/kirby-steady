@@ -10,6 +10,8 @@ namespace Soerenengels\Steady;
  * @param object $data Steady API Response
  * @method int count() returns total Plan Objects
  * @method ?Plan find(string $id) returns Plan or null
+ * @method Plans filter(\Closure $filter) Returns new and filtered Plans Object
+ * @method Plan[] list() Returns array of Plan Objects
  */
 class Plans
 {
@@ -23,22 +25,56 @@ class Plans
 	}
 
 	/**
-	 * Finds a plan by id
+	 * Returns total Plan objects
+	 */
+	public function count(): int {
+		return count($this->list());
+	}
+
+	/**
+	 * Filters Plans by $filter Closure
+	 * @param \Closure $filter custom filter function
+	 * @return Plans returns new and filtered Plans object
+	 */
+	public function filter(\Closure $filter): Plans {
+		$filtered_plans = array_filter(
+			$this->list(),
+			$filter
+		);
+		return self::factory($filtered_plans);
+	}
+
+	/**
+	 * Create Plans object from array of Plan objects
+	 * @param Plan[] $list array of Plan objects
+	 * @return Plans
+	 */
+	public static function factory(array $list): Plans {
+		$plans = new Plans([]);
+		$plans->plans = $list;
+		return $plans;
+	}
+
+	/**
+	 * Find Plan by $id
 	 * @param string $id plan id
 	 * @return ?Plan returns Plan or null
 	 */
 	public function find(string $id): ?Plan {
-		$result = array_filter($this->plans, function(Plan $plan) use ($id) {
-			return $plan->id == $id;
-		});
-		return count($result) > 0 ? current($result) : null;
+		return array_reduce(
+			$this->list(),
+			function (?Plan $carry, ?Plan $item) use ($id) {
+				return $carry ?? ($item->id === $id ? $item : $carry);
+			},
+			null
+		);
 	}
 
 	/**
 	 * Returns array of Plan objects
 	 * @return Plan[]
 	 */
-	public function count():int {
-		return count($this->plans);
+	public function list(): array {
+		return $this->plans;
 	}
 }
