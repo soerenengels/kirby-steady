@@ -1,4 +1,5 @@
 <?php
+/** @var Steady $steady */
 $steady = steady();
 return [
 	'soerenengels.steady.blueprints.section.label' => 'Steady: Overview',
