@@ -53,9 +53,8 @@ Kirby::plugin('soerenengels/steady', [
 	'cache' => true,
 	'cache.widget' => true,
 	'options' => [
-		'token' => '...', // REQUIRED Steady API token
-		'cache' => 'steady-api', // OPTIONAL Name of cache in `/site/cache`
-		'widget' => false // OPTIONAL indicate use of Steady Javascript widget
+		'token' => '...', // REQUIRED: Steady REST API-Token
+		'widget' => false, // OPTIONAL: indicate use of Steady Javascript widget
 	],
 	'siteMethods' => [
 		'steady' => function (): Steady {
