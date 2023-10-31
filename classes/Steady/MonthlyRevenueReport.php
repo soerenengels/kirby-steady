@@ -28,6 +28,6 @@ class MonthlyRevenueReport extends Report {
 			)
 		);
 		$this->theme = $theme;
-		$this->link = $steady->publication()->campaign_page_url;
+		$this->link = 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id . '/analytics';
 	}
 }

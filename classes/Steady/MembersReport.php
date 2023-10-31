@@ -12,8 +12,8 @@ class MembersReport extends Report {
 		$steady = steady();
 		$this->label = t('soerenengels.steady.reports.members.label');
 		$this->value = $steady->publication()->members_count;
-		$this->info = t('soerenengels.steady.reports.members.info.default'); // TODO: compare members with Time X
+		$this->info = t('soerenengels.steady.reports.members.info.default'); // TODO: inserted_at compare members with Time X
 		$this->theme = 'info'; // TODO: choose theme based on comparison
-		$this->link = $steady->publication()->campaign_page_url;
+		$this->link = 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id . '/members';
 	}
 }
