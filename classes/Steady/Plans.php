@@ -1,31 +1,22 @@
 <?php
 namespace Soerenengels\Steady;
 
-interface PlansInterface {
-	public function find(string $id): ?Plan;
-	public function count(): int;
-}
 
 /**
- * Plans
+ * Plans Class
  * as requested via Steady API
  * https://developers.steadyhq.com/#plans
- * Returns an array of SteadyPlan Objects
  *
- * @param object $data steady api response
- *
- * @author Sören Engels <mail@soerenengels.de>
- * @version 1.0
- * @see https://github.com/soerenengels/kirby-steady
+ * @param object $data Steady API Response
+ * @method int count() returns total Plan Objects
+ * @method ?Plan find(string $id) returns Plan or null
  */
-class Plans implements PlansInterface
+class Plans
 {
-	/** @var array array of SteadyPlan objects */
-	public array $plans = [];
+	/** @var Plan[] array of Plan objects */
+	private array $plans = [];
 
-	function __construct(
-		array $data
-	) {
+	function __construct(array $data) {
 		foreach ($data as $plan) {
 			$this->plans[] = new Plan($plan);
 		};
@@ -44,7 +35,8 @@ class Plans implements PlansInterface
 	}
 
 	/**
-	 * Returns number of plans
+	 * Returns array of Plan objects
+	 * @return Plan[]
 	 */
 	public function count():int {
 		return count($this->plans);
