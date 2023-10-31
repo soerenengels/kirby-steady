@@ -8,11 +8,8 @@ use Kirby\Toolkit\Date;
  * as class
  *
  * @param array $data steady api response
- *
- * @author Sören Engels <mail@soerenengels.de>
- * @version 1.0
- * @see https://github.com/soerenengels/kirby-steady
  */
+#[AllowDynamicProperties]
 class Plan
 {
 
@@ -86,7 +83,7 @@ class Plan
 	public bool $giftable;
 
 
-	function __construct(
+	public function __construct(
 		array $data
 	) {
 		$this->id = $data['id'];
@@ -99,4 +96,10 @@ class Plan
 			$this->{$key} = $value;
 		};
 	}
+
+	public function __set($key, $value) {
+
+	}
+
+
 }
