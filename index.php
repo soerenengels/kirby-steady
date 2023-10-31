@@ -31,23 +31,26 @@ load([
 	'Soerenengels\\Steady\\Widgets' => __DIR__ . '/classes/Steady/Widgets.php',
 	'Soerenengels\\Steady\\Widget' => __DIR__ . '/classes/Steady/Widget.php',
 	'Soerenengels\\Steady\\WidgetType' => __DIR__ . '/classes/Steady/WidgetType.php',
+	'Soerenengels\\Steady\\User' => __DIR__ . '/classes/Steady/User.php',
+	'Soerenengels\\Steady\\UserType' => __DIR__ . '/classes/Steady/UserType.php',
+	'Soerenengels\\Steady\\Users' => __DIR__ . '/classes/Steady/Users.php',
+	'Soerenengels\\Steady\\Endpoint' => __DIR__ . '/classes/Steady/Endpoint.php'
 ]);
 
-function steady(): Steady {
-	return site()->steady();
+$steady = new Steady(option('soerenengels.steady.token'));
+function steady()
+{
+	return new Steady();
 }
 
 Kirby::plugin('soerenengels/steady', [
 	'blueprints' => [
-		'blocks/steady_paywall' => __DIR__ . '/blueprints/blocks/steady/paywall.php',
+		'blocks/steady_paywall' => require __DIR__ . '/blueprints/blocks/steady/paywall.php',
 		'blocks/steady_plans' => __DIR__ . '/blueprints/blocks/steady/plans.php',
-		'sections/stats/steady' => __DIR__ . '/blueprints/sections/stats/steady.php'
+		'sections/stats/steady' => require __DIR__ . '/blueprints/sections/stats/steady.php'
 	],
-	'cache' => function () {
-		return [
-			kirby()->option('soerenengels.steady.cache') => true
-		];
-	},
+	'cache' => true,
+	'cache.widget' => true,
 	'options' => [
 		'token' => '...', // REQUIRED Steady API token
 		'cache' => 'steady-api', // OPTIONAL Name of cache in `/site/cache`
