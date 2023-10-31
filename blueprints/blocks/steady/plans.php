@@ -6,7 +6,8 @@ $placeholder = [
 	'url' => 'https://steadyhq.com/en/backend/publications/' . $publication->id . '/plans'
 ];
 $options = [];
-foreach ($plans->plans as $plan) {
+$published_plans = $plans->filter(fn ($plan) => $plan->state == "published");
+foreach ($published_plans->list() as $plan) {
 	$options[] = [
 		'text' => $plan->name,
 		'value' => $plan->id
