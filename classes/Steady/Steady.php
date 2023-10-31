@@ -5,7 +5,6 @@ namespace Soerenengels\Steady;
 use Soerenengels\Steady\Publication;
 use Soerenengels\Steady\Plans;
 use Soerenengels\Steady\Subscriptions;
-use Soerenengels\Steady\NewsletterSubscribers;
 use Soerenengels\Steady\Widgets;
 use Soerenengels\Steady\Widget;
 use Soerenengels\Steady\WidgetType;
@@ -19,7 +18,7 @@ interface SteadyInterface
 	public function publication(): Publication;
 	public function plans(): Plans;
 	public function subscriptions(): Subscriptions;
-	public function newsletter_subscribers(): NewsletterSubscribers;
+	public function newsletter_subscribers(): Users;
 	public function report(string $id): ?array;
 	public function widgets(WidgetType $type): Widget|Widgets;
 
@@ -150,13 +149,13 @@ class Steady implements SteadyInterface
 	}
 
 	/**
-	 * Returns a NewsletterSubscribers object
-	 * @return SteadyNewsletterSubscribers;
+	 * Returns Steady Newsletter Subscribers as Users object
+	 * @return Users $users;
 	 */
-	public function newsletter_subscribers(): NewsletterSubscribers
+	public function newsletter_subscribers(): Users
 	{
 		$data = $this->getData(Endpoint::NEWSLETTER_SUBSCRIBERS)['data'];
-		return new NewsletterSubscribers($data);
+		return new Users($data);
 	}
 
 	/**

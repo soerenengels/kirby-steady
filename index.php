@@ -23,8 +23,6 @@ load([
 	'Soerenengels\\Steady\\NewsletterSubscribersReport' => __DIR__ . '/classes/Steady/NewsletterSubscribersReport.php',
 	'Soerenengels\\Steady\\MonthlyRevenueReport' => __DIR__ . '/classes/Steady/MonthlyRevenueReport.php',
 	'Soerenengels\\Steady\\Publication' => __DIR__ . '/classes/Steady/Publication.php',
-	'Soerenengels\\Steady\\NewsletterSubscriber' => __DIR__ . '/classes/Steady/NewsletterSubscriber.php',
-	'Soerenengels\\Steady\\NewsletterSubscribers' => __DIR__ . '/classes/Steady/NewsletterSubscribers.php',
 	'Soerenengels\\Steady\\Plans' => __DIR__ . '/classes/Steady/Plans.php',
 	'Soerenengels\\Steady\\Plan' => __DIR__ . '/classes/Steady/Plan.php',
 	'Soerenengels\\Steady\\Subscription' => __DIR__ . '/classes/Steady/Subscription.php',
