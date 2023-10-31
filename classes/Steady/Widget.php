@@ -1,19 +1,23 @@
 <?php
 
 namespace Soerenengels\Steady;
+use Soerenengels\Steady\Widgets;
 
-interface WidgetInterface
-{
-	public function isActive(): bool;
-}
-
-class Widget implements WidgetInterface
+/**
+ * Widget Class
+ * @method isActive
+ * @method title
+ * @method enabled
+ */
+class Widget
 {
 
 	public function __construct(
-		public WidgetType $type,
-		private Widgets $parent
-	) {
+		public WidgetType $type
+	) {}
+
+	public function title(): string {
+		return $this->type->title();
 	}
 
 	/**
@@ -21,8 +25,8 @@ class Widget implements WidgetInterface
 	 */
 	public function enabled(): bool
 	{
-		$needle = $this->type->value . 'Active":true';
-		$haystack = $this->parent::getWidgetLoaderContent();
+		$needle = $this->type->js() . 'Active":true';
+		$haystack = Widgets::getWidgetLoaderContent();
 
 		// Check if $needle is contained in $haystack
 		$result = (strstr(
@@ -39,12 +43,14 @@ class Widget implements WidgetInterface
 	/**
 	 * Returns true if Widget is able to be loaded
 	 *
-	 * - If plugins 'widget' option is set to true
-	 * - AND widget is activated in Steady backend
+	 * Requirements:
+	 * 1. Plugins 'widget' option is set to true AND
+	 * 2. Widget is activated in Steady backend
 	 */
 	public function isActive(): bool
 	{
-		return ($this->parent::enabled() &&
+		return (
+			kirby()->option('soerenengels.steady.widget') &&
 			$this->enabled()
 		);
 	}
