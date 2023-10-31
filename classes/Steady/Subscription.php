@@ -24,10 +24,6 @@ interface SubscriptionInterface {
  * @method subscriber() returns subscriber
  * @method gifter()
  * @method plan()
- *
- * @author Sören Engels <mail@soerenengels.de>
- * @version 1.0
- * @see https://github.com/soerenengels/kirby-steady
  */
 class Subscription implements SubscriptionInterface
 {
