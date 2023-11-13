@@ -29,5 +29,6 @@ class MonthlyRevenueReport extends Report {
 		);
 		$this->theme = $theme;
 		$this->link = 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id . '/analytics';
+		$this->icon = 'money';
 	}
 }

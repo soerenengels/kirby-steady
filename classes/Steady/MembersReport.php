@@ -15,5 +15,6 @@ class MembersReport extends Report {
 		$this->info = t('soerenengels.steady.reports.members.info.default'); // TODO: inserted_at compare members with Time X
 		$this->theme = 'info'; // TODO: choose theme based on comparison
 		$this->link = 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id . '/members';
+		$this->icon = 'users';
 	}
 }

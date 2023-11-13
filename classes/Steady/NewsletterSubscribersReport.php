@@ -21,5 +21,6 @@ class NewsletterSubscribersReport extends Report {
 		$this->info = $info;
 		$this->theme = $theme;
 		$this->link = 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id . '/subscribers';
+		$this->icon = 'email';
 	}
 }

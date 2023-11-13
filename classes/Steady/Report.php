@@ -11,6 +11,7 @@ namespace Soerenengels\Steady;
  * * notice (orange)
  * * info (blue)
  * @param string|null $link Reports can have a link to a source or more details. Links can be absolute or relative.
+ * @param string|null $string Reports can have an icon.
  * @method toArray() returns array for Stats report
 */
 class Report {
@@ -20,6 +21,7 @@ class Report {
 		public ?string $info = null,
 		public ?string $theme = 'default',
 		public ?string $link = null,
+		public ?string $icon = null,
 	) {}
 
 	/**
@@ -33,7 +35,8 @@ class Report {
 			'value' => $this->value,
 			'info' => $this?->info,
 			'theme' => $this?->theme,
-			'link' => $this?->link
+			'link' => $this?->link,
+			'icon' => $this?->icon
 		];
 	}
 }
