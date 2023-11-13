@@ -1,6 +1,6 @@
 {
   "name": "kirby-steady",
-  "version": "0.2",
+  "version": "0.2.1",
   "description": "Kirby CMS meets Steady",
   "scripts": {
     "dev": "npx -y kirbyup@latest src/index.js --watch",

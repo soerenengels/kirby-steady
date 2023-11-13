@@ -1,7 +1,7 @@
 {
   "name": "soerenengels/kirby-steady",
   "type": "kirby-plugin",
-  "version": "0.2",
+  "version": "0.2.1",
   "description": "Steady meets Kirby is a Kirby Plugin.",
   "license": "MIT",
 	"homepage": "https://github.com/soerenengels/kirby-steady#readme",
