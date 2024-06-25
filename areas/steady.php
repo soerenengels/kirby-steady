@@ -1,5 +1,6 @@
 <?php
 
+use Kirby\Panel\Panel;
 use Soerenengels\Steady\Steady;
 /** @var Steady $steady */
 
@@ -8,9 +9,16 @@ return [
 		return [
 			'icon' => 'steady',
 			'label' => 'Steady',
-			'link' => 'steady/stats',
+			'link' => 'steady',
 			'menu' => false,
 			'views' => [
+				[
+					'pattern' => 'steady',
+					'action' => function () {
+						// Default route forwards to stats
+						Panel::go('steady/stats');
+					}
+				],
 				[
 					'pattern' => 'steady/(:any)',
 					'action' => function ($tab) use ($steady) {
