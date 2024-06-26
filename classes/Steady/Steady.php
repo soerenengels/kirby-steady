@@ -213,8 +213,20 @@ class Steady implements SteadyInterface
 	public function widgets(
 		?WidgetType $type = null
 	): Widget|Widgets {
-		if (!$type) return new Widgets($this);
-		$widget = $type->value;
-		return $this->widgets()->$widget();
+		if (!$type) return new Widgets( // Create array of Widgets from WidgetType
+			array_map(
+				function(WidgetType $type) {
+					return new Widget($type);
+				},
+				WidgetType::cases()
+			),
+			$this
+		);
+		try {
+			$widget = $type->value;
+			return $this->widgets()->$widget();
+		} catch (Exception $e) {
+			$e->getMessage('widgets parameter must be of type WidgetType');
+		}
 	}
 }
