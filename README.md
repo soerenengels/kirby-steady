@@ -86,7 +86,7 @@ The `widgets()` method gives you access to an Widgets object. By calling `->adbl
 
 <!-- ADD IMAGE: GIF -->
 
-Behind the panel route `/panel/steady/stats` you'll find the hidden Steady panel area. In three tabs you find the available stats about you Steady publication, the status of the widgets in Steady backend aswell as the plugins config setting and an overview over the `$steady`-API and its available methods.
+Behind the panel route `/panel/steady` you'll find the hidden Steady panel area. In the tabs you find the available stats about you Steady publication, the status of the widgets in Steady backend aswell as the plugins config setting and an overview over the `$steady`-API and its available methods.
 
 ### Panel: Steady-Reports
 
