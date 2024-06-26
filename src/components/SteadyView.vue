@@ -207,11 +207,40 @@
 					<k-grid variant="columns">
 						<k-column width="1/3">
 							<k-section headline="$steady->subscriptions()">
-								<k-text>Description</k-text>
+								<k-text>
+									Returns the
+									<a
+										href="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/Subscriptions.php"
+										>\Soerenengels\Steady\Subscriptions</a
+									>
+									Class.<br /><br>
+								</k-text>
+								<k-text>
+									Methods:
+									<ul>
+										<li><a href="#example-subscriptions-count">count()</a>: int</li>
+										<li>filter(\Closure $filter): Subscriptions</li>
+										<li>
+											<a href="#example-subscriptions-find">find(string $id)</a> ?Subscription
+										</li>
+										<li>
+											<k-link to="#example-subscriptions-liste">list()</k-link>: Subscription[]
+										</li>
+									</ul>
+								</k-text>
 							</k-section>
 						</k-column>
 						<k-column width="2/3">
-							<k-section headline="Example">
+							<k-section headline="Example: $steady->subscriptions->count()">
+								<k-code language="json">{{ subscriptions }}</k-code>
+							</k-section>
+							<k-section headline="Example: $steady->subscriptions->filter()">
+								<k-code language="json">{{ subscriptions }}</k-code>
+							</k-section>
+							<k-section headline="Example: $steady->subscriptions->find()">
+								<k-code language="json">{{ subscriptions }}</k-code>
+							</k-section>
+							<k-section headline="Example: $steady->subscriptions->list()">
 								<k-code language="json">{{ subscriptions }}</k-code>
 							</k-section>
 						</k-column>
