@@ -6,12 +6,6 @@ use Soerenengels\Steady\Endpoint;
 use Kirby\Exception\Exception;
 use Kirby\Toolkit\Date;
 
-interface SubscriptionInterface {
-	public function cancel(): bool;
-	public function subscriber(): User|null;
-	public function gifter(): User|null;
-	public function plan(): Plan|null;
-}
 
 /**
  * Implements the api response from
