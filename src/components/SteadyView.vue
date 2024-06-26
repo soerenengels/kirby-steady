@@ -38,16 +38,15 @@
 								>.
 							</k-text>
 							<k-headline tag="h3">Example</k-headline>
-							<k-code language="yml">
-								sections:<br />
-								&nbsp;&nbsp;reportSection:<br />
-								&nbsp;&nbsp;&nbsp;&nbsp;type: stats<br />
-								&nbsp;&nbsp;&nbsp;&nbsp;label: Stats<br />
-								&nbsp;&nbsp;&nbsp;&nbsp;reports:<br />
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;site.steady.reports("newsletter_subscribers")<br />
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;site.steady.reports("members")<br />
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;site.steady.reports("revenue")
-							</k-code>
+<pre><k-code language="yml">sections:
+  reportSection:
+    type: stats
+    label: Stats
+    reports:
+      - site.steady.reports("newsletter_subscribers")
+      - site.steady.reports("members")
+      - site.steady.reports("revenue")
+</k-code></pre>
 						</k-section>
 					</k-column>
 				</k-grid>
