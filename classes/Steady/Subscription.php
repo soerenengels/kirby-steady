@@ -66,6 +66,9 @@ class Subscription {
 	/** @var string if you use our podcast features, this is the rss-feed url with authentication for the subscriber */
 	public string $rss_feed_url;
 
+	/** @var string utm campaign parameter */
+	public ?string $utm_campaign;
+
 	/** @var bool boolean; - if the subscription was a gift. If true, gifter information is included in the payload */
 	public bool $is_gift;
 
