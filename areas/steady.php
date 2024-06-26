@@ -11,7 +11,7 @@ return [
 			'icon' => 'steady',
 			'label' => t('soerenengels.steady', 'Steady'),
 			'link' => 'steady',
-			'menu' => false,
+			'menu' => true,
 			'views' => [
 				[
 					'pattern' => 'steady',
@@ -26,11 +26,8 @@ return [
 
 						// Setup
 						$publication = $steady->publication();
+						$reports = $steady->reports('newsletter_subscribers', 'members', 'revenue');
 
-						// Steady: Stats
-						if ($tab == 'stats') {
-							$reports = $steady->reports('newsletter_subscribers', 'members', 'revenue');
-						}
 						// Steady: Widgets
 						if ($tab == 'widgets') {
 							$widgets = $steady->widgets();
