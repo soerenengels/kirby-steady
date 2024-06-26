@@ -2,12 +2,17 @@
 /** @var Steady $steady */
 $steady = steady();
 return [
+	'soerenengels.steady' => 'Steady',
+	'soerenengels.steady.stats' => 'Statistiken',
+	'soerenengels.steady.widgets' => 'Widgets',
+	'soerenengels.steady.api' => 'API Steady',
+	'soerenengels.steady.oauth' => 'API OAuth',
 	'soerenengels.steady.blueprints.section.label' => 'Steady: Übersicht',
 
 	// reports
 	'soerenengels.steady.reports.members.label' => 'Mitglieder',
 	'soerenengels.steady.reports.members.info.default' => 'kein Vergleich möglich',
-	'soerenengels.steady.reports.newsletter.label' => 'Newsletter Abonennt*innen',
+	'soerenengels.steady.reports.newsletter.label' => 'Abonennt*innen',
 	'soerenengels.steady.reports.newsletter.info.zero' => 'Keine neuen Abonennt*innen in den letzten 30 Tagen',
 	'soerenengels.steady.reports.newsletter.info.singular' => 'Ein neues Abo in den letzten 30 Tagen',
 	'soerenengels.steady.reports.newsletter.info.plural' => ' in den letzten 30 Tagen',

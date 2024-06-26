@@ -2,6 +2,11 @@
 /** @var Steady $steady */
 $steady = steady();
 return [
+	'soerenengels.steady' => 'Steady',
+	'soerenengels.steady.stats' => 'Stats',
+	'soerenengels.steady.widgets' => 'Widgets',
+	'soerenengels.steady.api' => 'API Steady',
+	'soerenengels.steady.oauth' => 'API OAuth',
 	'soerenengels.steady.blueprints.section.label' => 'Steady: Overview',
 
 	// reports
