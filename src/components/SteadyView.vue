@@ -169,13 +169,13 @@
 								<k-text>
 									Methods:
 									<ul>
-										<li><a href="#example-plans-count">count()</a>: int</li>
-										<li>filter(\Closure $filter): Plans</li>
+										<li><a href="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/CountTrait.php">count()</a>: int</li>
+										<li><a href="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/FilterTrait.php">filter(\Closure $filter)</a>: Plans</li>
 										<li>
-											<a href="#example-plans-find">find(string $id)</a> ?Plan
+											<a href="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/FindTrait.php">find(string $id)</a> ?Plan
 										</li>
 										<li>
-											<k-link to="#example-plans-liste">list()</k-link>: Plan[]
+											<k-link to="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/hasItems.php">list()</k-link>: Plan[]
 										</li>
 									</ul>
 								</k-text>
@@ -218,13 +218,13 @@
 								<k-text>
 									Methods:
 									<ul>
-										<li><a href="#example-subscriptions-count">count()</a>: int</li>
-										<li>filter(\Closure $filter): Subscriptions</li>
+										<li><a href="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/CountTrait.php">count()</a>: int</li>
+										<li><a href="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/FilterTrait.php">filter(\Closure $filter)</a>: Subscriptions</li>
 										<li>
-											<a href="#example-subscriptions-find">find(string $id)</a> ?Subscription
+											<a href="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/FindTrait.php">find(string $id)</a> ?Subscription
 										</li>
 										<li>
-											<k-link to="#example-subscriptions-liste">list()</k-link>: Subscription[]
+											<k-link to="https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/hasItems.php">list()</k-link>: Subscription[]
 										</li>
 									</ul>
 								</k-text>
@@ -232,13 +232,13 @@
 						</k-column>
 						<k-column width="2/3">
 							<k-section headline="Example: $steady->subscriptions->count()">
-								<k-code language="json">{{ subscriptions }}</k-code>
+								<k-code language="json">{{ subscriptions.length }}</k-code>
 							</k-section>
-							<k-section headline="Example: $steady->subscriptions->filter()">
-								<k-code language="json">{{ subscriptions }}</k-code>
+							<k-section headline="Example: $steady->subscriptions->filter(fn($sub) => $sub->monthly_amount < 500)">
+								<k-code language="json">{{ filteredSubscriptions }}</k-code>
 							</k-section>
-							<k-section headline="Example: $steady->subscriptions->find()">
-								<k-code language="json">{{ subscriptions }}</k-code>
+							<k-section :headline="`Example: $steady->subscriptions->find('${subscriptions[0].id}')`">
+								<k-code language="json">{{ subscriptions[0] }}</k-code>
 							</k-section>
 							<k-section headline="Example: $steady->subscriptions->list()">
 								<k-code language="json">{{ subscriptions }}</k-code>
@@ -409,6 +409,9 @@ export default {
 					link: this.baseUrl + "?tab=report",
 				},
 			];
+		},
+		filteredSubscriptions() {
+			return this.subscriptions.filter((sub) => sub.monthly_amount < 500);
 		},
 	},
 	methods: {},
