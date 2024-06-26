@@ -312,7 +312,6 @@ export default {
 		newsletterSubscribers: Object,
 		tab: String,
 		subtab: String,
-		title: String,
 		reports: Array,
 		plugin: Object
 	},
