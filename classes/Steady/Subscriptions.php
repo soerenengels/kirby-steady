@@ -29,7 +29,10 @@ class Subscriptions
 		['included' => $included, 'data' => $data] = $response;
 
 		foreach ($data as $subscription) {
-			$this->items[] = new Subscription($subscription);
+			$this->items[] = new Subscription([
+				'data' => $subscription,
+				'included' => $included
+			]);
 		};
 
 		// filter included data for plan data
