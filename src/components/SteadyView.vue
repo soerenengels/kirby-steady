@@ -1,5 +1,5 @@
 <template>
-	<k-inside>
+	<k-panel-inside>
 		<k-view class="k-steady">
 			<k-header class="k-steady-header">
 				{{ publication.title }}
@@ -297,7 +297,7 @@
 				</k-grid>
 			</template>
 		</k-view>
-	</k-inside>
+	</k-panel-inside>
 </template>
 
 <script>
