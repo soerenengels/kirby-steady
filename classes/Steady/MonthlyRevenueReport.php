@@ -5,7 +5,7 @@ use Soerenengels\Steady\Report;
 class MonthlyRevenueReport extends Report {
 	public function __construct() {
 		$steady = steady();
-		$revenue = $steady->publication()->monthly_amount;
+		$revenue = $steady->publication()->monthly_amount / 100;
 		$currency = '€';
 		$theme = (
 			$revenue > 2600 ? 'positive' : (
