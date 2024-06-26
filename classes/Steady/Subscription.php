@@ -111,7 +111,7 @@ class Subscription {
 				$key == 'expires_at' &&
 				$value
 			) {
-				$value = new Date($value);
+				$value = $value ? new Date($value) : null;
 			}
 			try {
 				$this->{$key} = $value;
