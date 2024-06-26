@@ -113,7 +113,11 @@ class Subscription {
 			) {
 				$value = new Date($value);
 			}
-			$this->{$key} = $value;
+			try {
+				$this->{$key} = $value;
+			} catch (Exception $e) {
+				echo $e->getMessage('Could not set property ' . $key . ' with value ' . $value . ' in Subscription object');
+			}
 		};
 
 		// relations
