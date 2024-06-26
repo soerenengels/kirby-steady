@@ -1,5 +1,6 @@
 .DS_Store
 /assets/kirby-steady-feature-preview.afdesign
+/assets/archive
 node_modules
 
 /vendor/*
