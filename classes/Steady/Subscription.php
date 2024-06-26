@@ -94,7 +94,7 @@ class Subscription {
 			'id' => $id,
 			'type' => $type,
 			'attributes' => $attributes,
-			'relationsships' => $relationships
+			'relationships' => $relationships
 		] = $data;
 
 		// object creation
