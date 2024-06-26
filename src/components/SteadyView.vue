@@ -365,13 +365,13 @@ export default {
 					label: "API $steady",
 					icon: "code",
 					link: "steady/api?tab=publication",
-				},
+				}/* ,
 				{
 					name: "oauth",
 					label: "API $oauth",
 					icon: "code",
 					link: "steady/oauth",
-				},
+				}, */
 			],
 		};
 	},
