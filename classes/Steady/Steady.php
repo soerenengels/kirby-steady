@@ -192,6 +192,20 @@ class Steady implements SteadyInterface
 	}
 
 	/**
+	 * Returns array of Reports
+	 * @param string ...$ids revenue|newsletter_subscribers|members
+	 * @return array array of Reports
+	 */
+	public function reports(...$ids): array {
+		$reports = [];
+		foreach ($ids as $id) {
+			$report = $this->report($id);
+			if ($report) $reports[] = $report;
+		}
+		return $reports;
+	}
+
+	/**
 	 * Widgets method
 	 *
 	 * Returns Widgets object or specific Widget

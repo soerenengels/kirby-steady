@@ -21,20 +21,17 @@ return [
 				],
 				[
 					'pattern' => 'steady/(:any)',
-					'action' => function ($tab) use ($steady) {
+					'action' => function (string $tab = 'stats') use ($steady) {
+
+						// Setup
+						$publication = $steady->publication();
 
 						// Steady: Stats
-						$title = 'Stats';
-						$publication = $steady->publication();
-						$reports = [
-							$steady->report('newsletter_subscribers'),
-							$steady->report('members'),
-							$steady->report('revenue')
-						];
-
+						if ($tab == 'stats') {
+							$reports = $steady->reports('newsletter_subscribers', 'members', 'revenue');
+						}
 						// Steady: Widgets
 						if ($tab == 'widgets') {
-							$title = 'Widgets';
 							$widgets = $steady->widgets();
 							$widgetsEnabled = $widgets->enabled();
 							$widgetReports[] = [
@@ -60,7 +57,6 @@ return [
 
 						// Steady: API
 						if ($tab == 'api') {
-							$title = 'API';
 							$plans = $steady->plans()->list();
 							$subscriptions = $steady->subscriptions()->list();
 							$newsletterSubscribers = $steady->newsletter_subscribers()->filter(function ($user) {
@@ -70,15 +66,14 @@ return [
 
 						return [
 							'component' => 'k-steady-view',
-							'title' => 'Steady',
+							'title' => t('soerenengels.steady', 'Steady'),
 							'breadcrumb' => [
 								[
-									'label' => $title,
+									'label' => t("soerenengels.steady.$tab", $tab),
 									'link' => 'steady/' . $tab
 								]
-								],
+							],
 							'props' => [
-								'title' => $title,
 								'reports' => $reports ?? [],
 								'widgets' => $widgetReports ?? [],
 								'tab' => $tab,
