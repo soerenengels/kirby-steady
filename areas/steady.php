@@ -60,7 +60,7 @@ return [
 							$plans = $steady->plans()->list();
 							$subscriptions = $steady->subscriptions()->list();
 							$newsletterSubscribers = $steady->newsletter_subscribers()->filter(function ($user) {
-								return rand(1,100) == 1;
+								return rand(1, 100) == 1;
 							})->list();
 						}
 
