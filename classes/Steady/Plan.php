@@ -50,7 +50,7 @@ class Plan
 	public ?string $benefits;
 
 	/** @var bool boolean if we ask the user for her shipping address after she subscribed */
-	public bool $ask_for_shipping_address;
+	public bool $ask_for_shiping_address;
 
 	/** @var bool boolean if this plan has a goal of a certain amount of subscriptions */
 	public bool $goal_enabled;
