@@ -46,7 +46,7 @@ return [
 								$widgetReports[] = [
 									'info' =>  $widget->enabled() ? '✓' : '✕',
 									'value' => $widget->title(),
-									'theme' => $widgetsEnabled ? ($widget->enabled() ? 'positive': 'info') : ($widget->enabled() ? 'notice' : 'default'),
+									'theme' => $widgetsEnabled ? ($widget->enabled() ? 'positive' : 'info') : ($widget->enabled() ? 'notice' : 'default'),
 									'link' => 'https://steadyhq.com/de/backend/publications/' . $publication->id . '/integrations/' . $widget->type->value . '/edit',
 									'label' => 'Steady'
 								];
