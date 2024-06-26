@@ -97,9 +97,4 @@ class Plan
 		};
 	}
 
-	public function __set($key, $value) {
-
-	}
-
-
 }
