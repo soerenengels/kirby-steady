@@ -34,5 +34,9 @@
     "allow-plugins": {
       "getkirby/composer-installer": true
     }
+  },
+	"extra": {
+		"installer-name": "steady",
+    "kirby-cms-path": false
   }
 }
