@@ -2,13 +2,14 @@
 
 use Kirby\Panel\Panel;
 use Soerenengels\Steady\Steady;
+
 /** @var Steady $steady */
 
 return [
 	'steady' => function () use ($steady) {
 		return [
 			'icon' => 'steady',
-			'label' => 'Steady',
+			'label' => t('soerenengels.steady', 'Steady'),
 			'link' => 'steady',
 			'menu' => false,
 			'views' => [
