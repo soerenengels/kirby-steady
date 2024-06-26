@@ -125,7 +125,7 @@ class Subscription {
 
 		// relations
 		// relation: plan
-		$plan_id = $relationships['plan']['data']['id'];
+		/* $plan_id = $relationships['plan']['data']['id'];
 		$plan = array_filter($included, function($item) use ($plan_id) {
 			return $item['type'] == 'plan' && $item['id'] == $plan_id;
 		});
@@ -146,7 +146,7 @@ class Subscription {
 		$gifter = array_filter($users, function ($user) use ($gifter_id) {
 			return $user['id'] == $gifter_id;
 		});
-		$this->gifter = $gifter ? new User($gifter) : null;
+		$this->gifter = $gifter ? new User($gifter) : null;*/
 	}
 
 	// TODO
