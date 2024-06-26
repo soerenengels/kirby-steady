@@ -19,8 +19,7 @@ use Kirby\Toolkit\Date;
  * @method gifter()
  * @method plan()
  */
-class Subscription implements SubscriptionInterface
-{
+class Subscription {
 
 	/** @var string the id of the the publication */
 	public string $id;
