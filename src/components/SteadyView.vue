@@ -347,9 +347,6 @@ export default {
 			],
 		};
 	},
-	created() {
-		console.log(this.plugin);
-	},
 	computed: {
 		apiTabs() {
 			return [
