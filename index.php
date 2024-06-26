@@ -7,7 +7,6 @@
  * in Kirby CMS
  *
  * @package   Steady meets Kirby
- * @version   1.0
  * @author    Sören Engels <mail@soerenengels.com>
  * @link      https://github.com/soerenengels/kirby-steady
  * @copyright Sören Engels
