@@ -6,7 +6,7 @@ if ($block->steady_plans_customize() == false) {
 		$plans[] = $plans->find($plan_id);
 	}
 } else {
-	$plans = $plans->plans;
+	$plans = $plans->list();
 }
 ?>
 <?php snippet('components/steady/plans', ['plans' => $plans ]) ?>

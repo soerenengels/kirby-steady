@@ -17,25 +17,7 @@
 use Kirby\Cms\App as Kirby;
 use Soerenengels\Steady\Steady;
 
-load([
-	'Soerenengels\\Steady\\Report' => __DIR__ . '/classes/Steady/Report.php',
-	'Soerenengels\\Steady\\MembersReport' => __DIR__ . '/classes/Steady/MembersReport.php',
-	'Soerenengels\\Steady\\NewsletterSubscribersReport' => __DIR__ . '/classes/Steady/NewsletterSubscribersReport.php',
-	'Soerenengels\\Steady\\MonthlyRevenueReport' => __DIR__ . '/classes/Steady/MonthlyRevenueReport.php',
-	'Soerenengels\\Steady\\Publication' => __DIR__ . '/classes/Steady/Publication.php',
-	'Soerenengels\\Steady\\Plans' => __DIR__ . '/classes/Steady/Plans.php',
-	'Soerenengels\\Steady\\Plan' => __DIR__ . '/classes/Steady/Plan.php',
-	'Soerenengels\\Steady\\Subscription' => __DIR__ . '/classes/Steady/Subscription.php',
-	'Soerenengels\\Steady\\Subscriptions' => __DIR__ . '/classes/Steady/Subscriptions.php',
-	'Soerenengels\\Steady\\Steady' => __DIR__ . '/classes/Steady/Steady.php',
-	'Soerenengels\\Steady\\Widgets' => __DIR__ . '/classes/Steady/Widgets.php',
-	'Soerenengels\\Steady\\Widget' => __DIR__ . '/classes/Steady/Widget.php',
-	'Soerenengels\\Steady\\WidgetType' => __DIR__ . '/classes/Steady/WidgetType.php',
-	'Soerenengels\\Steady\\User' => __DIR__ . '/classes/Steady/User.php',
-	'Soerenengels\\Steady\\UserType' => __DIR__ . '/classes/Steady/UserType.php',
-	'Soerenengels\\Steady\\Users' => __DIR__ . '/classes/Steady/Users.php',
-	'Soerenengels\\Steady\\Endpoint' => __DIR__ . '/classes/Steady/Endpoint.php'
-]);
+@include_once __DIR__ . '/vendor/autoload.php';
 
 $steady = new Steady(option('soerenengels.steady.token'));
 function steady()

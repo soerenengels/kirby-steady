@@ -31,72 +31,18 @@ use Kirby\Cms\User as KirbyUser;
 class Users
 {
 
-	/** @var User[] array of User objects */
-	private array $users = [];
+	use hasItems, CountTrait, FindTrait, FactoryTrait, FilterTrait;
 
+	/** @var User[] array of User objects */
+	private array $items = [];
+
+	/** @param array<array> $data array of User data arrays */
 	public function __construct(
 		array $data
 	) {
 		foreach ($data as $user) {
-			$this->users[] = new User($user);
+			$this->items[] = new User($user);
 		};
-	}
-
-	/**
-	 * Returns total User objects
-	 */
-	public function count(): int {
-		return count($this->list());
-	}
-
-	/**
-	 * Filters Users by custom $filter Closure
-	 * @param \Closure $filter custom filter function
-	 * @return Users returns new and filtered Users object
-	 */
-	public function filter(\Closure $filter): Users {
-		$filtered_users =  array_filter(
-			$this->list(),
-			$filter
-		);
-		return self::factory($filtered_users);
-	}
-
-	/**
-	 * Create Users Object from array of User Objects
-	 * @param User[] $array Array of User Objects
-	 * @return Users $users New Users Object
-	 */
-	public static function factory(array $array): Users {
-		$users = new Users([]);
-		$users->users = $array;
-		return $users;
-	}
-
-	/**
-	 * Find User by $id
-	 * @param string $id Steady user id
-	 * @return ?User returns User or null
-	 */
-	public function find(string $id): ?User {
-		return array_reduce(
-			$this->list(),
-			function (
-				?User $carry,
-				?User $user
-			) use ($id) {
-				return $carry ?? ($user->id === $id ? $user : $carry);
-			},
-			null
-		);
-	}
-
-	/**
-	 * Returns array of User objects
-	 * @return User[]
-	 */
-	public function list(): array {
-		return $this->users;
 	}
 
 	/**

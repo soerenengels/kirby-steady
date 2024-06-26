@@ -4,6 +4,9 @@ namespace Soerenengels\Steady;
 
 use Soerenengels\Steady\WidgetType;
 use Soerenengels\Steady\Widget;
+use Soerenengels\Steady\FactoryTrait;
+use Soerenengels\Steady\FilterTrait;
+use Soerenengels\Steady\hasItems;
 use Kirby\Http\Remote;
 
 /**
@@ -19,25 +22,19 @@ use Kirby\Http\Remote;
 class Widgets
 {
 
-	/** @var array $widgets array of Widget objects */
-	private array $widgets = [];
+	use hasItems, FactoryTrait, FilterTrait;
 
 	/** @var Steady $steady Steady parent instance */
 	private Steady $steady;
 
 	/**
+	 * @param array<Widget> $array array of Widget objects
 	 * @param Steady $steady
-	 */
-	public function __construct($steady)
+	 * */
+	public function __construct($array = [], $steady = null)
 	{
 		$this->steady = $steady ?? steady();
-		// Create array of Widgets from WidgetType
-		$this->widgets = array_map(
-				function(WidgetType $type) {
-					return new Widget($type);
-				},
-				WidgetType::cases()
-		);
+		$this->items = $array;
 	}
 
 	// Creates methods named after WidgetType values
@@ -83,15 +80,6 @@ class Widgets
 			$request = Remote::get($url);
 			return $request->content();
 		}, 1);
-	}
-
-	/**
-	 * Return Widget objects as array
-	 * @return Widget[] array of Widget objects
-	 */
-	public function list(): array
-	{
-		return $this->widgets;
 	}
 
 }
