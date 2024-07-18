@@ -4,12 +4,19 @@
 			<k-header class="k-steady-header">
 				{{ publication.title }}
 				<template #buttons>
-					<k-button :title="'Version ' + plugin['version']">v{{ plugin['version'] }}</k-button>
+					<k-button
+						icon="edit"
+						:link="`https://steadyhq.com/de/backend/publications/${publication.id}/posts/new`"
+						>{{ $t('soerenengels.steady.create.post') }}</k-button
+					>
 					<k-button
 						icon="github"
 						:link="plugin['link']"
-						>Go to Plugin Repository</k-button
+						:title="'Version ' + plugin['version']"
+						>v{{ plugin['version'] }}</k-button
 					>
+					<k-button icon="book" :link="plugin['link']">Docs</k-button>
+					<k-button icon="steady" :link="steadyUrl" />
 				</template>
 			</k-header>
 			<k-tabs :tabs="tabs" :tab="tab" />
@@ -410,6 +417,9 @@ export default {
 				},
 			];
 		},
+		steadyUrl() {
+			return `https://steadyhq.com/de/backend/publications/${this.publication.id}/home`;
+		}
 		filteredSubscriptions() {
 			return this.subscriptions.filter((sub) => sub.monthly_amount < 500);
 		},
@@ -435,5 +445,11 @@ export default {
 }
 .k-steady-header {
 	margin-bottom: 0;
+}
+.k-header-buttons {
+	flex-grow: 1;
+	& .k-button:first-of-type {
+		margin-inline: var(--spacing-2) auto;
+	}
 }
 </style>
