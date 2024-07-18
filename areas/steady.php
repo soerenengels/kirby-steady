@@ -12,6 +12,28 @@ return [
 			'label' => t('soerenengels.steady', 'Steady'),
 			'link' => 'steady',
 			'menu' => true,
+			'dialogs' => [
+				'steady/subscriptions/cancel/(:any)' => [
+					'load' => function (string $id) {
+						return [
+							'component' => 'k-remove-dialog',
+							'props' => [
+								'text' => t('soerenengels.steady.subscriptions.cancel.question'),
+								'value' => ['id' => $id]
+							]
+						];
+					},
+					'submit' => function ($id) {
+						// cancel subscription
+						return [
+							'event' => 'steady.subscriptions.cancelled',
+							'data'  => [
+								'id' => $id
+							],
+						];
+					}
+				]
+			],
 			'views' => [
 				[
 					'pattern' => 'steady',

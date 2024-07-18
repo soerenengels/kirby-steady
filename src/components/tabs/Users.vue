@@ -90,7 +90,7 @@ export default {
 				{
 					text: this.$t('soerenengels.steady.subscriptions.cancel'),
 					icon: 'cancel',
-
+					click: () => this.$dialog(`steady/subscriptions/cancel/${row.id}`)
 				}
 			];
 		}
