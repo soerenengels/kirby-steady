@@ -2,9 +2,15 @@
   "scripts": {
     "dev": "npx -y kirbyup@latest src/index.js --watch",
     "serve": "npx -y kirbyup@latest serve src/index.js",
-    "build": "npx -y kirbyup@latest src/index.js"
-    },
+    "build": "npx -y kirbyup@latest src/index.js",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
   "posthtml": {
     "recognizeSelfClosing": true
+  },
+  "devDependencies": {
+    "vitepress": "^1.3.1"
   }
 }

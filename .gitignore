@@ -25,3 +25,8 @@ node_modules
 /vendor/**/tests/*
 /vendor/**/php4/*
 /vendor/getkirby/composer-installer
+
+# VitePress
+.vitepress/dist
+.vitepress/cache
+docs/.vitepress/cache
