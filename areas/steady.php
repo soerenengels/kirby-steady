@@ -29,38 +29,33 @@ return [
 						$reports = $steady->reports('newsletter_subscribers', 'members', 'revenue');
 
 						// Steady: Widgets
-						if ($tab == 'widgets') {
-							$widgets = $steady->widgets();
-							$widgetsEnabled = $widgets->enabled();
+						$widgets = $steady->widgets();
+						$widgetsEnabled = $widgets->enabled();
+						$widgetReports[] = [
+							'info' => ($widgetsEnabled ? 'Enabled' : 'Disabled'),
+							'label' => 'Kirby: config.php',
+							'theme' => $widgetsEnabled ? 'positive' : 'negative',
+							'value' => "Widgets"
+						];
+						$widgetsWarning = false;
+						foreach ($widgets->list() as $key => $widget) {
 							$widgetReports[] = [
-								'info' => ($widgetsEnabled ? 'Enabled' : 'Disabled'),
-								'label' => 'Kirby: config.php',
-								'theme' => $widgetsEnabled ? 'positive' : 'negative',
-								//'label' => "option('soerenengels.steady.widgets')",
-								'value' => "Widgets"
+								'info' =>  $widget->enabled() ? '✓' : '✕',
+								'value' => $widget->title(),
+								'theme' => $widgetsEnabled ? ($widget->enabled() ? 'positive' : 'info') : ($widget->enabled() ? 'notice' : 'default'),
+								'link' => 'https://steadyhq.com/de/backend/publications/' . $publication->id . '/integrations/' . $widget->type->value . '/edit',
+								'label' => 'Steady'
 							];
-							$widgetsWarning = false;
-							foreach ($widgets->list() as $key => $widget) {
-								$widgetReports[] = [
-									'info' =>  $widget->enabled() ? '✓' : '✕',
-									'value' => $widget->title(),
-									'theme' => $widgetsEnabled ? ($widget->enabled() ? 'positive' : 'info') : ($widget->enabled() ? 'notice' : 'default'),
-									'link' => 'https://steadyhq.com/de/backend/publications/' . $publication->id . '/integrations/' . $widget->type->value . '/edit',
-									'label' => 'Steady'
-								];
-								$widgetsWarning = $widgetWarning ?? ($widgetsWarning === $widget->isActive());
-							}
-
+							$widgetsWarning = $widgetWarning ?? ($widgetsWarning === $widget->isActive());
 						}
+
+
 
 						// Steady: API
-						if ($tab == 'api') {
-							$plans = $steady->plans()->list();
-							$subscriptions = $steady->subscriptions()->list();
-							$newsletterSubscribers = $steady->newsletter_subscribers()->filter(function ($user) {
-								return rand(1, 100) == 1;
-							})->list();
-						}
+						$subscriptions = $steady->subscriptions()->list();
+						$plans = $steady->plans()->list();
+						$newsletterSubscribers = $steady->newsletter_subscribers()->list();
+
 
 						return [
 							'component' => 'k-steady-view',
