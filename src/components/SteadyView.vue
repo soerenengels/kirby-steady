@@ -53,18 +53,17 @@
 <script>
 export default {
 	props: {
+		newsletterSubscribers: Object,
+		plans: Object,
+		plugin: Object,
+		publication: Object,
 		reports: Array,
+		subscriptions: Object,
+		subtab: String,
+		tab: String,
 		widgets: Array,
 		widgetsEnabled: Boolean,
-		widgetsWarning: Boolean,
-		publication: Object,
-		plans: Object,
-		subscriptions: Object,
-		newsletterSubscribers: Object,
-		tab: String,
-		subtab: String,
-		reports: Array,
-		plugin: Object
+		widgetsWarning: Boolean
 	},
 	data() {
 		return {
