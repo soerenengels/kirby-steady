@@ -7,15 +7,6 @@ class MonthlyRevenueReport extends Report {
 		$steady = steady();
 		$revenue = $steady->publication()->monthly_amount / 100;
 		$currency = '€';
-		$theme = (
-			$revenue > 2600 ? 'positive' : (
-				$revenue > 520 ? 'default' : (
-					$revenue > 40 ? 'info' : (
-						$revenue > 1 ? 'notice' : 'negative'
-					)
-				)
-			)
-		);
 		$this->label = t('soerenengels.steady.reports.revenue.label');
 		$this->value = $revenue . '' . $currency;
 		$this->info = (
@@ -27,7 +18,7 @@ class MonthlyRevenueReport extends Report {
 				)
 			)
 		);
-		$this->theme = $theme;
+		$this->theme = 'default';
 		$this->link = 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id . '/analytics';
 		$this->icon = 'money';
 	}
