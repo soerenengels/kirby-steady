@@ -99,7 +99,6 @@ return [
 								'plans' => $plans ?? [],
 								'subscriptions' => $subscriptions ?? [],
 								'newsletterSubscribers' => $newsletterSubscribers ?? [],
-								'reports' => $reports ?? [],
 								'plugin' => kirby()->plugin('soerenengels/steady')->toArray()
 							]
 						];
