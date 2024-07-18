@@ -13,7 +13,7 @@ if ($plan?->hidden) return; ?>
 		<img src="<?= $plan->image_url ?>" alt="">
 	</div>
 	<div class="steady__plan plan__benefits">
-		<?= nl2br($plan->benefits) ?>
+		<?= kt(nl2br($plan->benefits)) ?>
 	</div>
 	<div class="steady__plan plan__monthlyAmount">
 		<?= $plan->monthly_amount / 100 ?> <?= $plan->currency ?>
