@@ -421,7 +421,7 @@ export default {
 			return `https://steadyhq.com/de/backend/publications/${this.publication.id}/home`;
 		}
 		filteredSubscriptions() {
-			return this.subscriptions.filter((sub) => sub.monthly_amount < 500);
+			return this.subscriptions.filter(sub => sub.monthly_amount < 500);
 		},
 	},
 	methods: {},
