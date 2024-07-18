@@ -1,4 +1,9 @@
 import SteadyView from "./components/SteadyView.vue";
+import Insights from "./components/tabs/Insights.vue";
+import Widgets from "./components/tabs/Widgets.vue";
+import Users from "./components/tabs/Users.vue";
+import Debug from "./components/tabs/Debug.vue";
+import OAuth from "./components/tabs/OAuth.vue";
 
 panel.plugin("soerenengels/kirby-steady", {
 	use: {
@@ -11,6 +16,17 @@ panel.plugin("soerenengels/kirby-steady", {
   },
 	components: {
 		"k-steady-view": SteadyView,
+		"k-steady-tab-insights": Insights,
+		"k-steady-tab-widgets": Widgets,
+		"k-steady-tab-users": Users,
+		"k-steady-tab-debug": Debug,
+		"k-steady-tab-oauth": OAuth,
+		'k-steadyDate-field-preview': {
+      props: {
+        value: Object
+      },
+      template: '<p class="k-text-field-preview">{{ (new Date(value.date)).toLocaleDateString("de-DE") }}</p>'
+    }
 	},
 	icons: {
 		"steady":

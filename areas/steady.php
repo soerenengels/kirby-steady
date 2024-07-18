@@ -16,13 +16,13 @@ return [
 				[
 					'pattern' => 'steady',
 					'action' => function () {
-						// Default route forwards to stats
-						Panel::go('steady/stats');
+						// Default route forwards to insights
+						Panel::go('steady/insights');
 					}
 				],
 				[
 					'pattern' => 'steady/(:any)',
-					'action' => function (string $tab = 'stats') use ($steady) {
+					'action' => function (string $tab = 'insights') use ($steady) {
 
 						// Setup
 						$publication = $steady->publication();
