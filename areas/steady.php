@@ -18,13 +18,22 @@ return [
 						return [
 							'component' => 'k-remove-dialog',
 							'props' => [
-								'text' => t('soerenengels.steady.subscriptions.cancel.question'),
-								'value' => ['id' => $id]
+								'text' => t('soerenengels.steady.subscriptions.cancel.question')
 							]
 						];
 					},
 					'submit' => function ($id) {
-						// cancel subscription
+						try {
+							$steady->subscriptions()->cancel($id);
+						} catch (Exception $e) {
+							return [
+								'event' => 'steady.subscriptions.cancel.error',
+								'data'  => [
+									'id' => $id,
+									'error' => $e->getMessage()
+								],
+							];
+						}
 						return [
 							'event' => 'steady.subscriptions.cancelled',
 							'data'  => [
