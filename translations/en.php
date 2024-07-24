@@ -31,6 +31,10 @@ return [
 	'soerenengels.steady.subscribed' => 'Subscribed at',
 	'soerenengels.steady.id' => 'Id',
 	'soerenengels.steady.blueprints.section.label' => 'Steady: Overview',
+	'soerenengels.steady.snippets.plans.toggle' => 'Choose a Plan',
+	'soerenengels.steady.snippets.plans.monhtly' => 'Monthly',
+	'soerenengels.steady.snippets.plans.annual' => 'Annual',
+	'soerenengels.steady.snippets.plans.cta' => 'Become Member',
 
 	// reports
 	'soerenengels.steady.reports.members.label' => 'Total members',

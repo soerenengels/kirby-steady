@@ -31,6 +31,10 @@ return [
 	'soerenengels.steady.subscribed' => 'Abonniert seit',
 	'soerenengels.steady.id' => 'Id',
 	'soerenengels.steady.blueprints.section.label' => 'Steady: Übersicht',
+	'soerenengels.steady.snippets.plans.toggle' => 'Wähle deine Mitgliedschaft',
+	'soerenengels.steady.snippets.plans.monhtly' => 'Monatlich',
+	'soerenengels.steady.snippets.plans.annual' => 'Jährlich',
+	'soerenengels.steady.snippets.plans.cta' => 'Mitglied werden',
 
 	// reports
 	'soerenengels.steady.reports.members.label' => 'Mitglieder',
