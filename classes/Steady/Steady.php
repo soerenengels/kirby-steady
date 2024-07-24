@@ -28,7 +28,6 @@ interface SteadyInterface
 	public function post(Endpoint $endpoint);
 }
 
-// TODO: better caching
 /**
  * Get your steady publication data via the steady REST API.
  *
@@ -40,6 +39,7 @@ interface SteadyInterface
  */
 class Steady implements SteadyInterface
 {
+	/** @var Cache $cache Access the Steady Cache */
 	public Cache $cache;
 
 	public function __construct(
@@ -54,22 +54,29 @@ class Steady implements SteadyInterface
 
 
 	/**
-	 * Send request to Steady API $endpoint
+	 * Request the Steady API
 	 *
-	 * @param Endpoint $endpoint Endpoint Enum ::PUBLICATION | ::PLANS | ::SUBSCRIPTIONS | ::NEWSLETTER_SUBSCRIBERS
+	 * @param Endpoint|string $endpointOrUrl Endpoint Enum ::PUBLICATION | ::PLANS | ::SUBSCRIPTIONS | ::NEWSLETTER_SUBSCRIBERS or url string
 	 * @param string $method request method GET|POST|PUT|PATCH|DELETE|HEAD, default: GET
 	 */
 	public function request(
-		Endpoint $endpoint,
+		Endpoint|string $endpointOrUrl,
 		string $method = 'GET',
 		?array $headers = null,
 		array $data = []
-	) {
+	): Remote {
+
+		// Set default headers with API token
 		$headers = $headers ?? [
 			'X-Api-Key: ' . $this->api_token
 		];
+
+		// Get url from Endpoint Enum or use url string
+		$url = $endpoint instanceof Endpoint ? $endpoint->url() : $endpointOrUrl;
+
+		// Request data from Steady API
 		$request = Remote::request(
-			$endpoint->url(),
+			$url,
 			[
 				'method'  => $method,
 				'headers' => $headers,
@@ -77,9 +84,11 @@ class Steady implements SteadyInterface
 			]
 		);
 
+		// Check for errors
 		if ($request->code() !== 200) {
 			throw new Exception('An error occurred: ' . $request->code());
 		}
+
 		return $request;
 	}
 
@@ -87,12 +96,13 @@ class Steady implements SteadyInterface
 	 * Send GET request to Steady API $endpoint
 	 *
 	 * @param Endpoint $endpoint Endpoint Enum
-	 * @param ?array $headers optional for REST request
+	 * @param ?array $headers optional: headers array
+	 * @return \stdClass|array|null parsed Response data
 	 */
 	public function get(
 		Endpoint $endpoint,
 		?array $headers = null
-	)
+	): \stdClass|array|null
 	{
 		return $this->request(
 			$endpoint,
@@ -104,15 +114,16 @@ class Steady implements SteadyInterface
 	/**
 	 * Send POST request to Steady API $endpoint
 	 *
-	 * @param Endpoint $endpoint ENDPOINT Enum
+	 * @param Endpoint|string $endpoint ENDPOINT Enum or url string
 	 * @param ?array $data data array to send with request
 	 * @param ?array $headers headers array
+	 * @return \stdClass|array|null parsed Response data
 	 */
 	public function post(
-		Endpoint $endpoint,
+		Endpoint|string $endpoint,
 		?array $data = null,
 		?array $headers = null
-	)
+	): \stdClass|array|null
 	{
 		return $this->request(
 			$endpoint,
@@ -123,8 +134,10 @@ class Steady implements SteadyInterface
 	}
 
 	/**
-	 * Get data from cache or set it via
-	 * callback function
+	 * Get data from cache
+	 * or set it, if it
+	 * does not yet exist
+	 * via callback function
 	 *
 	 * @param Endpoint $endpoint ENDPOINT Enum
 	 * @return mixed $data cached data from Endpoint
@@ -137,7 +150,8 @@ class Steady implements SteadyInterface
 	}
 
 	/**
-	 * Get an object for your Steady Publication
+	 * Get Steady Publication object
+	 *
 	 * @return Publication
 	 */
 	public function publication(): Publication
