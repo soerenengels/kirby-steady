@@ -57,9 +57,11 @@ return [
 
 						// Setup
 						$publication = $steady->publication();
-						$reports = $steady->reports('newsletter_subscribers', 'members', 'revenue');
-
-						// Steady: Widgets
+						$reports = $steady->reports(
+							'newsletter_subscribers',
+							'members',
+							'revenue'
+						);
 						$widgets = $steady->widgets();
 						$widgetsEnabled = $widgets->enabled();
 						$widgetReports[] = [
