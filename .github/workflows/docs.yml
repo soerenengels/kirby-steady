@@ -1,0 +1,31 @@
+name: Docs Deployment
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - run: npm install
+      - run: npm run docs:build
+
+      - name: FTP Deployment
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.server }}
+          local-dir: ./docs/.vitepress/dist
+          server-dir: ${{ secrets.server_dir }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+          port: 22
+          protocol: ftps
