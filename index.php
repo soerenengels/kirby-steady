@@ -29,7 +29,8 @@ Kirby::plugin('soerenengels/steady', [
 	'blueprints' => [
 		'blocks/steady_paywall' => require __DIR__ . '/blueprints/blocks/steady/paywall.php',
 		'blocks/steady_plans' => __DIR__ . '/blueprints/blocks/steady/plans.php',
-		'sections/stats/steady' => require __DIR__ . '/blueprints/sections/stats/steady.php'
+		'sections/stats/steady' => require __DIR__ . '/blueprints/sections/stats/steady.php',
+		'users/steady' => __DIR__ . '/blueprints/users/steady.yml'
 	],
 	'cache' => true,
 	'cache.widget' => true,
