@@ -149,28 +149,23 @@ class Subscription {
 		$this->gifter = $gifter ? new User($gifter) : null;*/
 	}
 
-	// TODO
 	/**
 	 * Cancel Subscription
 	 * sends a POST request to steady API
 	 * to cancel $this subscription
-	 * returns true in case of success
 	 */
-	/* public function cancel(): bool {
-		$steady = steady();
-
-
+	public function cancel(): void {
 		try {
+			$steady = steady();
 			// POST request to /subscriptions/:subscription_id/cancel
-			$request = $steady->post(Endpoint::SUBSCRIPTIONS . $this->id . '/cancel');
+			$remote = $steady->post(Endpoint::SUBSCRIPTIONS->url() . '/' . $this->id . '/cancel');
+			// Flush steady subscriptions cache
+			$steady->cache->remove(Endpoint::SUBSCRIPTIONS->value);
 		} catch (Exception $e) {
-			// status code 442 means subscription can't be canceled (e.g. because it already is cancelled)
+			// TODO: status code 442 means subscription can't be canceled (e.g. because it already is cancelled)
 			echo $e->getMessage();
 		}
-		// flush steady subscriptions cache
-		$steady->cache->remove(Endpoint::SUBSCRIPTIONS);
-		return true;
-	} */
+	}
 
 	/**
 	 * returns subscriber as User
