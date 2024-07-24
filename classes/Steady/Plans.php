@@ -25,4 +25,11 @@ class Plans
 		};
 	}
 
+	public function sort(): static {
+		usort($this->items, function ($a, $b) {
+			return $a->monthly_amount <=> $b->monthly_amount;
+		});
+		return $this;
+	}
+
 }
