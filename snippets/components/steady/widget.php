@@ -5,4 +5,6 @@
  */
 if (!steady()?->widgets()?->enabled()) return;
 ?>
-<script type="text/javascript" src="<?= steady()->publication()->js_widget_url ?>"></script>
+<script>
+	<?= steady()->widgets()->getWidgetLoaderContent(); ?>
+</script>
