@@ -1,6 +1,9 @@
 <?php
 namespace Soerenengels\Steady;
 use Kirby\Toolkit\Date;
+use Kirby\Http\Url;
+use Kirby\Http\Uri;
+use Kirby\Http\Query;
 
 /**
  * Implements the api response from
@@ -95,6 +98,16 @@ class Plan
 			}
 			$this->{$key} = $value;
 		};
+	}
+
+	public function high_res_image_url($width = 1200, $height = 600, $dpr = 3): string {
+		$uri = new Uri($this->image_url);
+		$query = new Query(Url::query($this->image_url));
+		$query->w = $width;
+		$query->h = $height;
+		$query->dpr = $dpr;
+		$uri->setQuery($query);
+		return $uri->toString();
 	}
 
 }
