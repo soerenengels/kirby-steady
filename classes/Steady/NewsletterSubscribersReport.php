@@ -13,7 +13,7 @@ class NewsletterSubscribersReport extends Report {
 		})->count();
 		$indicator = $new_subscriptions > 0 ? '+' : '±';
 		$info = $indicator . ($new_subscriptions > 0 ? ($new_subscriptions > 1 ? $new_subscriptions . t('soerenengels.steady.reports.newsletter.info.plural') : t('soerenengels.steady.reports.newsletter.info.singular')) : t('soerenengels.steady.reports.newsletter.info.zero'));
-		$theme = $new_subscriptions > 1 ? 'positive' : ($new_subscriptions > 0 ? 'default' : 'notice');
+		$theme = $new_subscriptions >= 1 ? 'positive' : 'default';
 
 		// Assignment
 		$this->label = t('soerenengels.steady.reports.newsletter.label');
