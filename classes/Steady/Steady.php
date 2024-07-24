@@ -9,6 +9,7 @@ use Soerenengels\Steady\Widgets;
 use Soerenengels\Steady\Widget;
 use Soerenengels\Steady\WidgetType;
 use Soerenengels\Steady\Endpoint;
+use Soerenengels\Steady\OAuth;
 use Kirby\Cache\Cache;
 use Kirby\Http\Remote;
 use Kirby\Exception\Exception;
@@ -228,5 +229,27 @@ class Steady implements SteadyInterface
 		} catch (Exception $e) {
 			$e->getMessage('widgets parameter must be of type WidgetType');
 		}
+	}
+
+	/** oauth method */
+	public function oauth(): ?OAuth {
+		$this->kirby = $this->kirby ?? kirby();
+		$id = $this->kirby->option('soerenengels.steady.oauth.client.id');
+		$secret = $this->kirby->option('soerenengels.steady.oauth.client.secret');
+		$redirect_uri = $this->kirby->option('soerenengels.steady.oauth.redirect-uri');
+
+		if (
+			!$id ||
+			!$secret ||
+			!$redirect_uri
+		) return null;
+
+		return new OAuth(
+			$id,
+			$secret,
+			$redirect_uri,
+			$this,
+			$this->kirby
+		);
 	}
 }

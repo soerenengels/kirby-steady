@@ -36,7 +36,16 @@ Kirby::plugin('soerenengels/steady', [
 	'cache.widget' => true,
 	'options' => [
 		'token' => '...', // REQUIRED: Steady REST API-Token
-		'widget' => false, // OPTIONAL: indicate use of Steady Javascript widget
+		'widget' => false, // OPTIONAL: indicate use of Steady Javascript widget,
+		'oauth' => [
+			'client' => [
+				'id' => '...',
+				'secret' => '...',
+			],
+			'blueprint' => 'client.yml', // OPTIONAL: path to blueprint for user creation
+			'redirect-uri' => site()->url() . '/oauth/steady/callback',
+			'after-login' => 'url'
+		]
 	],
 	'siteMethods' => [
 		'steady' => function (): Steady {
@@ -51,7 +60,30 @@ Kirby::plugin('soerenengels/steady', [
 		'blocks/steady_plans' => __DIR__ . '/snippets/blocks/steady/plans.php',
 	],
 	'translations' => [
-		'en' => require __DIR__ . '/translations/en.php',
-		'de' => require __DIR__ . '/translations/de.php'
-	]
+		'en' => require_once __DIR__ . '/translations/en.php',
+		'de' => require_once __DIR__ . '/translations/de.php'
+	],
+	'routes' => function () {
+		if (!kirby()->option('soerenengels.steady.oauth.after-login') || !kirby()->option('soerenengels.steady.oauth')) return null;
+		return [
+			[
+				'pattern' => 'oauth/steady/callback',
+				'action'  => function (): void {
+					steady()
+						->oauth()
+						->processCallback(
+							get('state'),
+							get('code')
+						);
+				},
+			],
+			[
+				'pattern' => 'oauth/steady/authorize',
+				'action'  => function (): void {
+					// TODO: save referrer
+					go(steady()->oauth()->url());
+				},
+			],
+		];
+	},
 ]);
