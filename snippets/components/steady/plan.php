@@ -27,7 +27,7 @@ if (option('slugs')) {
 		<?= tt('soerenengels.steady.snippets.plan.comparison', null, [
 			'saving' => round(((1 - ($plan->annual_amount / ($plan->monthly_amount * 12)))) * 100),
 			'currency' => $plan->currency,
-			'total' => $plan->annual_amount
+			'total' => $plan->annual_amount / 100
 			]) ?>
 	</div>
 	<?php if ($plan->goal_enabled): ?>
