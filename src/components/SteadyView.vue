@@ -10,12 +10,13 @@
 						>{{ $t('soerenengels.steady.create.post') }}</k-button
 					>
 					<k-button
+						v-if="$config.debug"
 						icon="github"
 						:link="plugin['link']"
 						:title="'Version ' + plugin['version']"
 						>v{{ plugin['version'] }}</k-button
 					>
-					<k-button icon="book" :link="plugin['link']">Docs</k-button>
+					<k-button v-if="$config.debug" icon="book" :link="plugin['link']">Docs</k-button>
 					<k-button icon="steady" :link="steadyUrl" />
 				</template>
 			</k-header>
@@ -83,9 +84,11 @@ export default {
 		filteredSubscriptions() {
 			return this.subscriptions.filter(sub => sub.monthly_amount < 500);
 		},
-
 		tabs() {
-			return Object.entries(this.views).map(([key, value]) => {
+			return Object.entries(this.views).filter(([key, _]) => {
+				if (key !== 'debug') return true;
+				return this.$config.debug;
+			}).map(([key, value]) => {
 				const param = (['users', 'debug'].includes(key) ? '?tab=' : '') + (key === 'users' ? 'subscribers' : (key == 'debug' ? 'publication' : ''));
 				return {
 					name: key,
