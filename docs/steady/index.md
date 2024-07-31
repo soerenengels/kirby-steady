@@ -17,4 +17,4 @@ The **site method** `$site->steady()` or **helper function** `steady()` give you
 - [`$steady->newsletter_subscribers()`](/steady/newsletter-subscribers)
 - [`$steady->report($id)`](/steady/reports)
 - [`$steady->widgets()`](/steady/widgets)
-- [`$steady->oauth()`](/oauth)
+- [`$steady->oauth()`](/oauth/)
