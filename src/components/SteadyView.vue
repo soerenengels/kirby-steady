@@ -102,7 +102,7 @@ export default {
 };
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 #toc ol,
 #toc ul {
 	list-style: auto;
