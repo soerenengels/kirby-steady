@@ -82,4 +82,26 @@ class Widgets
 		}, 1);
 	}
 
+	public function toReports(): array {
+		$widgetsEnabled = $this->enabled();
+		$widgetsWarning = false;
+		$widgetReports[] = [
+			'info' => ($widgetsEnabled ? 'Enabled' : 'Disabled'),
+			'label' => 'Kirby: config.php',
+			'theme' => $widgetsEnabled ? 'positive' : 'negative',
+			'value' => "Widgets"
+		];
+		foreach ($this->list() as $widget) {
+			$widgetReports[] = [
+				'info' =>  $widget->enabled() ? '✓' : '✕',
+				'value' => $widget->title(),
+				'theme' => $widgetsEnabled ? ($widget->enabled() ? 'positive' : 'info') : ($widget->enabled() ? 'notice' : 'default'),
+				'link' => 'https://steadyhq.com/de/backend/publications/' . $this->steady->publication()->id . '/integrations/' . $widget->type->value . '/edit',
+				'label' => 'Steady'
+			];
+			$widgetsWarning = $widgetWarning ?? ($widgetsWarning === $widget->isActive());
+		}
+		return $widgetReports;
+	}
+
 }
