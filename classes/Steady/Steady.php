@@ -72,7 +72,7 @@ class Steady implements SteadyInterface
 		];
 
 		// Get url from Endpoint Enum or use url string
-		$url = $endpoint instanceof Endpoint ? $endpoint->url() : $endpointOrUrl;
+		$url = ($endpointOrUrl instanceof Endpoint) ? $endpointOrUrl->url() : $endpointOrUrl;
 
 		// Request data from Steady API
 		$request = Remote::request(
