@@ -19,13 +19,11 @@ jobs:
       - run: npm install
       - run: npm run docs:build
 
-      - name: FTP Deployment
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      - name: Sync Files
+        uses: SamKirkland/web-deploy@v1
         with:
-          server: ${{ secrets.server }}
-          local-dir: ./docs/.vitepress/dist/
-          server-dir: ${{ secrets.server_dir }}
-          username: ${{ secrets.username }}
-          password: ${{ secrets.password }}
-          port: 22
-          protocol: ftps
+          target-server: ${{ secrets.server }}
+          source-path: ./docs/.vitepress/dist/
+          destination-path: ${{ secrets.server_dir }}
+          remote-user: ${{ secrets.username }}
+          private-ssh-key: ${{ secrets.password }}
