@@ -6,7 +6,7 @@ if (!$plans) return;
 	<?php if ($plans): ?>
 		<section class="steady__plans__header">
 			<h2><?= t('soerenengels.steady.snippets.plans.toggle') ?></h2>
-			<label for="steady-toggle-plans">
+			<label for="steady-period">
 				<?= t('soerenengels.steady.snippets.plans.monthly') ?>
 				<input type="checkbox" id="steady-period" aria-label="Toggle Plans" name="steady-period" checked />
 				<span class="slider"></span>
