@@ -7,10 +7,10 @@ if (!$plans) return;
 		<section class="steady__plans__header">
 			<h2><?= t('soerenengels.steady.snippets.plans.toggle') ?></h2>
 			<label for="steady-period">
-				<?= t('soerenengels.steady.snippets.plans.monthly') ?>
+				<?= t('soerenengels.steady.snippets.plans.monthly', 'Monatlich') ?>
 				<input type="checkbox" id="steady-period" aria-label="Toggle Plans" name="steady-period" checked />
 				<span class="slider"></span>
-				<?= t('soerenengels.steady.snippets.plans.annual') ?>
+				<?= t('soerenengels.steady.snippets.plans.annual', 'Jährlich') ?>
 			</label>
 		</section>
 		<?php foreach ($plans as $plan) : ?>
