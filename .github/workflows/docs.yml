@@ -23,7 +23,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.server }}
-          local-dir: ./docs/.vitepress/dist
+          local-dir: ./docs/.vitepress/dist/
           server-dir: ${{ secrets.server_dir }}
           username: ${{ secrets.username }}
           password: ${{ secrets.password }}
