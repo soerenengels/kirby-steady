@@ -76,7 +76,7 @@ class OAuth
 	 */
 	public function subscription()//: ?Subscription
 	{
-		// Return Subscription if set // TODO: remove current_subscription, use cache instead
+		// Return Subscription if set
 		if (($subscription = $this->current_subscription ?? null)) return $subscription;
 		// Check if there is a token, otherwise return null
 		//if (!($token = $this->token ?? null)) return $token;
