@@ -80,7 +80,7 @@ Kirby::plugin('soerenengels/steady', [
 			[
 				'pattern' => 'oauth/steady/authorize',
 				'action'  => function (): void {
-					// TODO: save referrer
+					steady()->oauth()->setReferrer();
 					go(steady()->oauth()->url());
 				},
 			],

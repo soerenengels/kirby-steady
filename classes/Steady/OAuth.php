@@ -183,9 +183,8 @@ class OAuth
 		// Request access token
 		$token = $this->token('authorization_code', $code);
 
-		// Redirect to page set in after login option
-		// TODO: check session
-		go($this->kirby->option('soerenengels.steady.oauth.after-login'));
+		// Redirect to referrer or after login page
+		go($this->getReferrer());
 	}
 
 
@@ -320,5 +319,14 @@ class OAuth
 		$accessTokenIsSet = $this->getAccessToken() ? true : false;
 		$accessTokenIsNotExpired = $this->token->isExpired() ? false : true;
 		return $kirbyUserIsLoggedIn && $accessTokenIsSet && $accessTokenIsNotExpired;
+	}
+
+	public function setReferrer(?string $url = null): void {
+		$referrer = $url ?? $this->kirby->request()->referrer();
+		$this->kirby->session()->set('soerenengels.steady.referrer', $referrer);
+	}
+
+	public function getReferrer(): string {
+		return $this->kirby->session()->pull('soerenengels.steady.referrer') ?? $this->kirby->option('soerenengels.steady.oauth.after-login') ?? '/';
 	}
 }
