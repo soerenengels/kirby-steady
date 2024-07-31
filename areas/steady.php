@@ -14,7 +14,7 @@ return [
 			'menu' => true,
 			'dialogs' => [
 				'steady/subscriptions/cancel/(:any)' => [
-					'load' => function (string $id) {
+					'load' => function () {
 						return [
 							'component' => 'k-remove-dialog',
 							'props' => [
@@ -22,7 +22,7 @@ return [
 							]
 						];
 					},
-					'submit' => function ($id) {
+					'submit' => function ($id) use ($steady) {
 						try {
 							$steady->subscriptions()->cancel($id);
 						} catch (Exception $e) {
