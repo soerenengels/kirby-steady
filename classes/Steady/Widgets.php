@@ -66,6 +66,11 @@ class Widgets
 		return kirby()->option('soerenengels.steady.widget');
 	}
 
+	public function isWarning(): bool
+	{
+		return false;// TODO: $this->enabled() && $this->isActive();
+	}
+
 	/**
 	 * Request Steadys Javascript Code for Widget
 	 * @return string $content javscript content string
