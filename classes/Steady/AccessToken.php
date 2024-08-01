@@ -40,7 +40,8 @@ class AccessToken
 
 	public function isExpired(): bool
 	{
-		$expirationDate = $this->scheduledAt()->add($this->expiresIn());
+		if(!($scheduledAt = $this->scheduledAt())) return true;
+		$expirationDate = $scheduledAt->add($this->expiresIn());
 		return Date::now()->isAfter($expirationDate);
 	}
 
