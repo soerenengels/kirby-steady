@@ -324,11 +324,21 @@ class OAuth
 		return $kirbyUserIsLoggedIn && $accessTokenIsSet && $accessTokenIsNotExpired;
 	}
 
+	/**
+	 * Set Session with Referrer
+	 */
 	public function setReferrer(?string $url = null): void {
 		$referrer = $url ?? $this->kirby->request()->referrer();
 		$this->kirby->session()->set('soerenengels.steady.referrer', $referrer);
 	}
 
+	/**
+	 * Get Referrer from Session
+	 *
+	 * and delete the Session afterwards
+	 *
+	 * @return string $url Referrer string
+	 */
 	public function getReferrer(): string {
 		return $this->kirby->session()->pull('soerenengels.steady.referrer') ?? $this->kirby->option('soerenengels.steady.oauth.after-login') ?? '/';
 	}
