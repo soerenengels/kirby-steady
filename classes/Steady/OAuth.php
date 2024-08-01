@@ -53,7 +53,7 @@ class OAuth
 	 * with current access token
 	 *
 	 * @param Endpoint $endpoint OAuth Endpoint Enum
-	 * @re turn Remote response
+	 * @return \stdClass|array|null parsed Response data
 	 */
 	public function get(Endpoint $endpoint, ?string $token = null)
 	{
