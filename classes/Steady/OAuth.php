@@ -272,19 +272,11 @@ class OAuth
 	} */
 
 	/**
-	 * Reset Object properties and Cookies
+	 * Logout corresponding Kirby User
 	 * */
-	public function logout(): true
+	public function logout(): void
 	{
-		/* Cookie::remove('steady_access_token');
-		// TODO: reset refresh token in user
-
-		$this->verification = null;
-		$this->authorization_code = null;
-		$this->access_token = null;
-		$this->current_user = null;
-		$this->current_subscription = null; */
-		return true;
+		$this->kirby()->user()->logout();
 	}
 
 	/**
