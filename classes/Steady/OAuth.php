@@ -37,9 +37,9 @@ class OAuth
 	 * @param ?Kirby $kirby Kirby instance
 	 */
 	public function __construct(
-		private string $client_id,
-		private string $client_secret,
-		private string $redirect_uri,
+		public string $client_id,
+		public string $client_secret,
+		public string $redirect_uri,
 		private ?Steady $steady = null,
 		private ?Kirby $kirby = null
 	) {
@@ -65,7 +65,7 @@ class OAuth
 		$response = $this->steady->get(
 			$endpoint,
 			[
-				'Authorization: Bearer ' . $token,
+				'Authorization: Bearer ' . $this->token()->accessToken(),
 				'Accept: application/vnd.api+json'
 			]
 		);
@@ -79,40 +79,37 @@ class OAuth
 	 */
 	public function subscription()//: ?Subscription
 	{
-		// Return Subscription if set
-		if (($subscription = $this->current_subscription ?? null)) return $subscription;
-		// Check if there is a token, otherwise return null
-		//if (!($token = $this->token ?? null)) return $token;
-		// Request Subscription data
-		if((!$this->isLoggedIn()) || (!($token = $this->getAccessToken()))) return null;
-		$response = $this->get(Endpoint::OAUTH_CURRENT_SUBSCRIPTION, $this->getAccessToken());
+		if(!$this->isLoggedIn()) return null;
+
+		try {
+			$response = $this->get(Endpoint::OAUTH_CURRENT_SUBSCRIPTION);
+			return $response;
+			// return new Subscription($response['data']);
+		} catch (Exception $e) {
+			$e->getMessage();
+			return null;
+		}
 		// and set current_subscription
-		return $response;
-		return $this->current_subscription = new Subscription($response['data']);
 	}
 
 	/**
-	 * Returns info about the current user
+	 * Return current user
+	 *
+	 * when the (Kirby) user is logged in
+	 *
+	 * @return User|null $user Steady User
 	 */
-	public function user(): mixed//?User
+	public function user(): ?User
 	{
-		// Return User if already requested
-		if (($user = $this->current_user ?? null)) return $user;
-		// check if access token exists
-		//$this->checkCookie();
-		if((!$this->isLoggedIn()) || (!($token = $this->getAccessToken()))) return null;
-		$response = $this->get(Endpoint::OAUTH_CURRENT_USER, $token);
+		if(!$this->isLoggedIn()) return null;
 
-		return $this->current_user = new User($response['data']);
-	}
-
-	/**
-	 * Get Access Token
-	 * @return ?string access token or null
-	 */
-	public function getAccessToken(): ?string
-	{
-			return kirby()->user()?->content()->steady_access_token()->yaml()['access_token'] ?? null;
+		try {
+			$response = $this->get(Endpoint::OAUTH_CURRENT_USER);
+			return new User($response['data']);
+		} catch (Exception $e) {
+			echo $e->getMessage(); // TODO: handle exception
+			return null;
+		}
 	}
 
 	/**
@@ -184,7 +181,10 @@ class OAuth
 		if (!$this->isVerified($state)) throw new Exception('State is not verified.');
 
 		// Request access token
-		$token = $this->token('authorization_code', $code);
+		$response = $this->token()->request(token: $code);
+
+		// Save Token to KirbyUser and log in
+		$this->token()->save($response);
 
 		// Redirect to referrer or after login page
 		go($this->getReferrer());
@@ -192,12 +192,7 @@ class OAuth
 
 
 	/**
-	 * Get Steady Access Token
-	 *
-	 * __Step 5:__ It's time for an access token.
-	 * With some data in exchange we request
-	 * an access token. The request response gets
-	 * stored in a new AccessToken object.
+	 * Handle Tokens
 	 *
 	 * @param string $grant_type 'authorization_code'|'refresh_token'
 	 * @return ?AccessToken access_token or null
@@ -205,71 +200,9 @@ class OAuth
 	public function token(
 		$grant_type = 'authorization_code',
 		$token = null
-	): mixed/* |?AccessToken */ {
-		$data = [
-			'client_id' => $this->client_id,
-			'client_secret' => $this->client_secret,
-			'grant_type' => $grant_type,
-			'redirect_uri' => $this->redirect_uri,
-			'code' => $token ?? $this->authorization_code
-		];
-		/* if ($grant_type == 'authorization_code') { */
-			/* $data += [
-
-			]; */
-		/* } else {
-			$data[] = [
-				'refresh_token' => $token ?? $this->getRefreshToken()
-			];
-		} */
-
-
-		/* $response = $this->steady->post(
-			Endpoint::OAUTH_ACCESS_TOKEN,
-			$data
-		); */
-		$remote = Remote::request(Endpoint::OAUTH_ACCESS_TOKEN->url(), [
-			'method' => 'POST',
-			'headers' => [
-				'Accept: application/json'
-			],
-			'data' => $data,
-		]);
-		$access_token = new AccessToken($remote, $this);
-		return true;
-		/*
-		F::write(kirby()->root('logs') . '/log.txt', $response->toString());
-		return $response;
-		/* } catch (Exception $e) {
-			$e->getMessage();
-			return 'error?';
-			return null;
-		} */
+	): AccessToken {
+		return new AccessToken($this);
 	}
-
-	/**
-	 * Get refresh token
-	 * @return ?string returns refresh token or null
-	 */
-	/* private function getRefreshToken(): ?string
-	{
-		if (!($email = $this->user()->email)) return null;
-		if (!($user = kirby()->user($email))) return null;
-		$refresh_token = $user->content()->refresh_token();
-		return $refresh_token;
-	} */
-
-	/**
-	 * Refresh Current Users Access Token
-	 */
-	/* public function updateAccessToken(): AccessToken
-	{
-		$response = $this->token(
-			'refresh_token',
-			$this->refresh_token
-		);
-		return new AccessToken($response);
-	} */
 
 	/**
 	 * Logout corresponding Kirby User
@@ -311,9 +244,9 @@ class OAuth
 	 */
 	public function isLoggedIn(): bool {
 		$kirbyUserIsLoggedIn = $this->kirby->user() ? true : false;
-		$accessTokenIsSet = $this->getAccessToken() ? true : false;
-		$accessTokenIsNotExpired = $this->token->isExpired() ? false : true;
-		return $kirbyUserIsLoggedIn && $accessTokenIsSet && $accessTokenIsNotExpired;
+		$accessTokenIsSet = $this->token()->accessToken() ? true : false;
+		$accessTokenIsNotExpired = $this->token()->isExpired() ? false : true;
+		return $kirbyUserIsLoggedIn  && $accessTokenIsSet /*&& $accessTokenIsNotExpired */;
 	}
 
 	/**
