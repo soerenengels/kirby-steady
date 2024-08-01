@@ -14,9 +14,12 @@ use Kirby\Cms\App as Kirby;
 
 
 /**
+ * OAuth Class
+ *
  * Enables an OAuth Flow for Steady
- * @method user() returns current User object or null
- * @method subscription() returns current Subscription object or null
+ *
+ * @method user() Return current User or null
+ * @method subscription() Return current Subscription or null
  * @method string url() Return authorization url
  */
 class OAuth
