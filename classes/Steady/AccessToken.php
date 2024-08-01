@@ -131,10 +131,11 @@ class AccessToken
 		return true;
 	}
 
-	private function scheduledAt(): ?\Kirby\Toolkit\Date
+	public function scheduledAt(): ?\Kirby\Toolkit\Date
 	{
+		if(!($user = kirby()->user())) return null;
 		return new Date(
-			kirby()->user()?->content()->steady_access_token()->yaml()['scheduled_at']
+			$user->content()->steady_access_token()->yaml()['scheduled_at']
 		) ?? null;
 	}
 
