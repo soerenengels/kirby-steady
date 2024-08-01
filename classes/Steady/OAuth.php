@@ -204,7 +204,7 @@ class OAuth
 	 * */
 	public function logout(): void
 	{
-		$this->kirby()->user()->logout();
+		$this->kirby->user()->logout();
 	}
 
 	/**
