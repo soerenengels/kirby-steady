@@ -109,7 +109,7 @@ class OAuth
 	 */
 	public function getAccessToken(): ?string
 	{
-			return kirby()->user()->content()->steady_access_token()->yaml()['access_token'] ?? null;
+			return kirby()->user()?->content()->steady_access_token()->yaml()['access_token'] ?? null;
 	}
 
 	/**
