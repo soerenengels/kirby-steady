@@ -84,6 +84,13 @@ Kirby::plugin('soerenengels/steady', [
 					go(steady()->oauth()->url());
 				},
 			],
+			[
+				'pattern' => 'oauth/steady/logout',
+				'action'  => function (): void {
+					steady()->oauth()->logout();
+					go('/steady');
+				},
+			],
 		];
 	},
 ]);
