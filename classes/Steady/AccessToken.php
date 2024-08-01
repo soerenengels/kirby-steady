@@ -34,7 +34,7 @@ class AccessToken
 
 	private function expiresIn(): DateInterval
 	{
-		$timestamp = kirby()->user()->content()->steady_access_token()->yaml()['expires_in'] ?? 604800;
+		$timestamp = kirby()->user()?->content()->steady_access_token()->yaml()['expires_in'] ?? 604800;
 		return new DateInterval('PT' . $timestamp . 'S');
 	}
 
