@@ -17,7 +17,7 @@
 						>v{{ plugin['version'] }}</k-button
 					>
 					<k-button v-if="$config.debug" icon="book" :link="plugin['link']">Docs</k-button>
-					<k-button icon="steady" :link="steadyUrl" />
+					<k-button icon="steady" :link="`https://steadyhq.com/de/backend/publications/${publication.id}/home`" />
 				</template>
 			</k-header>
 
@@ -78,9 +78,6 @@ export default {
 		};
 	},
 	computed: {
-		steadyUrl() {
-			return `https://steadyhq.com/de/backend/publications/${this.publication.id}/home`;
-		},
 		filteredSubscriptions() {
 			return this.subscriptions.filter(sub => sub.monthly_amount < 500);
 		},
