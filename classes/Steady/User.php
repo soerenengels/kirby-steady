@@ -51,4 +51,14 @@ class User
 			$this->{$key} = $value;
 		};
 	}
+
+	/**
+	 * Return full name
+	 *
+	 * @return ?string $fullname Concat first and last name if both are set
+	 */
+	public function fullname(): ?string {
+		if((!$this->first_name) || (!$this->last_name)) return null;
+		return $this->first_name . ' ' . $this->last_name;
+	}
 }
