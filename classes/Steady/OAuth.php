@@ -24,11 +24,6 @@ use Kirby\Cms\App as Kirby;
  */
 class OAuth
 {
-	private string $authorization_code;
-	private AccessToken $token;
-	private ?User $current_user; // TODO: remove
-	private ?Subscription $current_subscription; // TODO: remove
-
 	/**
 	 * @param string $client_id Steady OAuth Client Id
 	 * @param string $client_secret Steady OAuth Client Secret
