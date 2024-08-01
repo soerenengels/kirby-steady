@@ -105,11 +105,11 @@ export default {
 				{
 					text: this.$t('soerenengels.steady.open'),
 					icon: 'open',
-					link: `https://steadyhq.com/de/backend/publications/${this.publication.id}/members/${row.id}`
+					link: `https://steadyhq.com/backend/publications/${this.publication.id}/members/${row.id}`
 				},{
 					text: this.$t('soerenengels.steady.message.send'),
 					icon: 'email',
-					link: `https://steadyhq.com/de/backend/publications/${this.publication.id}/messages#/${publicationName}/${row.id}`
+					link: `https://steadyhq.com/backend/publications/${this.publication.id}/messages#/${publicationName}/${row.id}`
 				},{
 					text: this.$t('soerenengels.steady.subscriptions.cancel'),
 					icon: 'cancel',
