@@ -72,13 +72,13 @@ class OAuth
 	 * for the current user. If the user has no subscription,
 	 * or it has expired, the data attribute of the response is null.
 	 */
-	public function subscription()//: ?Subscription
+	public function subscription(): ?mixed
 	{
 		if(!$this->isLoggedIn()) return null;
 
 		try {
 			$response = $this->get(Endpoint::OAUTH_CURRENT_SUBSCRIPTION);
-			return $response;
+			return $response['data'] == null ? null : $response;
 			// return new Subscription($response['data']);
 		} catch (Exception $e) {
 			$e->getMessage();
