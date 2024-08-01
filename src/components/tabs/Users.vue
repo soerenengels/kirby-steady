@@ -20,7 +20,8 @@ export default {
 	props: {
 		tab: String,
 		members: Array,
-		subscribers: Array
+		subscribers: Array,
+		publication: Object
 	},
 	data() {
 		return {
@@ -47,6 +48,12 @@ export default {
 					id: {
 						label: this.$t('soerenengels.steady.id')
 					},
+					name: {
+						label: this.$t('soerenengels.steady.member'),
+						type: 'text',
+						width: '1/4',
+						mobile: true,
+					},
 					active_from: {
 						label: this.$t('soerenengels.steady.activated'),
 						type: 'steadyDate',
@@ -54,20 +61,26 @@ export default {
 						align: 'right',
 						mobile: true
 					},
+					state: {
+						label: this.$t('soerenengels.steady.state'),
+						type: 'tags',
+						width: '1/8'
+					},
+					plan: {
+						label: this.$t('soerenengels.steady.plan'),
+						type: 'text',
+						width: '1/6',
+						mobile: true
+					},
 					monthly_amount: {
 						label: this.$t('soerenengels.steady.monthly-amount'),
 						mobile: true,
 						before: '€',
-						width: '1/4',
+						width: '1/6',
 						type: 'number'
 					},
 					period: {
 						label: this.$t('soerenengels.steady.period'),
-						type: 'tags',
-						width: '1/8'
-					},
-					state: {
-						label: this.$t('soerenengels.steady.state'),
 						type: 'tags',
 						width: '1/8'
 					}
@@ -86,8 +99,18 @@ export default {
 	},
 	methods: {
 		options(row) {
+			const url = new URL(this.publication.campaign_page_url)
+			const publicationName = url.pathname.substring(1)
 			return [
 				{
+					text: this.$t('soerenengels.steady.open'),
+					icon: 'open',
+					link: `https://steadyhq.com/de/backend/publications/${this.publication.id}/members/${row.id}`
+				},{
+					text: this.$t('soerenengels.steady.message.send'),
+					icon: 'email',
+					link: `https://steadyhq.com/de/backend/publications/${this.publication.id}/messages#/${publicationName}/${row.id}`
+				},{
 					text: this.$t('soerenengels.steady.subscriptions.cancel'),
 					icon: 'cancel',
 					click: () => this.$dialog(`steady/subscriptions/cancel/${row.id}`)
@@ -111,9 +134,18 @@ export default {
 		},
 		rows() {
 			return this[this.tab]?.map(row => {
+				// Users
+				if (this.tab == 'subscribers') return {
+					...row
+				};
+				// Members
 				return {
-					...row,
-					monthly_amount: row.monthly_amount / 100
+					...row.data,
+					id: row.subscriber.id,
+					name: row.subscriber.attributes['first-name'] + ' ' + row.subscriber.attributes['last-name'],
+					plan: row.plan.attributes.name,
+					state: this.$t('soerenengels.steady.state.' + row.data.state),
+					monthly_amount: row.data.monthly_amount / 100
 				};
 			});
 		},

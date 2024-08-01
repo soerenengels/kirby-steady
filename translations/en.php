@@ -3,7 +3,10 @@
 $steady = steady();
 return [
 	'soerenengels.steady' => 'Steady',
+	'soerenengels.steady.open' => 'View on Steady',
+	'soerenengels.steady.message.send' => 'Send a message',
 	'soerenengels.steady.create.post' => 'Create Post',
+	'soerenengels.steady.plan' => 'Plan',
 	'soerenengels.steady.plans' => 'Plans',
 	'soerenengels.steady.insights' => 'Insights',
 	'soerenengels.steady.debug' => 'Debug',
@@ -18,6 +21,7 @@ return [
 	'soerenengels.steady.debug' => 'Debug',
 	'soerenengels.steady.users' => 'Users',
 	'soerenengels.steady.users.headline' => 'Manage your Users',
+	'soerenengels.steady.member' => 'Member',
 	'soerenengels.steady.members' => 'Members',
 	'soerenengels.steady.subscribers' => 'Subscribers',
 	'soerenengels.steady.subscriptions.cancel' => 'Cancel Subscription',
@@ -25,6 +29,7 @@ return [
 	'soerenengels.steady.subscriptions.cancelled' => 'Subscription cancelled',
 	'soerenengels.steady.oauth' => 'API OAuth',
 	'soerenengels.steady.state' => 'State',
+	'soerenengels.steady.state.active' => 'Active',
 	'soerenengels.steady.period' => 'Period',
 	'soerenengels.steady.monthly-amount' => 'Monthly Amount',
 	'soerenengels.steady.activated' => 'Activated at',

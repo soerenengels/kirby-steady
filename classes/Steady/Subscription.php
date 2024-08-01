@@ -5,6 +5,7 @@ use Soerenengels\Steady\User;
 use Soerenengels\Steady\Endpoint;
 use Kirby\Exception\Exception;
 use Kirby\Toolkit\Date;
+use Kirby\Toolkit\A;
 
 
 /**
@@ -84,6 +85,8 @@ class Subscription {
 	/** @var User|false if included gifter as User, else false */
 	public User|false $gifter;
 
+	private array $relationships;
+	private array $included;
 
 	public function __construct(
 		array $response
@@ -125,6 +128,8 @@ class Subscription {
 
 		// relations
 		// relation: plan
+		$this->relationships = $relationships;
+		$this->included = $included;
 		/* $plan_id = $relationships['plan']['data']['id'];
 		$plan = array_filter($included, function($item) use ($plan_id) {
 			return $item['type'] == 'plan' && $item['id'] == $plan_id;
@@ -168,24 +173,40 @@ class Subscription {
 	}
 
 	/**
-	 * returns subscriber as User
+	 * returns subscriber as array
 	*/
-	public function subscriber(): ?User {
-		return $this->subscriber;
+	public function subscriber(): ?array {
+		return A::find($this->included, function($item) {
+			return (
+				$item['type'] == 'user' &&
+				$item['id'] == $this->relationships['subscriber']['data']['id']
+			);
+		});
 	}
 
 	/**
 	 * returns gifter as User, if subscription is gifted,
 	 * else null
 	 */
-	public function gifter(): ?User {
-		return $this->gifter;
+	public function gifter(): ?array {
+		if (!array_key_exists('gifter', $this->relationships)) return null;
+		return A::find($this->included, function($item) {
+			return (
+				$item['type'] == 'user' &&
+				$item['id'] == $this->relationships['gifter']['data']['id']
+			);
+		});
 	}
 
 	/**
 	 * returns plan as Plan
 	 */
-	public function plan(): ?Plan {
-		return $this->plan;
+	public function plan(): ?array {
+		return A::find($this->included, function($item) {
+			return (
+				$item['type'] == 'plan' &&
+				$item['id'] == $this->relationships['plan']['data']['id']
+			);
+		});
 	}
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Soerenengels\Steady;
 use Soerenengels\Steady\Subscription;
+use Kirby\Toolkit\A;
 
 /**
  * Steady Subscriptions
@@ -46,6 +47,17 @@ class Subscriptions
 			return $item['type'] == 'user';
 		});
 		$this->included_users = $users;
+	}
+
+	public function toArray() {
+		return A::map($this->list(), function($item) {
+			return [
+				'data' => $item,
+				'plan' => $item->plan(),
+				'subscriber' => $item->subscriber(),
+				'gifter' => $item->gifter()
+			];
+		});
 	}
 
 }

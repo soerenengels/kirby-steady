@@ -3,7 +3,10 @@
 $steady = steady();
 return [
 	'soerenengels.steady' => 'Steady',
+	'soerenengels.steady.open' => 'Auf Steady anzeigen',
+	'soerenengels.steady.message.send' => 'Nachricht senden',
 	'soerenengels.steady.create.post' => 'Beitrag erstellen',
+	'soerenengels.steady.plan' => 'Paket',
 	'soerenengels.steady.plans' => 'Pakete',
 	'soerenengels.steady.insights' => 'Einblicke',
 	'soerenengels.steady.debug' => 'Debug',
@@ -18,6 +21,7 @@ return [
 	'soerenengels.steady.debug' => 'Debug',
 	'soerenengels.steady.users' => 'User*innen',
 	'soerenengels.steady.users.headline' => 'Manage deine User*innen',
+	'soerenengels.steady.member' => 'Mitglied',
 	'soerenengels.steady.members' => 'Mitglieder',
 	'soerenengels.steady.subscribers' => 'Abonennt*innen',
 	'soerenengels.steady.subscriptions.cancel' => 'Mitgliedschaft abbrechen',
@@ -25,6 +29,7 @@ return [
 	'soerenengels.steady.subscriptions.cancelled' => 'Mitgliedschaft erfolgreich aufgelöst',
 	'soerenengels.steady.oauth' => 'API OAuth',
 	'soerenengels.steady.state' => 'Status',
+	'soerenengels.steady.state.active' => 'Aktiv',
 	'soerenengels.steady.period' => 'Zeitraum',
 	'soerenengels.steady.monthly-amount' => 'Monatlicher Beitrag',
 	'soerenengels.steady.activated' => 'Aktiviert',

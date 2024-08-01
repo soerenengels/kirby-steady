@@ -33,6 +33,7 @@
 			<k-steady-tab-users
 				:members="subscriptions"
 				:subscribers="newsletterSubscribers"
+				:publication="publication"
 				:tab="subtab"
 				v-if="tab == 'users'"
 			/>

@@ -75,7 +75,7 @@ return [
 								'plugin' => kirby()->plugin('soerenengels/steady')->toArray(),
 								'publication' => $steady->publication() ?? [],
 								'reports' => $reports ?? [],
-								'subscriptions' => $steady->subscriptions()->list(),
+								'subscriptions' => $steady->subscriptions()->toArray(),
 								'subtab' => get('tab', null),
 								'tab' => $tab,
 								'widgets' => ($widgets = $steady->widgets())->toReports(),
