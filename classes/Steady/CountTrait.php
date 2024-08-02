@@ -8,4 +8,18 @@ trait CountTrait {
 	public function count(): int {
 		return count($this->items);
 	}
+
+	/**
+	 * Returns first item
+	 */
+	public function first() {
+		return $this->items[0];
+	}
+
+	/**
+	 * Returns last item
+	 */
+	public function last() {
+		return end($this->items);
+	}
 }
