@@ -5,8 +5,8 @@ return [
 	'label' => t('soerenengels.steady.blueprints.section.label'),
 	'size' => 'huge',
 	'reports' => [
-		'site.steady.report("members")',
-		'site.steady.report("newsletter_subscribers")',
-		'site.steady.report("revenue")'
+		'members' => 'site.steady.report("members")',
+		'subscribers' => 'site.steady.report("newsletter_subscribers")',
+		'revenue' => 'site.steady.report("revenue")'
 	]
 ];
