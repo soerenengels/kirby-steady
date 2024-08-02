@@ -1,8 +1,8 @@
 ![Kirby x Steady](https://github.com/soerenengels/kirby-steady/blob/main/assets/kirby-steady-feature-preview.png?raw=true)
 
-# Kirby x Steady
+# Kirby 🤝 Steady
 
-**[Kirby](https://getkirby.com/) meets [Steady](https://steadyhq.com/).** A plugin for Kirby `Version 4 and later` and `php >= 8.2`. Connect your Kirby site to your Steady publication. Request data for your publication from the [Steady API](https://developers.steadyhq.com/#rest).
+**[Kirby](https://getkirby.com/) meets [Steady](https://steadyhq.com/).** A plugin for Kirby `Version 4 and later` and `php >= 8.2`. Connect your Kirby site to your Steady publication. Request data for your publication, newsletter subscribers, members ans plans from the Steady [API](https://developers.steadyhq.com/#rest).
 
 ## Features
 
@@ -26,24 +26,21 @@ composer require soerenengels/kirby-steady
 
 ### Quick setup
 
-To use this plugin, add your required [REST API-Key](https://steadyhq.com/backend/publications/default/integrations/api/edit) in your `config.php`. Keep the key secure.
+For basic usage, add your required [REST API-Key](https://steadyhq.com/backend/publications/default/integrations/api/edit) in your `config.php`. Keep the key secure.
 
 ```php
 return [
-  // ...
   'options' => [
     'soerenengels.steady' => [
-      'token' => '...', // Instead of ... use your API key
+      'token' => '...',
     ]
   ]
-]
+];
 ```
-
 
 ## Documentation
 
-TODO: Build and host Documentation
-TODO: Add Link to Documentation
+Jump to the [documentation](https://kirby-steady.soerenengels.de/).
 
 ## Features
 
@@ -51,16 +48,13 @@ TODO: Add Link to Documentation
 
 - **Stay on top of the things** with the Steady area: Look into your Publication stats, keep track of your Widgets and get an overview of the data from the `$steady`-API.
 - **Mind the Numbers** with Steady reports: Add Steady reports to your panel via a the stats section or as individual reports. 
-- Display your plans in your templates: Add a **Steady: Plans** `$block` by adding it to your fieldsets.
-- Steady paywall as `$block`
-- Adblock detection
+- **Display your plans** in your templates: Add a **Steady: Plans** `$block` by adding it to your fieldsets.
+- **Steady paywall** as `$block`
+- **Adblock detection**
 
 ## Outlook
 
-- fix Subscriptions class
 - feature-checkout Integrate Steady Checkout with checkout_url, checkout_snippet and checkout_thanks
-- feature-oauth: see <https://github.com/oliverschloebe/oauth2-steadyhq>, connect steady users to kirby users
-- feature-webhook: Webhook for new Steady Subscriptions
 
 ## Available Translations
 
