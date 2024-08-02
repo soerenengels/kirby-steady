@@ -47,7 +47,6 @@
 				:widgets="widgets"
 				v-if="tab == 'debug'"
 			/>
-			<k-steady-tab-oauth v-if="tab == 'oauth'" />
 		</k-view>
 	</k-panel-inside>
 </template>
@@ -73,8 +72,7 @@ export default {
 				insights: 'chart',
 				widgets: this.widgetsEnabled ? 'toggle-on' : 'toggle-off',
 				users: 'users',
-				debug: 'code',
-				/* oauth: 'key' */
+				debug: 'code'
 			}
 		};
 	},
