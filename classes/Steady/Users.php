@@ -5,13 +5,6 @@ use Soerenengels\Steady\User;
 use Kirby\Cms\Users as KirbyUsers;
 use Kirby\Cms\User as KirbyUser;
 
-// FEATURE: public function add(Users|User|array $subscriber): Users;
-// FEATURE: group()/groupBy()
-// FEATURE: isEmpty()/isNotEmpty()
-// FEATURE: remove()
-// FEATURE: not()
-// FEATURE: sort()
-
 /**
  * Users Class
  * derived from object included in Steady API response
