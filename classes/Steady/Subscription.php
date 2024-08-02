@@ -88,6 +88,8 @@ class Subscription {
 	private array $relationships;
 	private array $included;
 
+	use toArrayTrait;
+
 	public function __construct(
 		array $response
 	) {

@@ -17,7 +17,7 @@ use Kirby\Toolkit\A;
 class Subscriptions implements \IteratorAggregate
 {
 
-	use hasItems, FindTrait, CountTrait, FactoryTrait, FilterTrait;
+	use hasItems, FindTrait, CountTrait, FactoryTrait, FilterTrait, toArrayTrait;
 
 	/** @var array array of included users */
 	public array $included_users = [];
@@ -47,17 +47,6 @@ class Subscriptions implements \IteratorAggregate
 			return $item['type'] == 'user';
 		});
 		$this->included_users = $users;
-	}
-
-	public function toArray() {
-		return A::map($this->list(), function($item) {
-			return [
-				'data' => $item,
-				'plan' => $item->plan(),
-				'subscriber' => $item->subscriber(),
-				'gifter' => $item->gifter()
-			];
-		});
 	}
 
 }

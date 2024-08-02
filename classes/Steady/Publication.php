@@ -81,4 +81,5 @@ class Publication
 			$this->{$key} = $value;
 		};
 	}
+	use toArrayTrait;
 }

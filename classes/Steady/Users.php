@@ -31,7 +31,7 @@ use Kirby\Cms\User as KirbyUser;
 class Users implements \IteratorAggregate
 {
 
-	use hasItems, CountTrait, FindTrait, FactoryTrait, FilterTrait;
+	use hasItems, CountTrait, FindTrait, FactoryTrait, FilterTrait, toArrayTrait;
 
 	/** @var User[] array of User objects */
 	private array $items = [];

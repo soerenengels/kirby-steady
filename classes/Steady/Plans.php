@@ -14,7 +14,7 @@ namespace Soerenengels\Steady;
  */
 class Plans implements \IteratorAggregate
 {
-	use hasItems, FactoryTrait, FilterTrait, FindTrait, CountTrait;
+	use hasItems, FactoryTrait, FilterTrait, FindTrait, CountTrait, toArrayTrait;
 
 	/** @param array $data Steady API Response */
 	function __construct(

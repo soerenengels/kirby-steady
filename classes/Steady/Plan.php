@@ -110,4 +110,5 @@ class Plan
 		return $uri->toString();
 	}
 
+	use toArrayTrait;
 }

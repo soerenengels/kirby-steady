@@ -70,10 +70,10 @@ return [
 								]
 							],
 							'props' => [
-								'newsletterSubscribers' => $steady->newsletter_subscribers()->list(),
-								'plans' => $steady->plans()->list(),
+								'newsletterSubscribers' => $steady->newsletter_subscribers()->toArray(),
+								'plans' => $steady->plans()->toArray(),
 								'plugin' => kirby()->plugin('soerenengels/steady')->toArray(),
-								'publication' => $steady->publication() ?? [],
+								'publication' => $steady->publication()->toArray() ?? [],
 								'reports' => $reports ?? [],
 								'subscriptions' => $steady->subscriptions()->toArray(),
 								'subtab' => get('tab', null),
