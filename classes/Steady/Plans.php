@@ -27,7 +27,7 @@ class Plans implements \IteratorAggregate
 
 	public function sort(): static {
 		usort($this->items, function ($a, $b) {
-			return $a->monthly_amount <=> $b->monthly_amount;
+			return $a->monthly_amount() <=> $b->monthly_amount();
 		});
 		return $this;
 	}

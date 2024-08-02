@@ -5,7 +5,7 @@ $plans = steady()->plans();
 if ($block->steady_plans_customize() == "true") {
 	$plans = $plans->filter(function (\Soerenengels\Steady\Plan $plan) use ($block) {
 		return in_array(
-			$plan->id,
+			$plan->id(),
 			$block->steady_plans()->split()
 		);
 	});

@@ -3,14 +3,14 @@ $steady = steady();
 $publication = $steady->publication();
 $plans = $steady->plans();
 $placeholder = [
-	'url' => 'https://steadyhq.com/en/backend/publications/' . $publication->id . '/plans'
+	'url' => 'https://steadyhq.com/en/backend/publications/' . $publication->id() . '/plans'
 ];
 $options = [];
-$published_plans = $plans->filter(fn ($plan) => $plan->state == "published");
-foreach ($published_plans->list() as $plan) {
+$published_plans = $plans->filter(fn ($plan) => $plan->state() == "published");
+foreach ($published_plans as $plan) {
 	$options[] = [
-		'text' => $plan->name,
-		'value' => $plan->id
+		'text' => $plan->name(),
+		'value' => $plan->id()
 	];
 }
 return [

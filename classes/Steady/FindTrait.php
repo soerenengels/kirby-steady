@@ -12,7 +12,7 @@ trait FindTrait {
 		return array_reduce(
 			$this->items,
 			function (?object $carry, ?object $item) use ($id) {
-				return $carry ?? ($item->id === $id ? $item : $carry);
+				return $carry ?? ($item->id() === $id ? $item : $carry);
 			},
 			null
 		);

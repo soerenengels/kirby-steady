@@ -49,7 +49,7 @@ class Users implements \IteratorAggregate
 	 * Create Kirby $users from Users
 	 * @param string $role Kirby $user role for newsletter subscribers
 	 */
-	public function createKirbyUsers(
+	/* public function createKirbyUsers(
 		string $role = 'steady-subscriber'
 	): KirbyUsers {
 		$new_users = array_map(
@@ -104,5 +104,5 @@ class Users implements \IteratorAggregate
 			$this->list()
 		);
 		return $users;
-	}
+	} */
 }

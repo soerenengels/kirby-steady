@@ -16,74 +16,49 @@ use Kirby\Toolkit\A;
  * @param array $response associative array with steady api response of keys 'data' and 'includes'
  *
  * @method cancel() cancels subscription
- * @method subscriber() returns subscriber
  * @method gifter()
  * @method plan()
+ * @method subscriber() return subscriber
+ *
+ * @method string id() Id of the the subscription
+ * @method string type() Type
+ * @method string id() the id of the the publication
+ * @method string type() type
+ * @method string state() guest / in_trial / active / not_renewing
+ * @method string period() monthly / annual — the period of the contract of the user
+ * @method string currency() EUR / USD / SEK
+ * @method int monthly_amount() monthly amount of the associated plan (users don’t pay in states in_trial and guest)
+ * @deprecated @method int monthly_amount_in_cents() Use monthly_amount() instead.
+ * @method Date inserted_at() datetime converted to Kirby\Toolkit\Date of the creation of the subscription
+ * @method Date updated_at() datetime converted to Kirby\Toolkit\Date when the subscription was updated the last time on our system
+ * @method Date|null cancelled_at() datetime converted to Kirby\Toolkit\Date of the cancellation / null
+ * @method Date|null trial_ends_at() datetime converted to Kirby\Toolkit\Date when the subscription's trial period will end or has ended / null
+ * @method Date|null active_from() datetime converted to Kirby\Toolkit\Date when the subscription was paid for the first time/ null
+ * @method Date|null expires_at() datetime converted to Kirby\Toolkit\Date when the subscription will expire / null
+ * @method string rss_feed_url() if you use our podcast features, this is the rss-feed url with authentication for the subscriber
+ * @method string utm_campaign() utm campaign parameter
+ * @method bool is_gift() boolean; - if the subscription was a gift. If true, gifter information is included in the payload
+ * @method string plan_id() id of steady plan
  */
 class Subscription {
 
-	/** @var string the id of the the publication */
-	public string $id;
-
-	/** @var string type */
-	public string $type;
-
-	/** @var string guest / in_trial / active / not_renewing */
-	public string $state;
-
-	/** @var string monthly / annual — the period of the contract of the user */
-	public string $period;
-
-	/** @var string EUR / USD / SEK */
-	public string $currency;
-
-	/** @var int monthly amount of the associated plan (users don’t pay in states in_trial and guest) */
-	public int $monthly_amount;
-
-	/**
-	 * @deprecated Use monthly-amount instead.
-	 * @var int
-	 * */
-	public int $monthly_amount_in_cents;
-
-	/** @var Date datetime converted to Kirby\Toolkit\Date of the creation of the subscription */
-	public Date $inserted_at;
-
-	/** @var Date datetime converted to Kirby\Toolkit\Date when the subscription was updated the last time on our system */
-	public Date $updated_at;
-
-	/** @var Date|null datetime converted to Kirby\Toolkit\Date of the cancellation / null */
-	public ?Date $cancelled_at;
-
-	/** @var Date|null datetime converted to Kirby\Toolkit\Date when the subscription's trial period will end or has ended / null */
-	public ?Date $trial_ends_at;
-
-	/** @var Date|null datetime converted to Kirby\Toolkit\Date when the subscription was paid for the first time/ null */
-	public ?Date $active_from;
-
-	/** @var Date|null datetime converted to Kirby\Toolkit\Date when the subscription will expire / null */
-	public ?Date $expires_at;
-
-	/** @var string if you use our podcast features, this is the rss-feed url with authentication for the subscriber */
-	public string $rss_feed_url;
-
-	/** @var string utm campaign parameter */
-	public ?string $utm_campaign;
-
-	/** @var bool boolean; - if the subscription was a gift. If true, gifter information is included in the payload */
-	public bool $is_gift;
-
-	/** @var string $plan_id id of steady plan */
-	public string $plan_id;
-
-	/** @var Plan included Plan */
-	public Plan $plan;
-
-	/** @var User|false if included subscriber as User, else false */
-	public User|false $subscriber;
-
-	/** @var User|false if included gifter as User, else false */
-	public User|false $gifter;
+	private readonly string $id;
+	private readonly string $type;
+	private readonly string $state;
+	private readonly string $period;
+	private readonly string $currency;
+	private readonly int $monthly_amount;
+	private readonly int $monthly_amount_in_cents;
+	private readonly Date $inserted_at;
+	private readonly Date $updated_at;
+	private readonly ?Date $cancelled_at;
+	private readonly ?Date $trial_ends_at;
+	private readonly ?Date $active_from;
+	private readonly ?Date $expires_at;
+	private readonly string $rss_feed_url;
+	private readonly ?string $utm_campaign;
+	private readonly bool $is_gift;
+	private readonly string $plan_id;
 
 	private array $relationships;
 	private array $included;
@@ -156,6 +131,15 @@ class Subscription {
 		$this->gifter = $gifter ? new User($gifter) : null;*/
 	}
 
+	public function __call($name, $arguments)
+	{
+		$properties = get_class_vars($this::class);
+		if (!in_array($name, array_keys($properties))) {
+			throw new \BadMethodCallException();
+		}
+		return $this->$name;
+	}
+
 	/**
 	 * Cancel Subscription
 	 * sends a POST request to steady API
@@ -165,7 +149,7 @@ class Subscription {
 		try {
 			$steady = steady();
 			// POST request to /subscriptions/:subscription_id/cancel
-			$remote = $steady->post(Endpoint::SUBSCRIPTIONS->url() . '/' . $this->id . '/cancel');
+			$remote = $steady->post(Endpoint::SUBSCRIPTIONS->url() . '/' . $this->id() . '/cancel');
 			// Flush steady subscriptions cache
 			$steady->cache->remove(Endpoint::SUBSCRIPTIONS->value);
 		} catch (Exception $e) {

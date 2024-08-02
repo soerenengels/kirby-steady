@@ -2,7 +2,7 @@
 $isActive = $steady->widgets()->paywall()->isActive();
 
 $placeholder = [
-	'url' => 'https://steadyhq.com/en/backend/publications/' . $steady->publication()->id . '/integrations/paywall/edit'
+	'url' => 'https://steadyhq.com/en/backend/publications/' . $steady->publication()->id() . '/integrations/paywall/edit'
 ];
 return [
 	'name' => 'Steady: Paywall',

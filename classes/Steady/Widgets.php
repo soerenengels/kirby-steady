@@ -78,7 +78,7 @@ class Widgets
 	public static function getWidgetLoaderContent(): string
 	{
 		$steady = steady();
-		$url = $steady->publication()->js_widget_url;
+		$url = $steady->publication()->js_widget_url();
 		// TODO: use parent
 		$cache = $steady->cache;
 		return $cache->getOrSet('js-widget-url', function() use ($url) {
@@ -101,7 +101,7 @@ class Widgets
 				'info' =>  $widget->enabled() ? '✓' : '✕',
 				'value' => $widget->title(),
 				'theme' => $widgetsEnabled ? ($widget->enabled() ? 'positive' : 'info') : ($widget->enabled() ? 'notice' : 'default'),
-				'link' => 'https://steadyhq.com/de/backend/publications/' . $this->steady->publication()->id . '/integrations/' . $widget->type->value . '/edit',
+				'link' => 'https://steadyhq.com/de/backend/publications/' . $this->steady->publication()->id() . '/integrations/' . $widget->type->value . '/edit',
 				'label' => 'Steady'
 			];
 			$widgetsWarning = $widgetWarning ?? ($widgetsWarning === $widget->isActive());
