@@ -83,6 +83,12 @@ class Plan
 	}
 
 
+	/**
+	 * @param int $width default: 1200
+	 * @param int $height default: 600
+	 * @param int $dpr default: 3
+	 * @return string url of image_url in higher resolution
+	*/
 	public function high_res_image_url($width = 1200, $height = 600, $dpr = 3): string {
 		$uri = new Uri($this->image_url());
 		$query = new Query(Url::query($this->image_url()));
