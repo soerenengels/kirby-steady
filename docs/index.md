@@ -33,11 +33,15 @@ features:
     link: blocks/adblock-detection
   - icon: 🧱
     title: Paywall
-    details: Add a Paywall $block to your articles or pages
+    details: Add a Paywall to your articles or pages with a $block or KirbyTag
     link: blocks/paywall
-  #- icon: 🔑
-    #title: OAuth
-    #details: Add a OAuth login flow with Steady to your website.
-    #link: oauth
+  - icon: 🔑
+    title: OAuth
+    details: Integrate an OAuth login flow with Steady to your website.
+    link: oauth
+  - icon: 🙋‍♂️
+    title: Manage Subscriptions
+    details: Manage your subscriptions from within the panel
+    link: panel/area
 ---
 

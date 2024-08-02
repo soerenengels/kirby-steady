@@ -25,19 +25,21 @@ sections:
 
 #### Example: Display all plans or a single plan via a `$snippet`
 
-```php
+:::code-group
+```php [All plans]
 // Display all plans
 snippet('components/steady/plans', [
-  'plans' => $steady->plans()->plans // array of Plan objects
+  'plans' => $steady->plans()
 ]);
 ```
 
-```php
+```php [Single Plan]
 // Display a single plan by id
 snippet('components/steady/plan', [
-  'plan' => $steady->plans()->find($id) // Plan object
+  'plan' => $steady->plans()->find($id)
 ]);
 ```
+:::
 
 ## Style your plans
 
@@ -46,6 +48,8 @@ The styling of the plans is up to you. For the HTML markup structure and classes
 ### Styling
 
 The styling of the plans is up to you. For the HTML markup structure and classes see [`/snippets/components/steady/plans.php`](https://github.com/soerenengels/kirby-steady/blob/main/snippets/components/steady/plans.php) and [`/snippets/components/steady/plan.php`](https://github.com/soerenengels/kirby-steady/blob/main/snippets/components/steady/plan.php). If you want to change the markup of the plans, you can overwrite those components by creating a new file in `/site/snippets/components/steady/{name-of-file-you-want-to-overwrite}.php`.
+
+#### Example: Default Styling
 
 ```css
 .steady__plans {

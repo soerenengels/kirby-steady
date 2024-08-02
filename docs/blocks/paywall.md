@@ -1,10 +1,15 @@
 # Paywall
 
-To use the Steady Paywall block, you need to **activate it** (1) in your Publications Steady settings (Integrations > Steady Paywall), **add it** (2) to your blocks fieldsets **and integrate** (3) the Steady Javascript Widget in your websites `<head>...</head>`.
+To use the Steady Paywall block, you need to 
 
-## Example: Add Paywall to your blocks fieldsets
+1. **activate it** (1) in your [Publications Steady settings](https://steadyhq.com/de/backend/publications/default/integrations/paywall/edit) (Integrations > Steady Paywall),
+2. **add it** (2) to your blocks fieldsets in your blueprint 
+3. **and integrate** (3) the Steady Javascript Widget in your websites `<head>...</head>`.
 
-```yml
+## Example
+
+:::code-group
+```yml [Blueprint]
 sections:
   content:
     fields:
@@ -16,14 +21,21 @@ sections:
           - ...
 ```
 
-```php
+```php [Template]
+<head>
+<!-- ... -->
+<?= steady()->widgets()->snippet() ?>
+</head>
+```
+
+```php [config.php]
 // /site/config/config.php
 return [
   'soerenengels.kirby-steady.widget' => true,
 ]
 ```
+:::
 
-::: tip
+:::tip ☝️ Tip
 Besides using the Paywall $block, you can also insert the Paywall with the `(paywall:)` KirbyTag.
-
 :::

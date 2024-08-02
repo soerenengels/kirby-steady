@@ -3,7 +3,7 @@ outline: deep
 ---
 # Reports
 
-Simply add Steady reports to your panel via a the stats section or as individual reports.  
+Simply add Steady reports to your panel via a stats section or as individual reports.  
 Following reports are available:
 
 - Members
@@ -26,6 +26,8 @@ section:
 ```
 
 ### Report
+
+Customize which reports and label you want to display:
 
 ```yml{6-12}
 section:

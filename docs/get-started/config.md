@@ -14,10 +14,10 @@ return [
     'soerenengels.steady' => [
 
       // Required: Steady REST API token
-      'token' => '...', // string|null, default: null
+      'token' => null, // string|null
 
       // Indicate use of Steady widget JavaScript 
-      'widget' => true, // bool, default: false
+      'widget' => false, // bool
 
       // Optional: Show or hide tabs individually
       'panel' => [ // array or bool, default: true
@@ -29,11 +29,12 @@ return [
       // Optional: OAuth settings
       'oauth' => [ // array or bool, default: false
         'client' => [
-          'id' => '...', //
+          'id' => '...',
           'secret' => '...',
         ],
         'redirect-uri' => site()->url() . '/oauth/steady/callback',
-        'after-login' => 'url'
+        'after-login' => site()->url(),
+        'after-logout' => site()->url()
       ]
     ]
   ]

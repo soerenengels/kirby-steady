@@ -9,7 +9,7 @@ $steady = $site->steady();
 $steady = steady();
 ```
 
-The **site method** `$site->steady()` or **helper function** `steady()` give you access to the [`Steady`](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/Steady.php) Class and its following methods:
+The **helper function** `steady()` or the **site method** `$site->steady()` give you access to the [`Steady`](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/Steady.php) Class and its following methods:
 
 - [`$steady->publication()`](/steady/publication)
 - [`$steady->plans()`](/steady/plans)

@@ -1,17 +1,17 @@
 # Widgets
 
-The `$steady->widgets()` method gives you access to the [Widgets](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/Widgets.php) object.
+The `$steady->widgets()` method gives you access to the [Widgets](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/Widgets.php) object. It is mostly used internally for the logic of the widgets panel tab.
 
 ## Methods
 
 - adblock(): Widget
-- enabled(): bool
-- static factory(): static
-- filter(): static
 - floatingButton(): Widget
+- paywall(): Widget
+- static factory(): static
+- enabled(): bool
+- filter(): static
 - getWidgetLoaderContent(): string
 - list(): array
-- paywall(): Widget
 
 ### Examples
 

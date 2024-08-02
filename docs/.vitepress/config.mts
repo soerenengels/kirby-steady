@@ -24,7 +24,7 @@ export default defineConfig({
         /* link: '/get-started', */
         items: [
           { text: 'Installation & Setup', link: '/get-started/install-setup' },
-          { text: 'Config', link: '/get-started/config' }
+          { text: 'Options', link: '/get-started/config' }
         ]
       },
       {
@@ -49,18 +49,23 @@ export default defineConfig({
         items: [
           { text: 'Publication', link: '/steady/publication' },
           { text: 'Plans', link: '/steady/plans' },
+          { text: 'Plan', link: '/steady/plan' },
           { text: 'Subscriptions', link: '/steady/subscriptions' },
+          { text: 'Subscription', link: '/steady/subscription' },
           { text: 'Newsletter Subscribers', link: '/steady/newsletter-subscribers' },
           { text: 'Reports', link: '/steady/reports' },
           { text: 'Widgets', link: '/steady/widgets' }
         ]
-      }/* ,
+      },
       {
         text: 'OAuth',
+        link: '/oauth',
         items: [
-          { text: 'Work to be Done', link: '/oauth' },
+          { text: 'Setup', link: '/oauth/setup' },
+          { text: 'The Flow', link: '/oauth/flow' },
+          { text: 'Reference', link: '/oauth/reference' },
         ]
-      } */
+      }
     ],
 
     socialLinks: [

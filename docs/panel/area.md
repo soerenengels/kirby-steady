@@ -10,7 +10,15 @@ You have also the option to [hide the panel area or individual tabs](/get-starte
 
 ![Steady Panel Area: Insights Tab](/assets/screenshot-steady-insights.png)
 
-...
+The Insights tab displays three reports:
+
+1. **Newsletter Subscribers** — site.steady.report("members")
+2. **Members** — site.steady.report("newsletter_subscribers")
+3. **Revenue** — site.steady.report("revenue")
+
+:::tip ☝️ Tip
+You can also use the [reports in your own stats section](/panel/reports).
+:::
 
 ## Widgets
 
@@ -18,60 +26,32 @@ Widgets are disabled by default. To use the Steady integrations, you have to ins
 
 :::code-group
 ```php [template.php]
-// ...
+<head>
+<?= steady()->widgets()->snippet() ?>
+</head>
 ```
 ```php [config.php]
-// ...
+return [
+  'options' => [
+    // Indicate, that you use the Steady Integrations on your website.
+    'soerenengels.steady.widget' => true 
+  ]
+];
 ```
 :::
 
 ![Steady Panel Area: Widgets Tab](/assets/screenshot-steady-widgets.png)
 
-<!-- <k-column width="1/3">
-						<k-section headline="How to: Activate the Widgets">
-							<k-text
-								>Click on the Widgets state to enable or disable the Widget in
-								the Steady Backend.</k-text
-							>
-							<k-headline>Config</k-headline>
-							<k-text
-								>Include the `components/steady/widget`-Snippet in your websites
-								head. Change the kirby config.php file to activate the snippet
-								an enable the use of Steady Widgets.</k-text
-							>
-							<k-headline>Paywall</k-headline>
-							<k-text
-								>You can use the Steady: Paywall $block to enable the paywall on
-								a certain webpage.</k-text
-							>
-							<k-headline>Adblock Detection</k-headline>
-							<k-text
-								>If the adblock detection is enabled in the Steady Backend and
-								the Widget option is configured, the adblock detection is
-								active.</k-text
-							>
-							<k-headline>Floating Button</k-headline>
-							<k-text
-								>If the floating button is enabled in the Steady Backend and the
-								Widget option is configured, the floating button should be
-								visible.</k-text
-							>
-							<k-headline>Checkout</k-headline>
-							<k-text
-								>Explainer on how to activate and use the Widgets (Backend,
-								Config, JS, Blocks)</k-text
-							>
-						</k-section>
-					</k-column> -->
+The Widgets tab reflects the current configuration of your Widgets in the Steady Backend and on your site. You will be redirected to the widgets Steady settings, when you click on the corresponding stat and are logged in into Steady.
 
 ## Users
 
-The Users tab gives you access to your newsletter subscribers and members. You can cancel subscriptions for your newsletter subscribers from within the panel.
+The Users tab gives you access to your newsletter subscribers and members. You can cancel subscriptions for your members from within the panel.
 
 ![Steady Panel Area: Users Tab](/assets/screenshot-steady-users-members.png)
 
 ## Debug
 
-When your Kirby `debug` option is set to true, you have access to the debug tab in the Steady area.
+When your Kirby `debug` option is set to true, you have access to the debug tab in the Steady area. It gives you insights into the data retrieved from the Steady API for debugging purposes.
 
 ![Steady Panel Area: Debug Tab](/assets/screenshot-steady-debug-plans.png)

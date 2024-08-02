@@ -1,12 +1,10 @@
 # Plans
 
-The Plans class represents your Steady plans as requested via the [Steady REST API](https://developers.steadyhq.com/#plans).
+The [Plans](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/Plans.php) class represents your Steady Plans as requested via the [Steady REST API](https://developers.steadyhq.com/#plans).
 
 ```php
 $plans = steady()->plans();
 ```
-
-Returns the [\Soerenengels\Steady\Plans]() Class.
 
 ## Methods
 
@@ -21,18 +19,23 @@ Returns the [\Soerenengels\Steady\Plans]() Class.
 ```php [count()]
 $plans = steady()->plans();
 
-$totalPlans = $plans->count();
+$totalPlans = $plans->count(); // e.g. 3
 ```
 
-```php [list()]
+```php [filter()]
 $plans = steady()->plans();
+$plans = $plans->filter(fn($plan) {
+  return $plan->state() === 'published';
+});
 
-foreach($plans->list() as $plan):
-  echo $plan->name;
+foreach($plans as $plan):
+  echo $plan->name();
 endforeach;
 ```
+
+```php [find()]
+$plans = steady()->plans();
+
+$plan = $plans->find('b9d7574f-5246-4c94-ade5-1d4e9b169afc');
+```
 :::
-
-## Plan
-
-...
