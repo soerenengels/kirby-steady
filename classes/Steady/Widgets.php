@@ -87,6 +87,15 @@ class Widgets
 		}, 1);
 	}
 
+	/**
+	 * Widget Snippet
+	 *
+	 * @return string script tag with Steady Javascript Widget Loader
+	 */
+	public function snippet(): string {
+		return snippet('components/steady/widget');
+	}
+
 	public function toReports(): array {
 		$widgetsEnabled = $this->enabled();
 		$widgetsWarning = false;
