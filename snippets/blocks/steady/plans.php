@@ -12,6 +12,6 @@ if ($block->steady_plans_customize() == "true") {
 }
 
 snippet('components/steady/plans', [
-	'plans' => $plans->sort()->list()
+	'plans' => $plans->sort()
 ]);
 ?>
