@@ -28,7 +28,7 @@ use Kirby\Cms\User as KirbyUser;
  * @method filter(\Closure $filter): returns array of User objects
  * @method list(): returns array of User objects
  */
-class Users
+class Users implements \IteratorAggregate
 {
 
 	use hasItems, CountTrait, FindTrait, FactoryTrait, FilterTrait;

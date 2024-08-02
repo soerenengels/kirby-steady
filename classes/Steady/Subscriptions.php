@@ -14,7 +14,7 @@ use Kirby\Toolkit\A;
  * @method filter(\Closure $filter): returns Subscriptions object
  * @method list(): returns array of Subscription objects
  */
-class Subscriptions
+class Subscriptions implements \IteratorAggregate
 {
 
 	use hasItems, FindTrait, CountTrait, FactoryTrait, FilterTrait;

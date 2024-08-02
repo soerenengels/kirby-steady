@@ -12,7 +12,7 @@ namespace Soerenengels\Steady;
  * @method Plans filter(\Closure $filter) Returns new and filtered Plans Object
  * @method Plan[] list() Returns array of Plan Objects
  */
-class Plans
+class Plans implements \IteratorAggregate
 {
 	use hasItems, FactoryTrait, FilterTrait, FindTrait, CountTrait;
 

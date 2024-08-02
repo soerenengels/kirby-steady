@@ -1,6 +1,9 @@
 <?php
 namespace Soerenengels\Steady;
 
+use ArrayIterator;
+use Traversable;
+
 trait hasItems {
 
 	/** @var array $items array of children Classes */
@@ -13,4 +16,9 @@ trait hasItems {
 	public function list(): array {
 		return $this->items;
 	}
+
+	public function getIterator(): \Traversable {
+		return new \ArrayIterator($this->items);
+	}
+
 }
