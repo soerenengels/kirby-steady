@@ -11,8 +11,14 @@ use DateInterval;
  */
 class AccessToken
 {
+	/** @var OAuth $oauth Instance of OAuth object */
 	private OAuth $oauth;
 
+	/**
+	 * Constructor
+	 *
+	 * @param ?OAuth $oauth Instance of OAuth object or null
+	 */
 	public function __construct(
 		?OAuth $oauth = null
 	) {
