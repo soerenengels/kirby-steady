@@ -59,7 +59,9 @@ class Publication
 		$this->id = $data['id'];
 		$this->type = $data['type'];
 		foreach ($data['attributes'] as $key => $value) {
+			// Replace - with _ in method names
 			$key = str_replace('-', '_', $key);
+			// Cast date values in Kirby\Toolkit\Date class
 			if ($key == 'inserted_at' || $key == 'updated_at') {
 				$value = new Date($value);
 			}
