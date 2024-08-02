@@ -1,6 +1,5 @@
 <?php
-$plans = $plans ?? null;
-if (!$plans) return;
+if (!($plans = $plans ?? null)) return;
 ?>
 <section id="steady-plans" class="steady__plans">
 	<?php if ($plans): ?>
