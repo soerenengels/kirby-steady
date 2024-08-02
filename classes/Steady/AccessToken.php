@@ -140,10 +140,12 @@ class AccessToken
 
 	public function scheduledAt(): ?\Kirby\Toolkit\Date
 	{
-		if(!($user = kirby()->user())) return null;
-		return new Date(
-			$user->content()->steady_access_token()->yaml()['scheduled_at']
-		) ?? null;
+		if(
+			!($user = kirby()->user()) ||
+			!($scheduledAt = $user->content()->steady_access_token()->yaml()['scheduled_at'] ?? null)
+			) return null;
+
+		return new Date($scheduledAt);
 	}
 
 	/**
