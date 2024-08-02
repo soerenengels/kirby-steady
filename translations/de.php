@@ -16,7 +16,7 @@ return [
 	'soerenengels.steady.widgets' => 'Widgets',
 	'soerenengels.steady.widgets.label' => 'Konfigurationsstatus',
 	'soerenengels.steady.widgets.help' => "Diese Übersicht zeigt den <strong>aktuellen Konfigurationsstatus</strong> der Plugin option('soerenengels.steady.widget') und der individuellen Widget Einstellungen im Steady Backend.",
-	'soerenengels.steady.widgets.notice.activated' => 'Widgets sind in Kirbys config.php aktiviert, aber kein Widgets ist im Steady Backend aktiviert.',
+	'soerenengels.steady.widgets.notice.activated' => 'Widgets sind in Kirbys config.php aktiviert, aber kein Widget ist im Steady Backend aktiviert.',
 	'soerenengels.steady.widgets.notice.disabled' => 'Widgets sind in Kirby deaktiviert, aber im Steady Backend aktiviert.',
 	'soerenengels.steady.debug' => 'Debug',
 	'soerenengels.steady.users' => 'User*innen',
