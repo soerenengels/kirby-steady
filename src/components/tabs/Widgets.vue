@@ -42,6 +42,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.k-box {
+	margin-block-end: var(--spacing-2);
+}
 .k-stats-widgets {
 	padding-block-end: var(--spacing-4);
 	&.inactive .k-stat:not(:first-child) {
