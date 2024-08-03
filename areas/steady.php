@@ -54,12 +54,7 @@ return [
 				[
 					'pattern' => 'steady/(:any)',
 					'action' => function (string $tab = 'insights') use ($steady) {
-						$reports = $steady->reports( // TODO: default reports
-							'newsletter_subscribers',
-							'members',
-							'revenue'
-						);
-
+						$widgets = steady()->widgets();
 						return [
 							'component' => 'k-steady-view',
 							'title' => t('soerenengels.steady', 'Steady'),
@@ -78,7 +73,7 @@ return [
 								'subscriptions' => $steady->subscriptions()->toArray(),
 								'subtab' => get('tab', null),
 								'tab' => $tab,
-								'widgets' => ($widgets = $steady->widgets())->toReports(),
+								'widgets' => $widgets->toReports(),
 								'widgetsEnabled' => $widgets->enabled(),
 								'widgetsWarning' => $widgets->isWarning()
 							]
