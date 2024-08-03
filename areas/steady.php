@@ -47,7 +47,7 @@ return [
 				[
 					'pattern' => 'steady',
 					'action' => function () {
-						// Default route forwards to insights
+						// Default route: forward to insights
 						Panel::go('steady/insights');
 					}
 				],
