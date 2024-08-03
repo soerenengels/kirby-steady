@@ -42,9 +42,10 @@ Kirby::plugin('soerenengels/steady', [
 				'id' => '...',
 				'secret' => '...',
 			],
-			'blueprint' => 'client.yml', // OPTIONAL: path to blueprint for user creation
+			'blueprint' => 'client.yml', // OPTIONAL: path to blueprint for oauth user
 			'redirect-uri' => site()->url() . '/oauth/steady/callback',
-			'after-login' => 'url'
+			'after-login' => '/',
+			'after-logout' => '/'
 		]
 	],
 	'siteMethods' => [
