@@ -48,6 +48,12 @@ Kirby::plugin('soerenengels/steady', [
 			'after-logout' => '/'
 		]
 	],
+	'permissions' => [
+		'insights' => true,
+		'widgets' => true,
+		'users' => true,
+		'debug' => true
+	],
 	'siteMethods' => [
 		'steady' => function (): Steady {
 			return new Steady(option('soerenengels.steady.token'));
