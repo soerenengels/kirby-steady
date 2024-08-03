@@ -213,6 +213,7 @@ class Steady implements SteadyInterface
 	 */
 	public function reports(...$ids): array {
 		$reports = [];
+		$ids = empty($ids) ? ['newsletter_subscribers', 'members', 'revenue'] : $ids;
 		foreach ($ids as $id) {
 			$report = $this->report($id);
 			if ($report) $reports[] = $report;
