@@ -6,13 +6,13 @@
 
 ## Features
 
-1. **Access the API:** Site method `$site->steady()` or `steady()`-helper to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
+1. **Access the API:** Use the `steady()` helper or `$site->steady()` site method to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
 2. **Steady reports:** Stay up to date with Steady Reports in a Panel section
 3. **Display your Plans:** Add your Steady Plans as `$block` or `$snippet` to your Website.
 4. **Let your Content be worth it:** Add a Paywall `$block` to your articles or pages.
 5. **Adblock detection:** Activate Adblocker detection and display the Steady Adblock Overlay.
-6. **Member Login:** Let your members login to your Steady publication, to deactivate the paywall for them.
-7. **Hidden Steady Area:** Simple overview of Steady stats, Plugin configuration status and Plugin docs.
+6. **Member Login:** Let your members login to your Steady publication, e.g. to deactivate the paywall for them.
+7. **Steady Area:** Your Steady dashboard for stats, plugin configuration, subscribers and members.
 
 ## Get Started
 
@@ -42,19 +42,9 @@ return [
 
 Jump to the [documentation](https://kirby-steady.soerenengels.de/).
 
-## Features
+## Roadmap
 
-<!-- TODO: ADD IMAGE: GIF -->
-
-- **Stay on top of the things** with the Steady area: Look into your Publication stats, keep track of your Widgets and get an overview of the data from the `$steady`-API.
-- **Mind the Numbers** with Steady reports: Add Steady reports to your panel via a the stats section or as individual reports. 
-- **Display your plans** in your templates: Add a **Steady: Plans** `$block` by adding it to your fieldsets.
-- **Steady paywall** as `$block`
-- **Adblock detection**
-
-## Outlook
-
-- feature-checkout Integrate Steady Checkout with checkout_url, checkout_snippet and checkout_thanks
+- feature-widgets: Integrate the next generation of Steady Widgets
 
 ## Available Translations
 
