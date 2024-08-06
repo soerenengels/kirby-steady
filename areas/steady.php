@@ -1,8 +1,6 @@
 <?php
-
-use Kirby\Panel\Panel;
 use Soerenengels\Steady\Steady;
-
+use Kirby\Panel\Panel;
 /** @var Steady $steady */
 
 return [
@@ -66,6 +64,24 @@ return [
 							],
 							'props' => [
 								'newsletterSubscribers' => $steady->newsletter_subscribers()->toArray(),
+								'views' => [
+									'insights' => [
+										'icon' => 'chart',
+										'permission' => kirby()->user()->role()->permissions()->for('soerenengels.steady', 'insights')
+									],
+									'widgets' => [
+										'icon' => $widgets->enabled() ? 'toggle-on' : 'toggle-off',
+										'permission' => kirby()->user()->role()->permissions()->for('soerenengels.steady', 'widgets')
+									],
+									'users' => [
+										'icon' => 'users',
+										'permission' => kirby()->user()->role()->permissions()->for('soerenengels.steady', 'users')
+									],
+									'debug' => [
+										'icon' => 'code',
+										'permission' => kirby()->user()->role()->permissions()->for('soerenengels.steady', 'debug')
+									]
+								],
 								'plans' => $steady->plans()->toArray(),
 								'plugin' => kirby()->plugin('soerenengels/steady')->toArray(),
 								'publication' => $steady->publication()->toArray(),
