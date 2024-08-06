@@ -23,19 +23,18 @@
 
 			<!-- Tabs -->
 			<k-tabs :tabs="tabs" :tab="tab" />
-			<k-steady-tab-insights :reports="reports" v-if="tab == 'insights'" />
+			<k-steady-tab-insights :reports="reports" v-if="tab == 'insights' && views.insights.permission" />
 			<k-steady-tab-widgets
 				:widgets="widgets"
 				:widgetsEnabled="widgetsEnabled"
 				:widgetsWarning="widgetsWarning"
-				v-if="tab == 'widgets'"
+				v-if="tab == 'widgets' && views.widgets.permission"
 			/>
 			<k-steady-tab-users
 				:members="subscriptions"
 				:subscribers="newsletterSubscribers"
 				:publication="publication"
-				:tab="subtab"
-				v-if="tab == 'users'"
+				v-if="tab == 'users' && views.users.permission"
 			/>
 			<k-steady-tab-debug
 				:tab="subtab"
@@ -45,7 +44,7 @@
 				:subscribers="newsletterSubscribers"
 				:reports="reports"
 				:widgets="widgets"
-				v-if="tab == 'debug'"
+				v-if="tab == 'debug' && views.debug.permission"
 			/>
 		</k-view>
 	</k-panel-inside>
@@ -62,6 +61,7 @@ export default {
 		subscriptions: Object,
 		subtab: String,
 		tab: String,
+		views: Object,
 		widgets: Array,
 		widgetsEnabled: Boolean,
 		widgetsWarning: Boolean
@@ -81,15 +81,19 @@ export default {
 			return this.subscriptions.filter(sub => sub.monthly_amount < 500);
 		},
 		tabs() {
-			return Object.entries(this.views).filter(([key, _]) => {
-				if (key !== 'debug') return true;
-				return this.$config.debug;
-			}).map(([key, value]) => {
+			return Object.entries(this.views)
+				.filter(([key, _]) => {
+					return (key !== 'debug') ? true : this.$config.debug;
+				})
+				.filter(([_, value]) => {
+					return value.permission;
+				})
+				.map(([key, value]) => {
 				const param = (['users', 'debug'].includes(key) ? '?tab=' : '') + (key === 'users' ? 'subscribers' : (key == 'debug' ? 'publication' : ''));
 				return {
 					name: key,
 					label: this.$t(`soerenengels.steady.${key}`),
-					icon: value,
+					icon: value.icon,
 					link: `steady/${key}${param}`
 				};
 			});
