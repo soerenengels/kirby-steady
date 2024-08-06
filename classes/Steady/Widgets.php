@@ -22,7 +22,7 @@ use Kirby\Http\Remote;
 class Widgets
 {
 
-	use hasItems, FactoryTrait, FilterTrait;
+	use hasItems, FactoryTrait, FilterTrait, CountTrait;
 
 	/** @var Steady $steady Steady parent instance */
 	private Steady $steady;
@@ -66,9 +66,15 @@ class Widgets
 		return kirby()->option('soerenengels.steady.widget');
 	}
 
+	/**
+	 * Returns true if any widget is active
+	 */
 	public function isWarning(): bool
 	{
-		return false;// TODO: $this->enabled() && $this->isActive();
+		$enabledWidgets = $this->filter(function($widget) {
+			return $widget->enabled();
+		});
+		return $enabledWidgets->count() > 0;
 	}
 
 	/**
