@@ -20,6 +20,7 @@ use Kirby\Toolkit\Date;
  */
 class User
 {
+	use toArrayTrait;
 
 	private readonly string $id;
 	private readonly UserType $type;
