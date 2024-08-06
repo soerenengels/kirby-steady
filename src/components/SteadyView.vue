@@ -34,6 +34,7 @@
 				:members="subscriptions"
 				:subscribers="newsletterSubscribers"
 				:publication="publication"
+				:tab="subtab"
 				v-if="tab == 'users' && views.users.permission"
 			/>
 			<k-steady-tab-debug
