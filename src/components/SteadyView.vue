@@ -68,14 +68,9 @@ export default {
 		widgetsWarning: Boolean
 	},
 	data() {
-		return {
-			views: {
-				insights: 'chart',
-				widgets: this.widgetsEnabled ? 'toggle-on' : 'toggle-off',
-				users: 'users',
-				debug: 'code'
-			}
-		};
+		return {};
+	},
+	created() {
 	},
 	computed: {
 		filteredSubscriptions() {
