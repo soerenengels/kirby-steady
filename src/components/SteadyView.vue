@@ -54,12 +54,12 @@
 <script>
 export default {
 	props: {
-		newsletterSubscribers: Object,
+		newsletterSubscribers: Array,
 		plans: Object,
 		plugin: Object,
 		publication: Object,
 		reports: Array,
-		subscriptions: Object,
+		subscriptions: Array,
 		subtab: String,
 		tab: String,
 		views: Object,
