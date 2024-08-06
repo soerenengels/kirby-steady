@@ -28,5 +28,5 @@ Visitors, who are not already logged into your website, see this button. After t
 
 
 ::: warning 🚨 Warning
-Do not use the Steady login button, if you implement the [OAuth2-Flow](/oauth) manually. The button is programmed, that it works together with the Steady Javascript widget and shall not be used with a manual OAuth flow, as Steady states.
+Do not use the Steady login button, if you implement the [OAuth2-Flow](/oauth/index) manually. The button is programmed, that it works together with the Steady Javascript widget and shall not be used with a manual OAuth flow, as Steady states.
 :::

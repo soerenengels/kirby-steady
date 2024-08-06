@@ -1,6 +1,6 @@
 # The OAuth Flow
 
-Before you setup the OAuth flow, make sure you have [set the oauth config](/oauth/config) in your `config.php` and added the redirect uri in the Steady Backend to `https://{your-site-url.com}/oauth/steady/callback`.
+Before you setup the OAuth flow, make sure you have [set the oauth config](/oauth/setup) in your `config.php` and added the redirect uri in the Steady Backend to `https://{your-site-url.com}/oauth/steady/callback`.
 
 ## 1. Add a Login link to your site.
 
