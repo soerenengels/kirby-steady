@@ -18,10 +18,13 @@
 <script>
 export default {
 	props: {
-		tab: String,
 		members: Array,
+		publication: Object,
 		subscribers: Array,
-		publication: Object
+		tab: {
+			type: String,
+			default: 'subscribers'
+		}
 	},
 	data() {
 		return {
@@ -125,28 +128,29 @@ export default {
 					name: key,
 					label: this.$t(`soerenengels.steady.${key}`),
 					icon: value,
-					click: () => {
-						this.tab = key
-						// TODO: Update query parameter
-					},
+					link: `steady/users?tab=${key}`
 				};
 			});
 		},
 		rows() {
-			return this[this.tab]?.map(row => {
-				// Users
-				if (this.tab == 'subscribers') return {
-					...row
-				};
+			return this[this.tab].map(row => {
+				// Newsletter subscribers
+				if (this.tab == 'subscribers') {
+					return {
+						...row
+					}
+				}
 				// Members
+				const subscriber = row.included.find(item => item.id === row.relationships.subscriber.data.id);
+				const plan = row.included.find(item => item.id === row.relationships.plan.data.id);
 				return {
-					...row.data,
-					id: row.subscriber.id,
-					name: row.subscriber.attributes['first-name'] + ' ' + row.subscriber.attributes['last-name'],
-					plan: row.plan.attributes.name,
-					state: this.$t('soerenengels.steady.state.' + row.data.state),
-					monthly_amount: row.data.monthly_amount / 100
-				};
+					...row,
+					id: subscriber.id,
+					monthly_amount: row.monthly_amount / 100,
+					plan: plan.attributes.name,
+					state: this.$t('soerenengels.steady.state.' + row.state),
+					name: subscriber.attributes['first-name'] + ' ' + subscriber.attributes['last-name'],
+				}
 			});
 		},
 		columns() {
