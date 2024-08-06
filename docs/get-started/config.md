@@ -19,13 +19,6 @@ return [
       // Indicate use of Steady widget JavaScript 
       'widget' => false, // bool
 
-      // Optional: Show or hide tabs individually
-      'panel' => [ // array or bool, default: true
-        'insights' => true,
-        'widgets' => false,
-        'data' => false
-      ],
-
       // Optional: OAuth settings
       'oauth' => [ // array or bool, default: false
         'client' => [
@@ -39,4 +32,18 @@ return [
     ]
   ]
 ];
+```
+
+## Permissions
+
+You can customize the tabs of the Steady area in your panel for each user blueprint by setting the corresponding persmissions.
+
+### Example
+
+```yaml
+title: Editor
+permissions:
+  "soerenengels.steady":
+    widgets: false
+    users: false
 ```
