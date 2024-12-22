@@ -1,4 +1,7 @@
 <?php
+use Kirby\Toolkit\I18n;
+use Soerenengels\Steady\Plan;
+
 $steady = steady();
 $publication = $steady->publication();
 $plans = $steady->plans();
@@ -23,18 +26,18 @@ return [
 			'label' => false,
 			'type' => 'info',
 			'theme' => 'none',
-			'text' => tt('soerenengels.steady.blueprints.plans.info.text', null, $placeholder)
+			'text' => I18n::template('soerenengels.steady.blueprints.plans.info.text', null, $placeholder)
 		],
 		'steady_plans_customize' => [
-			'label' => t('soerenengels.steady.blueprints.plans.customize.label'),
+			'label' => I18n::translate('soerenengels.steady.blueprints.plans.customize.label'),
 			'type' => 'toggle',
 			'text' => [
-				t('soerenengels.steady.blueprints.plans.customize.false'),
-				t('soerenengels.steady.blueprints.plans.customize.true')
+				I18n::translate('soerenengels.steady.blueprints.plans.customize.false'),
+				I18n::translate('soerenengels.steady.blueprints.plans.customize.true')
 			]
 		],
 		'steady_plans' => [
-			'label' => t('soerenengels.steady.blueprints.plans.choice.label'),
+			'label' => I18n::translate('soerenengels.steady.blueprints.plans.choice.label'),
 			'type' => 'multiselect',
 			'min' => '1',
 			'max' => $plans->count(),
