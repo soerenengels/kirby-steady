@@ -7,10 +7,11 @@ namespace Soerenengels\Steady;
  */
 enum WidgetType: string
 {
+	case ENGAGEMENTWALL = 'engagement_wall';
+	case NEWSLETTER = 'newsletter';
+	case CHECKOUT = 'checkout';
 	case PAYWALL = 'paywall';
 	case ADBLOCK = 'adblock_detection';
-	case FLOATING_BUTTON = 'floating_button';
-	case CHECKOUT = 'checkout';
 
 	/**
 	 * Returns title of WidgetType case
@@ -18,10 +19,11 @@ enum WidgetType: string
 	public function title(): string
 	{
 		return match ($this) {
+			self::ENGAGEMENTWALL => 'Announcement Layer',
+			self::NEWSLETTER => 'Newsletter Signup Layer',
+			self::CHECKOUT => 'Checkout',
 			self::PAYWALL => 'Paywall',
 			self::ADBLOCK => 'Adblock Detection',
-			self::FLOATING_BUTTON => 'Floating Button',
-			self::CHECKOUT => 'Checkout'
 		};
 	}
 
@@ -32,10 +34,11 @@ enum WidgetType: string
 	public function js(): string
 	{
 		return match ($this) {
+			self::ENGAGEMENTWALL => 'engagementWall',
+			self::CHECKOUT => 'checkout',
+			self::NEWSLETTER => 'newsletter',
 			self::PAYWALL => 'paywall',
 			self::ADBLOCK => 'adblock',
-			self::FLOATING_BUTTON => 'floating_button',
-			self::CHECKOUT => 'checkout'
 		};
 	}
 }
