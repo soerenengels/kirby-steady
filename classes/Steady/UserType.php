@@ -4,7 +4,7 @@ namespace Soerenengels\Steady;
 
 /**
  * UserType Enum
- * @var string $value UserType value
+ * @property string $value UserType value
  * */
 enum UserType: string
 {
