@@ -41,4 +41,18 @@ enum WidgetType: string
 			self::ADBLOCK => 'adblock',
 		};
 	}
+
+	/**
+	 * Returns icon for WidgetType case
+	 */
+	public function icon(): string {
+		return match ($this) {
+			self::ENGAGEMENTWALL => 'megaphone',
+			self::NEWSLETTER => 'email',
+			self::CHECKOUT => 'store',
+			self::PAYWALL => 'money',
+			self::ADBLOCK => 'protected',
+			//self::FLOATING_BUTTON => 'floating_button',
+		};
+	}
 }
