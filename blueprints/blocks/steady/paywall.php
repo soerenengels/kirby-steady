@@ -1,11 +1,14 @@
 <?php
-$isActive = $steady->widgets()->paywall()->isActive();
+use Kirby\Toolkit\I18n;
+use Soerenengels\Steady\Steady;
+/** @var Steady $steady */
+$isActive = $steady->widgets()?->paywall()->isActive();
 
 $placeholder = [
 	'url' => 'https://steadyhq.com/en/backend/publications/' . $steady->publication()->id() . '/integrations/paywall/edit'
 ];
 return [
-	'name' => 'Steady: Paywall',
+	'name' => I18n::translate('steady.paywall.block'),
 	'icon' => 'lock',
 	'wysiwyg' => true,
 	'preview' => 'fields',
@@ -14,17 +17,18 @@ return [
 			'label' => false,
 			'type' => 'info',
 			'theme' => ($isActive ? 'none' : 'notice'),
-			'text' =>  tt(($isActive ? 'soerenengels.steady.blueprints.paywall.text' : 'soerenengels.steady.blueprints.paywall.text-with-warning'), null, $placeholder)
+			'text' =>  I18n::template('soerenengels.steady.blueprints.paywall.' . ($isActive ? 'text' : 'text-with-warning'), null, $placeholder)
 		],
 		'steady_paywall_small_toggle' => [
-			'label' => 'Do you want to show a smaller version of the Paywall?',
+			'label' => I18n::translate('steady.paywall.customize'),
 			'type' => 'toggle',
 			'text' => [
-				'No', 'Yes'
+				I18n::translate('steady.no'),
+				I18n::translate('steady.yes')
 			],
 		],
 		'utm_campaign' => [
-			'label' => 'UTM Campaign',
+			'label' => I18n::translate('steady.paywall.utm_campaign'),
 			'type' => 'text',
 			'placeholder' => 'utm_campaign'
 		]
