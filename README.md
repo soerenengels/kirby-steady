@@ -51,6 +51,10 @@ Jump to the [documentation](https://kirby-steady.soerenengels.de/).
 - English
 - German
 
+## Develop
+
+Use phpstan to check code.
+
 ## License
 
 MIT
