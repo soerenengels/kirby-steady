@@ -24,7 +24,7 @@ function steady(): Steady
 	return new Steady();
 }
 
-Kirby::plugin('soerenengels/steady', [
+Kirby::plugin('soerenengels/steady', version: '0.5', extends: [
 	'areas' => require __DIR__ . '/areas/steady.php',
 	'blueprints' => [
 		'blocks/steady_paywall' => require __DIR__ . '/blueprints/blocks/steady/paywall.php',

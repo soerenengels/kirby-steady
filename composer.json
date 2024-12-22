@@ -1,7 +1,6 @@
 {
   "name": "soerenengels/kirby-steady",
   "type": "kirby-plugin",
-  "version": "0.4",
   "description": "Steady meets Kirby is a Kirby Plugin.",
   "license": "MIT",
 	"homepage": "https://kirby-steady.soerenengels.de/",
@@ -12,9 +11,9 @@
     }
   ],
   "keywords": [
-    "kirby4",
-    "kirby4-cms",
-    "kirby4-plugin",
+    "kirby5",
+    "kirby5-cms",
+    "kirby5-plugin",
     "steady"
   ],
   "require": {
