@@ -1,5 +1,7 @@
 <?php
+use Kirby\Cms\Block;
 $plans = steady()->plans();
+/** @var Block $block */
 
 // Filter Plans, if Steady Plans are customized in block
 if ($block->steady_plans_customize() == "true") {

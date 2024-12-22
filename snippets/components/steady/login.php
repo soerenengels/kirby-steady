@@ -1,5 +1,7 @@
 <?php
+	/** @var string $size */
 	$size = $size ?? 'medium';
+	/** @var string $language */
 	$language = $language ?? 'en';
 ?>
 <a

@@ -1,13 +1,16 @@
 
 <?php
 use Kirby\Toolkit\I18n;
+use Soerenengels\Steady\Plan;
 
+/** @var ?Plan $plan */
 $plan = $plan ?? null;
 if ($plan?->hidden() || !$plan) return;
 
 /* Workaround, see: https://kirby.nolt.io/246 */
-if (option('slugs')) {
-	I18n::$locale = option('slugs');
+/** @var string $slugs */
+if ($slugs = option('slugs')) {
+	I18n::$locale = $slugs;
 }
  ?>
 <section id="steady-plan" class="steady__plan container">
