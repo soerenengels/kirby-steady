@@ -68,6 +68,7 @@ Kirby::plugin('soerenengels/steady', [
 		'components/steady/widget' => __DIR__ . '/snippets/components/steady/widget.php',
 		'blocks/steady_paywall' => __DIR__ . '/snippets/blocks/steady/paywall.php',
 		'blocks/steady_plans' => __DIR__ . '/snippets/blocks/steady/plans.php',
+		'steady/bouncer' => __DIR__ . '/snippets/components/steady/bouncer.php',
 	],
 	'translations' => [
 		'en' => require_once __DIR__ . '/translations/en.php',
