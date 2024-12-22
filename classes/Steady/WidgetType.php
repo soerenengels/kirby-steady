@@ -4,9 +4,7 @@ namespace Soerenengels\Steady;
 
 /**
  * WidgetType Enum
- * @method string title() title of WidgetType
- * @method string js() js title of WidgetType
- * */
+ */
 enum WidgetType: string
 {
 	case PAYWALL = 'paywall';
