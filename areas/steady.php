@@ -1,13 +1,16 @@
 <?php
+
 use Soerenengels\Steady\Steady;
 use Kirby\Panel\Panel;
+use Kirby\Toolkit\I18n;
+
 /** @var Steady $steady */
 
 return [
 	'steady' => function () use ($steady) {
 		return [
 			'icon' => 'steady',
-			'label' => t('soerenengels.steady', 'Steady'),
+			'label' => I18n::translate('soerenengels.steady'),
 			'link' => 'steady',
 			'menu' => true,
 			'dialogs' => [
