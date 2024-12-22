@@ -18,8 +18,8 @@ use Soerenengels\Steady\Steady;
 
 @include_once __DIR__ . '/vendor/autoload.php';
 
-$steady = new Steady(option('soerenengels.steady.token'));
-function steady()
+$steady = new Steady();
+function steady(): Steady
 {
 	return new Steady();
 }
