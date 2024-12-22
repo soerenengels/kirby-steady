@@ -5,19 +5,30 @@ use Soerenengels\Steady\Widgets;
 
 /**
  * Widget Class
- * @method isActive
- * @method title
- * @method enabled
  */
-class Widget
+class Widget extends Entity
 {
 
 	public function __construct(
-		public WidgetType $type
-	) {}
+		protected WidgetType $enum
+	) {
+		parent::__construct([
+			'id' => $this->enum->value,
+			'type' => $this->enum->value,
+			'attributes' => []
+		]);
+	}
 
 	public function title(): string {
-		return $this->type->title();
+		return $this->enum->title();
+	}
+
+	public function id(): string {
+		return $this->id;
+	}
+
+	public function icon(): string {
+		return $this->enum->icon();
 	}
 
 	/**
@@ -25,7 +36,7 @@ class Widget
 	 */
 	public function enabled(): bool
 	{
-		$needle = $this->type->js() . 'Active":true';
+		$needle = $this->enum->js() . 'Active":true';
 		$haystack = Widgets::getWidgetLoaderContent();
 
 		// Check if $needle is contained in $haystack
@@ -52,6 +63,32 @@ class Widget
 		return (
 			kirby()->option('soerenengels.steady.widget') &&
 			$this->enabled()
+		);
+	}
+
+	/**
+	 * Returns array representation of Widget
+	 *
+	 * @return array<string, string|bool>
+	 */
+	public function toArray(): array {
+		return [
+			'title' => $this->title(),
+			'type' => $this->type(),
+			'js' => $this->enum->js(),
+			'enabled' => $this->enabled(),
+			'isActive' => $this->isActive()
+		];
+	}
+
+	public function toReport(): Report {
+		return new Report(
+			$this->title(),
+			($this->enabled() ? '✓' : '✕'),
+			'Steady',
+			steady()->widgets()?->enabled() ? ($this->enabled() ? 'positive' : 'info') : ($this->enabled() ? 'notice' : 'default'),
+			'https://steadyhq.com/de/backend/publications/' . steady()->publication()->id() . '/integrations/' . $this->type() . '/edit',
+			$this->icon()
 		);
 	}
 }

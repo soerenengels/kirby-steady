@@ -1,0 +1,18 @@
+parameters:
+    level: 10
+    paths:
+        - classes
+        - areas
+        - blueprints
+        - dialogs
+        - drawers
+        - dropdowns
+        - snippets
+        - views
+        - index.php
+    scanFiles:
+        - index.php
+    typeAliases:
+        SteadyResponseArray: 'array{data:array{id:string,type:string,attributes: array<string, bool|int|string|null>,}}'
+includes:
+    - phar://phpstan.phar/conf/bleedingEdge.neon

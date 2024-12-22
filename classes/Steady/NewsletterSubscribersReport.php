@@ -2,25 +2,38 @@
 namespace Soerenengels\Steady;
 use Soerenengels\Steady\Report;
 use Soerenengels\Steady\Steady;
+use Soerenengels\Steady\User;
+use Kirby\Panel\Panel;
 
 class NewsletterSubscribersReport extends Report {
 	public function __construct() {
 		// Setup
-		$steady = steady();
-		$value = $steady->newsletter_subscribers()->count();
-		$new_subscriptions = $steady->newsletter_subscribers()->filter(function($item) {
-			return $item->opted_in_at()->compare()->days <= 30;
-		})->count();
-		$indicator = $new_subscriptions > 0 ? '+' : '±';
-		$info = $indicator . ($new_subscriptions > 0 ? ($new_subscriptions > 1 ? $new_subscriptions . t('soerenengels.steady.reports.newsletter.info.plural') : t('soerenengels.steady.reports.newsletter.info.singular')) : t('soerenengels.steady.reports.newsletter.info.zero'));
-		$theme = $new_subscriptions >= 1 ? 'positive' : 'default';
+		$subscribers = steady()->newsletter_subscribers();
+
+		/** @var string $label */
+		$label = t('soerenengels.steady.reports.newsletter.label', 'Subscribers');
+		$value = $subscribers->count();
+
+		// New subscribers
+		$newSubscribers = $subscribers->filter(
+			// TODO: Add Typehint
+			function(User $item) {
+				return $item->opted_in_at()?->compare()->days <= 30;
+			}
+		)->count();
+		/** @var string $info */
+		$info = tc('soerenengels.steady.reports.newsletter.info', $newSubscribers);
+
+		$link = kirby()->user()?->role()->permissions()->for('soerenengels.steady', 'users') ?
+			Panel::url('steady/users', ['query' => ['tab' => 'subscribers']]) :
+			'https://steadyhq.com/de/backend/publications/' . steady()->publication()->id() . '/subscribers';
 
 		// Assignment
-		$this->label = t('soerenengels.steady.reports.newsletter.label');
+		$this->label = $label;
 		$this->value = $value;
 		$this->info = $info;
-		$this->theme = $theme;
-		$this->link = 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id() . '/subscribers';
+		$this->theme = $newSubscribers >= 1 ? 'positive' : 'default';
+		$this->link = $link;
 		$this->icon = 'email';
 	}
 }

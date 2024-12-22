@@ -11,16 +11,15 @@ use Kirby\Http\Remote;
 use Kirby\Cms\User as KirbyUser;
 use Kirby\Data\Yaml;
 use Kirby\Cms\App as Kirby;
-
+use Kirby\Http\Cookie;
 
 /**
  * OAuth Class
  *
- * Enables an OAuth Flow for Steady
- *
- * @method user() Return current User or null
- * @method subscription() Return current Subscription or null
- * @method string url() Return authorization url
+ * Enable Steady OAuth Flow for your Website
+ * @phpstan-import-type SteadyEntityResponse from Steady
+ * @phpstan-import-type SteadyResponse from Steady
+ * @phpstan-import-type SteadyCollectionResponse from Steady
  */
 class OAuth
 {
@@ -48,16 +47,19 @@ class OAuth
 	 * with current access token
 	 *
 	 * @param Endpoint $endpoint OAuth Endpoint Enum
-	 * @return \stdClass|array|null parsed Response data
+	 * @return SteadyResponse|\stdClass|null parsed Response data
 	 */
-	public function get(Endpoint $endpoint, ?string $token = null)
+	public function get(
+		Endpoint $endpoint,
+		?string $token = null
+	): array|\stdClass|null
 	{
 		/* if (($token = $this->token)?->isExpired()) {
 			// GET new token
 			throw new Exception('Error: No valid access token.');
 		} */
 
-		$response = $this->steady->get(
+		$response = $this->steady?->get(
 			$endpoint,
 			[
 				'Authorization: Bearer ' . $this->token()->accessToken(),
@@ -76,16 +78,21 @@ class OAuth
 	 */
 	public function subscription(): ?Subscription
 	{
-		if(!$this->isLoggedIn()) return null;
-
 		try {
+			if(!$this->token()->accessToken()) throw new Exception('Error: User is not logged in.');
+			/** @var \stdClass|null|array{data: SteadyEntityResponse|null, included?: SteadyCollectionResponse } $response */
 			$response = $this->get(Endpoint::OAUTH_CURRENT_SUBSCRIPTION);
-			return $response['data'] == null ? null : new Subscription($response);
+			if (
+				!is_array($response)
+				) throw new Exception('Error: No subscription data in response.');
+			if ($response['data'] == null) throw new Exception('Error: No response from Steady API.');
+			$data = $response['data'];
+			$included = isset($response['included']) ? $response['included'] : [];
+			return new Subscription($data, $included);
 		} catch (Exception $e) {
-			$e->getMessage();
+			//$e->getMessage(); // TODO: handle exception
 			return null;
 		}
-		// and set current_subscription
 	}
 
 	/**
@@ -93,17 +100,21 @@ class OAuth
 	 *
 	 * when the (Kirby) user is logged in
 	 *
-	 * @return User|null $user Steady User
+	 * @return ?User $user Logged in Steady User
 	 */
 	public function user(): ?User
 	{
-		if(!$this->isLoggedIn()) return null;
-
 		try {
+			if(!$this->token()->accessToken()) throw new Exception('Error: User is not logged in.');
+			/** @var \stdClass|null|array{data: SteadyEntityResponse } $response */
 			$response = $this->get(Endpoint::OAUTH_CURRENT_USER);
+			if ($response === null) throw new Exception('Error: No response from Steady API.');
+			if (
+				!is_array($response)
+			) throw new Exception('Error: No subscription data in response.');
 			return new User($response['data']);
 		} catch (Exception $e) {
-			echo $e->getMessage(); // TODO: handle exception
+			//echo $e->getMessage(); // TODO: handle exception
 			return null;
 		}
 	}
@@ -115,10 +126,13 @@ class OAuth
 	 * Authorization to their Steady account.
 	 * Calls setVerification() to store a
 	 * verification string in Session
+	 *
+	 * @param null|string|false $referrer url to redirect after authorization, false to skip, null to use current url
 	 * @return string url string
 	 */
-	public function url(): string
+	public function url(null|string|bool $referrer = null): string
 	{
+		if (is_null($referrer) || is_string($referrer)) $this->setReferrer($referrer);
 		return Endpoint::OAUTH_AUTHORIZATION->url() .
 			'?response_type=code' .
 			'&client_id=' . $this->client_id .
@@ -139,7 +153,7 @@ class OAuth
 		// Create verification string
 		$verification = Uuid::generate();
 		// Set Verification string in $session
-		$this->kirby->session()->set('soerenengels.steady.state', $verification);
+		$this->kirby?->session()->data()->set('soerenengels.steady.state', $verification);
 		return $verification;
 	}
 
@@ -155,7 +169,7 @@ class OAuth
 	 */
 	private function isVerified(string $state): bool
 	{
-		return $state == $this->kirby->session()->pull('soerenengels.steady.state');
+		return $state == $this->kirby?->session()->data()->pull('soerenengels.steady.state');
 	}
 
 	/**
@@ -168,7 +182,6 @@ class OAuth
 	 *
 	 * @param string $state state string to verify
 	 * @param string $code authorization code
-	 * @return bool state response equals verfification string
 	 */
 	public function processCallback(string $state, string $code): void
 	{
@@ -179,58 +192,28 @@ class OAuth
 		// Request access token
 		$response = $this->token()->request(token: $code);
 
-		// Save Token to KirbyUser and log in
+		// Save Token
 		$this->token()->save($response);
 
 		// Redirect to referrer or after login page
 		go($this->getReferrer());
 	}
 
-
 	/**
-	 * Handle Tokens
+	 * Access Tokens
 	 *
-	 * @param string $grant_type 'authorization_code'|'refresh_token'
-	 * @return ?AccessToken access_token or null
+	 * @return Token Token abstraction
 	 */
-	public function token(
-		$grant_type = 'authorization_code',
-		$token = null
-	): AccessToken {
-		return new AccessToken($this);
+	public function token(): Token {
+		return new Token($this);
 	}
 
 	/**
 	 * Logout corresponding Kirby User
-	 * */
+	 */
 	public function logout(): void
 	{
-		$this->kirby->user()->logout();
-	}
-
-	/**
-	 * Return Kirby User
-	 * @param string $id Steady User Id
-	 * @return KirbyUser|null
-	 *  */
-	public function findUserBySteadyId(string $id): ?KirbyUser
-	{
-		return $this->kirby->users()->findBy('steady_id', $id);
-	}
-
-	public function createUser(Remote $response): KirbyUser {
-		$data = json_decode($response->content());
-		return $this->kirby->impersonate('kirby', function() use ($data) {
-			return $this->kirby->users()->create([
-				'name'      => $data->info->{'first-name'} . ' ' . $data->info->{'last-name'},
-				'email'     => $data->info->email,
-				'role'      => 'steady',
-				'content'   => [
-					'steady_id' => $data->info->id,
-					'steady_access_token' => Yaml::encode($data),
-				]
-			]);
-		});
+		$this->token()->flush();
 	}
 
 	/**
@@ -239,28 +222,37 @@ class OAuth
 	 * @return bool true if user is logged in
 	 */
 	public function isLoggedIn(): bool {
-		$kirbyUserIsLoggedIn = $this->kirby->user() ? true : false;
-		$accessTokenIsSet = $this->token()->accessToken() ? true : false;
-		$accessTokenIsNotExpired = $this->token()->isExpired() ? false : true;
-		return $kirbyUserIsLoggedIn  && $accessTokenIsSet /*&& $accessTokenIsNotExpired */;
+		return $this->user() ? true : false;
+	}
+
+	/**
+	 * Check if User is Member
+	 *
+	 * @return bool true if user is member
+	 */
+	public function isMember(): bool {
+		return $this->subscription() ? true : false;
 	}
 
 	/**
 	 * Set Session with Referrer
 	 */
-	public function setReferrer(?string $url = null): void {
-		$referrer = $url ?? $this->kirby->request()->referrer();
-		$this->kirby->session()->set('soerenengels.steady.referrer', $referrer);
+	public function setReferrer(
+		?string $url = null
+	): void {
+		$referrer = $url ?? $this->kirby?->request()->url();
+		$this->kirby?->session()->data()->set('soerenengels.steady.referrer', $referrer);
 	}
 
 	/**
 	 * Get Referrer from Session
-	 *
-	 * and delete the Session afterwards
+	 * and delete Session afterwards
 	 *
 	 * @return string $url Referrer string
 	 */
 	public function getReferrer(): string {
-		return $this->kirby->session()->pull('soerenengels.steady.referrer') ?? $this->kirby->option('soerenengels.steady.oauth.after-login') ?? '/';
+		/** @var string $referrer */
+		$referrer = $this->kirby?->session()->data()->pull('soerenengels.steady.referrer') ?? $this->kirby?->option('soerenengels.steady.oauth.after-login') ?? '/';
+		return $referrer;
 	}
 }

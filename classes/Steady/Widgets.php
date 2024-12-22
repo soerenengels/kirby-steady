@@ -2,76 +2,75 @@
 
 namespace Soerenengels\Steady;
 
-use Soerenengels\Steady\WidgetType;
 use Soerenengels\Steady\Widget;
-use Soerenengels\Steady\FactoryTrait;
-use Soerenengels\Steady\FilterTrait;
-use Soerenengels\Steady\hasItems;
+use Kirby\Exception\Exception;
 use Kirby\Http\Remote;
 
 /**
  * Give access to the Widgets via methods
  *
- * @param Steady $steady instance of Steady Class
  * @method Widget adblock() returns Widget Object
  * @method Widget floatingButton() returns Widget Object
  * @method Widget paywall() returns Widget Object
- * @method array list(): Widget returns Widget Object
+ * @method Widget[] list(): Widget returns Widget Object
  * @method bool enabled() returns widget config value
+ *
+ * @property Widget[] $items array of User objects
+ * @extends Collection<Widget>
  */
-class Widgets
+class Widgets extends Collection
 {
 
-	use hasItems, FactoryTrait, FilterTrait, CountTrait;
-
-	/** @var Steady $steady Steady parent instance */
-	private Steady $steady;
+	// TODO: remove this and constructor
+	/* * @var Steady $steady Steady instance */
+	//private Steady $steady;
 
 	/**
-	 * @param array<Widget> $array array of Widget objects
-	 * @param Steady $steady
+	 * @param array<Widget> $items array of Widget objects
 	 * */
-	public function __construct($array = [], $steady = null)
+	public function __construct(
+		protected array $items = []//,
+		//$steady = null
+	)
 	{
-		$this->steady = $steady ?? steady();
-		$this->items = $array;
+		//$this->steady = $steady ?? steady();
 	}
 
-	// Creates methods named after WidgetType values
 	/**
-	 * @method Widget adblock()
-	 * @method Widget checkout()
-	 * @method Widget floatingButton()
-	 * @method Widget paywall()
+	 * Magic Method to call WidgetType methods
 	 */
-	public function __call(string $name, $arguments): ?Widget
+	public function __call(string $name, mixed $arguments): ?Widget
 	{
 		// Check if method name is a WidgetType value and return Widget Object
-		if(!($type = WidgetType::tryFrom($name))) return null;
+		return $this->find($name);
+		/* if (!($type = WidgetType::tryFrom($name))) return null;
 		return array_reduce(
 			$this->list(),
-			function(?Widget $carry, ?Widget $widget) use ($type) {
-				return $carry ?? ($widget->type == $type ? $widget : $carry);
+			function (?Widget $carry, ?Widget $widget) use ($type) {
+				return $carry ?? ($widget?->type() == $type ? $widget : $carry);
 			},
 			null
-		);
+		); */
 	}
 
 	/**
-	 * Check if widgets are enabled in config
+	 * Check if widgets are enabled in kirby config
+	 *
 	 * @return boolean $enabled true if plugins 'widget' option is set to true
 	 */
 	public static function enabled(): bool
 	{
-		return kirby()->option('soerenengels.steady.widget');
+		/** @var bool $enabled */
+		$enabled = kirby()->option('soerenengels.steady.widget');
+		return $enabled;
 	}
 
 	/**
 	 * Returns true if any widget is active
 	 */
-	public function isWarning(): bool
+	public function isEnabledInSteady(): bool
 	{
-		$enabledWidgets = $this->filter(function($widget) {
+		$enabledWidgets = $this->filter(function (Widget $widget) {
 			return $widget->enabled();
 		});
 		return $enabledWidgets->count() > 0;
@@ -79,49 +78,55 @@ class Widgets
 
 	/**
 	 * Request Steadys Javascript Code for Widget
-	 * @return string $content javscript content string
+	 *
+	 * @return string $script javscript content string
 	 */
 	public static function getWidgetLoaderContent(): string
 	{
 		$steady = steady();
-		$url = $steady->publication()->js_widget_url();
-		// TODO: use parent
-		$cache = $steady->cache;
-		return $cache->getOrSet('js-widget-url', function() use ($url) {
-			$request = Remote::get($url);
-			return $request->content();
-		}, 1);
+		try {
+			$url = $steady->publication()->js_widget_url();
+			// TODO: use parent
+			$cache = $steady->cache;
+			/** @var string $widgetLoaderContent */
+			$widgetLoaderContent = $cache->getOrSet('js-widget-url', function () use ($url) {
+				$request = Remote::get($url);
+				return $request->content();
+			}, 1);
+			return $widgetLoaderContent;
+		} catch (Exception $e) {
+			return "\/* Error: Could not load the Steady Widget Loader \*/\n" . $e->getMessage();
+		}
 	}
 
 	/**
-	 * Widget Snippet
-	 *
-	 * @return string script tag with Steady Javascript Widget Loader
+	 * Return \<script> tag with Steady Javascript Widget Loader
 	 */
-	public function snippet(): string {
+	public function snippet(): \Kirby\Template\Snippet|string|null
+	{
 		return snippet('components/steady/widget');
 	}
 
-	public function toReports(): array {
+	/**
+	 * Returns array of Widget Reports
+	 *
+	 * @return array<array<string, string|int|null>> $widgetReports
+	 */
+	public function toReports(): array
+	{
+		$widgetReports = [];
 		$widgetsEnabled = $this->enabled();
-		$widgetsWarning = false;
-		$widgetReports[] = [
-			'info' => ($widgetsEnabled ? 'Enabled' : 'Disabled'),
-			'label' => 'Kirby: config.php',
-			'theme' => $widgetsEnabled ? 'positive' : 'negative',
-			'value' => "Widgets"
-		];
+		$widgetConfigReport = new Report(
+			'Kirby: config.php',
+			"Widgets",
+			($widgetsEnabled ? 'Enabled' : 'Disabled'),
+			($widgetsEnabled ? 'positive' : 'negative'),
+			icon: 'cog'
+		);
+		$widgetReports[] = $widgetConfigReport->toArray();
 		foreach ($this->list() as $widget) {
-			$widgetReports[] = [
-				'info' =>  $widget->enabled() ? '✓' : '✕',
-				'value' => $widget->title(),
-				'theme' => $widgetsEnabled ? ($widget->enabled() ? 'positive' : 'info') : ($widget->enabled() ? 'notice' : 'default'),
-				'link' => 'https://steadyhq.com/de/backend/publications/' . $this->steady->publication()->id() . '/integrations/' . $widget->type->value . '/edit',
-				'label' => 'Steady'
-			];
-			$widgetsWarning = $widgetWarning ?? ($widgetsWarning === $widget->isActive());
+			$widgetReports[] = $widget->toReport()->toArray();
 		}
 		return $widgetReports;
 	}
-
 }

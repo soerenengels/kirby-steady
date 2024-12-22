@@ -11,6 +11,7 @@
     "recognizeSelfClosing": true
   },
   "devDependencies": {
+    "kirbyuse": "^0.9.1",
     "vitepress": "^1.3.1"
   }
 }

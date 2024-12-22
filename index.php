@@ -49,14 +49,17 @@ Kirby::plugin('soerenengels/steady', [
 		]
 	],
 	'permissions' => [
-		'insights' => true,
-		'widgets' => true,
+		'insights' => false,
+		'settings' => true,
+		'plans' => true,
 		'users' => true,
-		'debug' => true
+		'debug' => function () {
+			return kirby()->user()?->isAdmin() ? true : false;
+		}
 	],
 	'siteMethods' => [
 		'steady' => function (): Steady {
-			return new Steady(option('soerenengels.steady.token'));
+			return steady();
 		}
 	],
 	'snippets' => [
@@ -71,30 +74,29 @@ Kirby::plugin('soerenengels/steady', [
 		'de' => require_once __DIR__ . '/translations/de.php'
 	],
 	'routes' => function () {
-		if (!kirby()->option('soerenengels.steady.oauth.after-login') || !kirby()->option('soerenengels.steady.oauth')) return null;
+		if (!kirby()->option('soerenengels.steady.oauth.after-login') || !kirby()->option('soerenengels.steady.oauth') || !($oauth = steady()->oauth())) return null;
 		return [
 			[
 				'pattern' => 'oauth/steady/callback',
-				'action'  => function (): void {
-					steady()
-						->oauth()
-						->processCallback(
-							get('state'),
-							get('code')
-						);
+				'action'  => function () use ($oauth): void {
+					/** @var string $state */
+					$state = get('state');
+					/** @var string $code */
+					$code = get('code');
+					$oauth->processCallback($state, $code);
 				},
 			],
 			[
 				'pattern' => 'oauth/steady/authorize',
-				'action'  => function (): void {
-					steady()->oauth()->setReferrer();
-					go(steady()->oauth()->url());
+				'action'  => function () use ($oauth): void {
+					go($oauth->url());
 				},
 			],
 			[
 				'pattern' => 'oauth/steady/logout',
-				'action'  => function (): void {
-					steady()->oauth()->logout();
+				'action'  => function () use ($oauth): void {
+					$oauth->logout();
+					// TODO: redirect to referrer
 					go('/steady');
 				},
 			],

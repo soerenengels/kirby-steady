@@ -4,18 +4,10 @@ use Soerenengels\Steady\Plan;
 
 $steady = steady();
 $publication = $steady->publication();
-$plans = $steady->plans();
+$published_plans = $steady->plans()->filter(fn (Plan $plan) => $plan->state() == "published");
 $placeholder = [
 	'url' => 'https://steadyhq.com/en/backend/publications/' . $publication->id() . '/plans'
 ];
-$options = [];
-$published_plans = $plans->filter(fn ($plan) => $plan->state() == "published");
-foreach ($published_plans as $plan) {
-	$options[] = [
-		'text' => $plan->name(),
-		'value' => $plan->id()
-	];
-}
 return [
 	'name' => 'Steady: ' . t('soerenengels.steady.blueprints.plans.name'),
 	'icon' => 'cart',
@@ -40,12 +32,12 @@ return [
 			'label' => I18n::translate('soerenengels.steady.blueprints.plans.choice.label'),
 			'type' => 'multiselect',
 			'min' => '1',
-			'max' => $plans->count(),
-			'help' => t('soerenengels.steady.blueprints.plans.choice.help'),
+			'max' => $published_plans->count(),
+			'help' => I18n::translate('soerenengels.steady.blueprints.plans.choice.help'),
 			'when' => [
 				'steady_plans_customize' => true
 			],
-			'options' => $options
+			'options' => $published_plans->toOptions()
 		]
 	]
 

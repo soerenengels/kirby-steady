@@ -1,184 +1,188 @@
 <template>
 	<div>
-		<k-headline>{{ $t('soerenengels.steady.users.headline') }}</k-headline>
+		<k-headline>{{ panel.t('soerenengels.steady.users.headline') }}</k-headline>
 		<k-tabs class="k-tabs" :tabs="tabs" :tab="tab" />
 		<k-table
+			class="k-steady-users"
 			:columns="columns"
 			:index="false"
-			@paginate="(e) => this.page = e.page"
 			:pagination="pagination"
-			:rows="paginatedItems">
-			<template #options="{ row }" v-if="tab == 'members'">
-				<k-options-dropdown :options="options(row)" />
+			:rows="paginatedItems"
+			@paginate="e => (page = e.page)"
+		>
+			<template #options="{ row }">
+				<k-options-dropdown :options="options(row)" v-if="tab == 'members'" />
+				<k-options-dropdown :options="options(row)" v-else />
 			</template>
 		</k-table>
 	</div>
 </template>
 
-<script>
-export default {
-	props: {
-		members: Array,
-		publication: Object,
-		subscribers: Array,
-		tab: {
-			type: String,
-			default: 'subscribers'
+<script setup>
+import { computed, ref, useContent, usePanel, useStore, watch } from 'kirbyuse';
+const panel = usePanel();
+
+const props = defineProps({
+	data: Array
+});
+
+// Pagination
+const page = ref(1);
+const pagination = computed(() => {
+	return {
+		page: page.value ?? 1,
+		details: true,
+		limit: 25,
+		total: rows.value.length
+	};
+});
+const index = computed(() => {
+	return (pagination.value.page - 1) * pagination.value.limit + 1;
+});
+
+const cols = ref({
+	subscribers: {
+		email: {
+			label: panel.t('email'),
+			mobile: true
+		},
+		opted_in_at: {
+			label: panel.t('soerenengels.steady.subscribed'),
+			type: 'date',
+			display: 'DD.MM.YYYY',
+			width: '1/4',
+			align: 'right',
+			mobile: true
 		}
 	},
-	data() {
-		return {
-			page: 1,
-			views: {
-				subscribers: 'email',
-				members: 'users'
-			},
-			cols: {
-				subscribers: {
-					email: {
-						label: this.$t('email'),
-						mobile: true
-					},
-					opted_in_at: {
-						label: this.$t('soerenengels.steady.subscribed'),
-						type: 'steadyDate',
-						width: '1/4',
-						align: 'right',
-						mobile: true
-					}
-				},
-				members: {
-					id: {
-						label: this.$t('soerenengels.steady.id')
-					},
-					name: {
-						label: this.$t('soerenengels.steady.member'),
-						type: 'text',
-						width: '1/4',
-						mobile: true,
-					},
-					active_from: {
-						label: this.$t('soerenengels.steady.activated'),
-						type: 'steadyDate',
-						width: '1/6',
-						align: 'right',
-						mobile: true
-					},
-					state: {
-						label: this.$t('soerenengels.steady.state'),
-						type: 'tags',
-						width: '1/8'
-					},
-					plan: {
-						label: this.$t('soerenengels.steady.plan'),
-						type: 'text',
-						width: '1/6',
-						mobile: true
-					},
-					monthly_amount: {
-						label: this.$t('soerenengels.steady.monthly-amount'),
-						mobile: true,
-						before: '€',
-						width: '1/6',
-						type: 'number'
-					},
-					period: {
-						label: this.$t('soerenengels.steady.period'),
-						type: 'tags',
-						width: '1/8'
-					}
-				}
-			}
-		};
-	},
-	created() {
-		this.$events.on('steady.subscriptions.cancelled', () => {
-			this.$panel.notification.success({
-				icon: 'check',
-				message: this.$t('soerenengels.steady.subscriptions.cancelled'),
-				type: 'success'
-			});
-		});
-	},
-	methods: {
-		options(row) {
-			const url = new URL(this.publication.campaign_page_url)
-			const publicationName = url.pathname.substring(1)
-			return [
-				{
-					text: this.$t('soerenengels.steady.open'),
-					icon: 'open',
-					link: `https://steadyhq.com/backend/publications/${this.publication.id}/members/${row.id}`
-				},{
-					text: this.$t('soerenengels.steady.message.send'),
-					icon: 'email',
-					link: `https://steadyhq.com/backend/publications/${this.publication.id}/messages#/${publicationName}/${row.id}`
-				},{
-					text: this.$t('soerenengels.steady.subscriptions.cancel'),
-					icon: 'cancel',
-					click: () => this.$dialog(`steady/subscriptions/cancel/${row.id}`)
-				}
-			];
-		}
-	},
-	computed: {
-		tabs() {
-			return Object.entries(this.views).map(([ key, value ]) => {
-				return {
-					name: key,
-					label: this.$t(`soerenengels.steady.${key}`),
-					icon: value,
-					link: `steady/users?tab=${key}`
-				};
-			});
+	members: {
+		id: {
+			label: panel.t('soerenengels.steady.id')
 		},
-		rows() {
-			return this[this.tab].map(row => {
-				// Newsletter subscribers
-				if (this.tab == 'subscribers') {
-					return {
-						...row
-					}
-				}
-				// Members
-				const subscriber = row.included.find(item => item.id === row.relationships.subscriber.data.id);
-				const plan = row.included.find(item => item.id === row.relationships.plan.data.id);
-				return {
-					...row,
-					id: subscriber.id,
-					monthly_amount: row.monthly_amount / 100,
-					plan: plan.attributes.name,
-					state: this.$t('soerenengels.steady.state.' + row.state),
-					name: subscriber.attributes['first-name'] + ' ' + subscriber.attributes['last-name'],
-				}
-			});
+		name: {
+			label: panel.t('soerenengels.steady.member'),
+			type: 'text',
+			width: '1/4',
+			mobile: true
 		},
-		columns() {
-			return this.cols[this.tab];
+		active_from: {
+			label: panel.t('soerenengels.steady.activated'),
+			type: 'date',
+			display: 'DD.MM.YYYY',
+			width: '1/6',
+			align: 'right',
+			mobile: true
 		},
-		pagination() {
-			return {
-				page: this.page,
-				details: true,
-				limit: 25,
-				total: this.rows?.length
-			};
+		state: {
+			label: panel.t('soerenengels.steady.state'),
+			type: 'tags',
+			width: '1/8'
 		},
-		index() {
-			return (this.pagination.page - 1) * this.pagination.limit + 1;
+		plan: {
+			label: panel.t('soerenengels.steady.plan'),
+			type: 'text',
+			width: '1/6',
+			mobile: true
 		},
-		paginatedItems() {
-			return this.rows
-				.sort((a, b) => {
-					const key = a.hasOwnProperty('opted_in_at')
-						? 'opted_in_at'
-						: 'active_from';
-					return new Date(a[key].date) >= new Date(b[key].date);
-				})
-				.slice(this.index - 1, this.pagination.limit * this.pagination.page);
+		monthly_amount: {
+			label: panel.t('soerenengels.steady.monthly-amount'),
+			mobile: true,
+			before: '€',
+			width: '1/6',
+			type: 'number'
+		},
+		period: {
+			label: panel.t('soerenengels.steady.period'),
+			type: 'tags',
+			width: '1/8'
 		}
 	}
+});
+
+// Tabs
+const views = {
+	members: 'users',
+	subscribers: 'email'
 };
+const tabs = computed(() => {
+	return Object.entries(views).map(([key, value]) => {
+		return {
+			name: key,
+			label: panel.t(`soerenengels.steady.${key}`),
+			icon: value,
+			link: `steady/users?tab=${key}`
+		};
+	});
+});
+const tab = computed(() => panel.view.query.tab ?? Object.keys(views)[0]);
+
+// Data
+const rows = computed(() => {
+	return tab.value === 'subscribers'
+		? props.data.subscribers
+		: props.data.members.map(row => {
+				// Members
+				const member = row.included.find(item => {
+					return item.id === row.relationships.subscriber.data.id;
+				});
+				const plan = row.included.find(item => {
+					return item.id === row.relationships.plan.data.id;
+				});
+
+				return {
+					...row,
+					id: member.id,
+					monthly_amount: row.monthly_amount / 100,
+					plan: plan.attributes.name,
+					state: panel.t('soerenengels.steady.state.' + row.state),
+					name:
+						member.attributes['first-name'] +
+						' ' +
+						member.attributes['last-name']
+				};
+		  });
+});
+
+const columns = computed(() => {
+	return cols.value[tab.value];
+});
+
+const sortedRows = computed(() => {
+	return rows.value.sort((a, b) => {
+		const key = a.hasOwnProperty('opted_in_at') ? 'opted_in_at' : 'active_from';
+		return new Date(a[key].date) >= new Date(b[key].date);
+	});
+});
+const paginatedItems = computed(() => {
+	return (
+		sortedRows.value?.slice(
+			index.value - 1,
+			pagination.value.limit * pagination.value.page
+		) ?? []
+	);
+});
+function options(row) {
+	return `steady/${tab.value}/${row.id}`;
+}
+
+panel.events.on('steady.subscriptions.cancelled', () => {
+	panel.notification.success({
+		icon: 'check',
+		message: panel.t('soerenengels.steady.subscriptions.cancelled'),
+		type: 'success'
+	});
+});
+
+/*
+		// previously commented out:
+		setTimeout(() => {
+		window.document.querySelectorAll('.k-bubble').forEach(el => {
+			console.log(el)
+			if(el.querySelector('.k-bubble-text').textContent == this.$t('soerenengels.steady.state.active')) {
+				el.style.setProperty('--bubble-back', 'var(--color-positive-light)')
+			}
+		})
+		}, 500) */
 </script>
 
 <style scoped>

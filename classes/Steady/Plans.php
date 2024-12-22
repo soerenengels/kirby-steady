@@ -1,35 +1,29 @@
 <?php
-
 namespace Soerenengels\Steady;
 
 /**
- * Plans Class
- * as requested via Steady API
- * https://developers.steadyhq.com/#plans
+ * Steady Plans
  *
- * @method int count() returns total Plan Objects
- * @method ?Plan find(string $id) returns Plan or null
- * @method Plans filter(\Closure $filter) Returns new and filtered Plans Object
- * @method Plan[] list() Returns array of Plan Objects
+ * @see https://developers.steadyhq.com/#plans
+ * @extends Collection<Plan>
  */
-class Plans implements \IteratorAggregate
+class Plans extends Collection
 {
-	use hasItems, FactoryTrait, FilterTrait, FindTrait, CountTrait, toArrayTrait;
+	protected const DEFAULT_SORT_PARAM = 'monthly_amount';
+	protected const ENTITY_CLASS = Plan::class;
 
-	/** @param array $data Steady API Response */
-	function __construct(
-		array $data
-	) {
-		foreach ($data as $plan) {
-			$this->items[] = new Plan($plan);
-		};
+	/**
+	 * @return array<array{text: string, value: string}> Options array for Kirby Select field
+	 */
+	public function toOptions(): array
+	{
+		$options = [];
+		foreach ($this->items as $plan) {
+			$options[] = [
+				'text' => $plan->name(),
+				'value' => $plan->id()
+			];
+		}
+		return $options;
 	}
-
-	public function sort(): static {
-		usort($this->items, function ($a, $b) {
-			return $a->monthly_amount() <=> $b->monthly_amount();
-		});
-		return $this;
-	}
-
 }
