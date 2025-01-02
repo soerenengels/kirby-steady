@@ -21,40 +21,23 @@ use Kirby\Http\Remote;
 class Widgets extends Collection
 {
 
-	// TODO: remove this and constructor
-	/* * @var Steady $steady Steady instance */
-	//private Steady $steady;
-
 	/**
 	 * @param array<Widget> $items array of Widget objects
-	 * */
+	 */
 	public function __construct(
-		protected array $items = []//,
-		//$steady = null
-	)
-	{
-		//$this->steady = $steady ?? steady();
-	}
+		protected array $items = []
+	) {}
 
 	/**
-	 * Magic Method to call WidgetType methods
+	 * Magic Method to call Widget by name
 	 */
 	public function __call(string $name, mixed $arguments): ?Widget
 	{
-		// Check if method name is a WidgetType value and return Widget Object
 		return $this->find($name);
-		/* if (!($type = WidgetType::tryFrom($name))) return null;
-		return array_reduce(
-			$this->list(),
-			function (?Widget $carry, ?Widget $widget) use ($type) {
-				return $carry ?? ($widget?->type() == $type ? $widget : $carry);
-			},
-			null
-		); */
 	}
 
 	/**
-	 * Check if widgets are enabled in kirby config
+	 * Check if Widgets are enabled in kirby config
 	 *
 	 * @return boolean $enabled true if plugins 'widget' option is set to true
 	 */
@@ -86,7 +69,6 @@ class Widgets extends Collection
 		$steady = steady();
 		try {
 			$url = $steady->publication()->js_widget_url();
-			// TODO: use parent
 			$cache = $steady->cache;
 			/** @var string $widgetLoaderContent */
 			$widgetLoaderContent = $cache->getOrSet('js-widget-url', function () use ($url) {
