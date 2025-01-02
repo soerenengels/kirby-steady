@@ -16,8 +16,7 @@ class NewsletterSubscribersReport extends Report {
 
 		// New subscribers
 		$newSubscribers = $subscribers->filter(
-			// TODO: Add Typehint
-			function(User $item) {
+			function(User $item): bool {
 				return $item->opted_in_at()?->compare()->days <= 30;
 			}
 		)->count();
