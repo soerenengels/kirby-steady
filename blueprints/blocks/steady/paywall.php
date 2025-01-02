@@ -1,6 +1,8 @@
 <?php
+
 use Kirby\Toolkit\I18n;
 use Soerenengels\Steady\Steady;
+
 /** @var Steady $steady */
 $isActive = $steady->widgets()?->paywall()->isActive();
 
