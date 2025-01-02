@@ -339,8 +339,6 @@ class Steady
 			$widget = $this->widgets()->$widgetType();
 			return $widget;
 		} catch (Exception $e) {
-			// TODO: handle exception
-			// $e->getMessage('widgets parameter must be of type WidgetType');
 			return null;
 		}
 	}
