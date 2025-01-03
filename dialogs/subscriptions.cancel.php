@@ -13,7 +13,7 @@ return [
 			]
 		];
 	},
-	'submit' => function ($id) use ($steady) {
+	'submit' => function (string $id) use ($steady) {
 		try {
 			$steady->subscriptions()->find($id)?->cancel();
 		} catch (Exception $e) {
