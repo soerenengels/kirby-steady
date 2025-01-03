@@ -77,6 +77,8 @@ return [
 	'soerenengels.steady.state' => 'State',
 	'soerenengels.steady.state.active' => 'Active',
 	'soerenengels.steady.period' => 'Period',
+	'soerenengels.steady.period.monthly' => 'Monthly',
+	'soerenengels.steady.period.annual' => 'Annual',
 	'soerenengels.steady.monthly-amount' => 'Monthly Amount',
 	'soerenengels.steady.activated' => 'Activated at',
 	'soerenengels.steady.subscribed' => 'Subscribed at',

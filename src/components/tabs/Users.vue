@@ -135,6 +135,7 @@ const rows = computed(() => {
 					id: member.id,
 					monthly_amount: row.monthly_amount / 100,
 					plan: plan.attributes.name,
+					period: panel.t('soerenengels.steady.period.' + row.period),
 					state: panel.t('soerenengels.steady.state.' + row.state),
 					name:
 						member.attributes['first-name'] +

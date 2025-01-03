@@ -78,6 +78,8 @@ return [
 	'soerenengels.steady.drawer.podcast.success.message' => 'Podcast erfolgreich erstellt',
 	'soerenengels.steady.state.active' => 'Aktiv',
 	'soerenengels.steady.period' => 'Zeitraum',
+	'soerenengels.steady.period.monthly' => 'Monatlich',
+	'soerenengels.steady.period.annual' => 'Jährlich',
 	'soerenengels.steady.monthly-amount' => 'Monatlicher Beitrag',
 	'soerenengels.steady.activated' => 'Aktiviert',
 	'soerenengels.steady.subscribed' => 'Abonniert seit',
