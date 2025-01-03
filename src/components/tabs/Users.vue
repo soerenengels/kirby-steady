@@ -89,6 +89,7 @@ const cols = ref({
 			mobile: true,
 			before: '€',
 			width: '1/6',
+			align: 'right',
 			type: 'number'
 		},
 		period: {
