@@ -39,3 +39,5 @@ return [
 :::tip ☝️ Tip
 Besides using the Paywall $block, you can also insert the Paywall with the `(paywall:)` KirbyTag.
 :::
+
+Explore [how you can use the paywall for specific parts](https://help.steadyhq.com/de/articles/6265620-paywall-auf-deiner-website-einrichten-so-funktioniert-s) of your website:
