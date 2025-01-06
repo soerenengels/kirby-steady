@@ -14,17 +14,18 @@ The recommended method to install this plugin is with [Composer](https://github.
 composer require soerenengels/kirby-steady
 ```
 
-#### Alternative: Zip
-
+::: info Alternative: .zip
 If you prefer to install your plugins via a zip file, simply [download](https://github.com/soerenengels/kirby-steady/archive/refs/heads/main.zip) the plugin and unzip its content to `/site/plugins/steady`.
+:::
 
-#### Alternative: Git
-
+::: info Alternative: Git
 You can also add this plugin as git submodule:
 
 ```bash
 git submodule add https://github.com/soerenengels/kirby-steady.git site/plugins/steady
 ```
+
+:::
 
 ## Setup
 
