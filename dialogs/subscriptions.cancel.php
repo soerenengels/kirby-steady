@@ -13,9 +13,9 @@ return [
 			]
 		];
 	},
-	'submit' => function (string $id) use ($steady) {
+	'submit' => function (string $id) {
 		try {
-			$steady->subscriptions()->find($id)?->cancel();
+			steady()->subscriptions()->find($id)?->cancel();
 		} catch (Exception $e) {
 			return [
 				'event' => 'steady.subscriptions.cancel.error',

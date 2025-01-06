@@ -3,8 +3,8 @@ use Soerenengels\Steady\Steady;
 /** @var Steady $steady */
 return [
 	'pattern' => 'steady/members/(:any)',
-	'action' => function(string $id) use ($steady) {
-		$publication_id = $steady->publication()->id();
+	'action' => function(string $id) {
+		$publication_id = steady()->publication()->id();
 		return [
 			[
 				'text'   => 'Auf Steady anzeigen',

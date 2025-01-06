@@ -5,8 +5,8 @@ use Soerenengels\Steady\Steady;
 /** @var Steady $steady */
 return [
 	'pattern' => 'steady/create',
-	'action'  => function () use ($steady) {
-
+	'action'  => function () {
+		$id = steady()->publication()->id();
 		return [
 			[
 				'text'   => I18n::translate('soerenengels.steady.podcast'),
@@ -16,17 +16,17 @@ return [
 			[
 				'text'   => I18n::translate('soerenengels.steady.post'),
 				'icon' => 'open', // 'page',
-				'link' => 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id(). '/posts/new'
+				'link' => 'https://steadyhq.com/de/backend/publications/' . $id . '/posts/new'
 			],
 			[
 				'text'   => I18n::translate('soerenengels.steady.plan'),
 				'icon' => 'open', // 'store',
-				'link' => 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id(). '/plans/new#plan_form'
+				'link' => 'https://steadyhq.com/de/backend/publications/' . $id . '/plans/new#plan_form'
 			],
 			[
 				'text'   => I18n::translate('soerenengels.steady.drip'),
 				'icon' => 'open', // 'email',
-				'link' => 'https://steadyhq.com/de/backend/publications/' . $steady->publication()->id(). '/drip_campaigns/new'
+				'link' => 'https://steadyhq.com/de/backend/publications/' . $id . '/drip_campaigns/new'
 			],
 			"-",
 			[

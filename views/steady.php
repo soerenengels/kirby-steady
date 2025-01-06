@@ -2,7 +2,6 @@
 
 use Kirby\Toolkit\I18n;
 use Kirby\Toolkit\A;
-/** @var Soerenengels\Steady\Steady $steady */
 
 return [
 	'pattern' => 'steady/(:any)',
@@ -62,26 +61,26 @@ return [
 		];
 		$tabs = A::filter(
 			$tabs,
-			function($tab) {
+			function ($tab) {
 				/** @var array{name: string, label: string, icon: string, link: string, permission: bool} $tab */
 				return $tab['permission'];
 			}
 		);
 
 		return [
-			'component' => 'k-steady-view',
-			'title' => t('soerenengels.steady', 'Steady'),
 			'breadcrumb' => [
 				[
 					'label' => t("soerenengels.steady.$tab", $tab),
 					'link' => 'steady/' . $tab
 				]
 			],
+			'component' => 'k-steady-view',
 			'props' => [
 				'data' => $data,
 				'tab' => $tab,
 				'tabs' => $tabs
-			]
+			],
+			'title' => t('soerenengels.steady', 'Steady'),
 		];
 	}
 ];

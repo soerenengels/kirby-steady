@@ -7,7 +7,7 @@ use Kirby\Toolkit\I18n;
 /** @var Steady $steady */
 
 return [
-	'steady' => function () use ($steady) {
+	'steady' => function () {
 		return [
 			'icon' => 'steady',
 			'label' => I18n::translate('soerenengels.steady'),
