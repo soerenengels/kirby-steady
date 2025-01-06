@@ -1,6 +1,6 @@
 # Area
 
-The Steady area gives you a simple overview of your Steady stats. It displays all Steady [Reports](/panel/reports) by default, shows you which [Widgets](#widgets) are activated and gives you access to your Steady users.
+The panel area gives you a simple overview of your Steady stats. It displays all Steady [Reports](/panel/reports) by default, shows you the status of your [Widgets](#widgets) and lets you manage your Steady users.
 
 ::: info ☝️ Info
 You have also the option to [hide the panel area or individual tabs](/get-started/config).
