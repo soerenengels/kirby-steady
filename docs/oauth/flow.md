@@ -12,11 +12,13 @@ When the user clicks the link, they will be redirected to the Steady Website to 
 
 ## 2. Process Callback
 
-The callback will be processed in the plugins callback route. With the received authentication an access token is requested and saved to a newly created Kirby $user with an client.yml blueprint (or as configured in the options). The $user gets automatically logged in.
+The callback will be processed in the plugins callback route. With the received authentication an access token is requested and saved to a cookie. As long as this cookie persists, the User is logged in.
 
 ## 3. Work with the authenticated Steady user
 
 Now you have the oportunity to get the current User `$steady->oauth()->user()` or the current users Subscription `$steady->oauth()->subscription()` data.
+
+You can also use the bouncer snippet, to handle different users states: visitor, steady user and member of the publication.
 
 ## 4. Logout user
 

@@ -2,8 +2,8 @@
 
 ## OAuth
 
-See: https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/OAuth.php
+See: [Soerenengels\Steady\OAuth](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/OAuth.php)
 
-## AccessToken
+## Token
 
-See: https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/AccessToken.php
+See: [Soerenengels\Steady\Token](https://github.com/soerenengels/kirby-steady/blob/main/classes/Steady/Token.php)
