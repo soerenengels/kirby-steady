@@ -17,11 +17,11 @@ hero:
 features:
   - icon: 🤗
     title: API Wrapper
-    details: Simply request Steady publication data, plans, subscriptions and newsletter subscribers in Kirby style
+    details: Simply request Steady publication data, plans, subscriptions and newsletter subscribers – the Kirby way
     link: /steady
   - icon: 📊
     title: Insights
-    details: Stay up to date with Steady Reports in the Panel
+    details: "Stay up to date: with Steady Reports in the Panel"
     link: /panel/reports
   - icon: 📦
     title: Plans
@@ -37,7 +37,7 @@ features:
     link: blocks/paywall
   - icon: 🔑
     title: OAuth
-    details: Integrate an OAuth login flow with Steady to your website.
+    details: "Easily integrate an OAuth2 login flow: e.g. only Steady users can comment an article"
     link: oauth
   - icon: 🙋‍♂️
     title: Manage Subscriptions
