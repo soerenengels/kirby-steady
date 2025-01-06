@@ -2,17 +2,24 @@
 
 # Kirby 🤝 Steady
 
-**[Kirby](https://getkirby.com/) meets [Steady](https://steadyhq.com/).** A plugin for Kirby `Version 4 and later` and `php >= 8.2`. Connect your Kirby site to your Steady publication. Request data for your publication, newsletter subscribers, members ans plans from the Steady [API](https://developers.steadyhq.com/#rest).
+**[Kirby](https://getkirby.com/) meets [Steady](https://steadyhq.com/).** A plugin for Kirby `Version 5 and later` and `php >= 8.2`. Connect your Kirby site to your Steady publication. Request data for your publication, newsletter subscribers, members and plans from the Steady [API](https://developers.steadyhq.com/#rest).
 
 ## Features
 
-1. **Access the API:** Use the `steady()` helper or `$site->steady()` site method to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
-2. **Steady reports:** Stay up to date with Steady Reports in a Panel section
-3. **Display your Plans:** Add your Steady Plans as `$block` or `$snippet` to your Website.
-4. **Let your Content be worth it:** Add a Paywall `$block` to your articles or pages.
-5. **Adblock detection:** Activate Adblocker detection and display the Steady Adblock Overlay.
-6. **Member Login:** Let your members login to your Steady publication, e.g. to deactivate the paywall for them.
-7. **Steady Area:** Your Steady dashboard for stats, plugin configuration, subscribers and members.
+- **Access the API:**  
+Use the `steady()` helper or `$site->steady()` site method to **request publication, plans, subscriptions and newsletter subscribers** for use in templates, snippets or everywhere else
+- **Steady Stats:**  
+Stay up to date with Steady Reports in a Panel section
+- **Display your Plans:**  
+Add your Steady Plans as `$block` or `$snippet` to your Website.
+- **Let your Content be worth it:**  
+Add a Paywall `$block` to your articles or pages.
+- **Adblock detection:**  
+Activate Adblocker detection and display the Steady Adblock Overlay.
+- **Member Login:**  
+Let your members login to your Steady publication, e.g. to deactivate the paywall for them or for a special member section.
+- **Steady Area:**  
+Your Steady dashboard for stats, plugin configuration, subscribers and members.
 
 ## Get Started
 
@@ -26,14 +33,12 @@ composer require soerenengels/kirby-steady
 
 ### Quick setup
 
-For basic usage, add your required [REST API-Key](https://steadyhq.com/backend/publications/default/integrations/api/edit) in your `config.php`. Keep the key secure.
+For basic usage, add your required [REST API-Key](https://steadyhq.com/backend/publications/default/integrations/api/edit) in your `config.php`. [Keep the key secure.](https://kirby-steady.soerenengels.de/get-started/install-setup.html#:~:text=%5D%0A%5D%3B-,%E2%98%9D%EF%B8%8F%20Tip,-You%20can%20use)
 
 ```php
 return [
   'options' => [
-    'soerenengels.steady' => [
-      'token' => '...',
-    ]
+    'soerenengels.steady.token' => '...',
   ]
 ];
 ```
@@ -42,23 +47,21 @@ return [
 
 Jump to the [documentation](https://kirby-steady.soerenengels.de/).
 
-## Roadmap
+## More
 
-- feature-widgets: Integrate the next generation of Steady Widgets
-
-## Available Translations
+### Available Translations
 
 - English
 - German
 
-## Develop
+### Develop
 
-Use phpstan to check code.
+Use PHPStan via `vendor/bin/phpstan` to check the code.
 
-## License
+### License
 
 MIT
 
-## Credits
+### Credits
 
 Sören Engels
