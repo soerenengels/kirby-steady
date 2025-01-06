@@ -6,6 +6,7 @@
 assets/ export-ignore
 docs/ export-ignore
 src/ export-ignore
+node_modules/ export-ignore
 
 .editorconfig export-ignore
 .prettierrc export-ignore
@@ -13,5 +14,6 @@ src/ export-ignore
 CHANGELOG.md export-ignore
 
 composer.lock export-ignore
-package-lock.json export-ignore
 package.json export-ignore
+package-lock.json export-ignore
+phpstan.neon export-ignore
